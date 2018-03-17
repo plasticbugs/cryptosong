@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb",
+  "settings": {
+    "import/resolver": "node"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}
