@@ -23,8 +23,8 @@ coverage
 # Dotenv
 .env
 
-build/js/
-build/css/
+build/js/style.min.css
+build/css/bundle.js
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
