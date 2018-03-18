@@ -16,7 +16,7 @@ module.exports = {
     // './src/styles/style.css',
   ],
   plugins: [
-    uglifyjs,
+    // uglifyjs,
     extractSass,
   ],
   output: {
@@ -32,16 +32,22 @@ module.exports = {
         },
       },
       {
-        test: /\.scss$/,
-        exclude: /(node_modules)/,
+        test:/\.(s*)css$/,
+        include: /(node_modules)/,
         use: extractSass.extract({
           use: [{
-            loader: 'css-loader?minimize', // translates CSS into CommonJS
+            // loader: 'css-loader?minimize', // translates CSS into CommonJS
+            loader: 'css-loader'
           },
           {
             loader: 'sass-loader', // creates style nodes from JS strings
           }],
         }),
+      },
+      {
+        test: [/\.eot$/, /\.png$/, /\.jpg$/, /\.gif$/, /\.ttf$/, /\.svg$/, /\.woff$/, /\.woff2$/],
+        loader: 'url-loader'
+        // output: './dist/public/css'
       },
     ],
   },
