@@ -1,10 +1,9 @@
 import React from 'react';
+import SongInputForm from './SongInputForm.jsx';
 // import ScatterChart from './ScatterChart.jsx';
 const App = () =>
   (
-    <div className="app">
-      {'Hello world'}
-    </div>
+    <SongInputForm />
   );
 
 module.exports = App;
