@@ -124,9 +124,7 @@ export default class SongInputForm extends Component {
   }
 
   handleChange(e, { name, value }) {
-    this.setState({[name]: value}, () => {
-      console.log('Set This: ', value);
-    })
+    this.setState({[name]: value})
   }
 
   handleSubmit() {
