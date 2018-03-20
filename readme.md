@@ -17,7 +17,7 @@ Now, navigate to where you want to download this code and clone this repo:
 ```
 git clone https://github.com/plasticbugs/cryptosong.git
 ```
-Change into this directory
+Change into the downloaded directory
 ```
 cd cryptosong
 ```
