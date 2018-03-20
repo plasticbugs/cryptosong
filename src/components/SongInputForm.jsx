@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Input, Header, Form, Select, Button, Dropdown } from 'semantic-ui-react';
+import { Container, Segment, Radio, Input, Header, Form, Select, Button, Dropdown } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import axios from 'axios';
 import moment from 'moment';
 
 const keyOptions = [
@@ -42,14 +42,14 @@ const topicOptions = [
 ]
 
 const instrumentOptions = [
-  'Vocals',
-  'Baritone Uke',
-  'Synths',
-  'Drum Machine',
-  'Snaps',
-  'Drums',
-  'Organ',
-  'Electric Guitar'
+  {key:"Vocals","text":"Vocals","value":"Vocals"},
+  {key:"Baritone Uke","text":"Baritone Uke","value":"Baritone Uke"},
+  {key:"Synths","text":"Synths","value":"Synths"},
+  {key:"Drum Machine","text":"Drum Machine","value":"Drum Machine"},
+  {key:"Snaps","text":"Snaps","value":"Snaps"},
+  {key:"Drums","text":"Drums","value":"Drums"},
+  {key:"Organ","text":"Organ","value":"Organ"},
+  {key:"Electric Guitar","text":"Electric Guitar","value":"Electric Guitar"}
 ]
 
 const beardOptions = [
@@ -79,68 +79,153 @@ const buildOptions = (arr) => {
 }
 
 export default class SongInputForm extends Component {
-  constructor (props) {
-    super(props)
+  // constructor (props) {
+    // super(props)
+    // this.state = {
+    //   date: moment()
+    // };
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleRadioChange = this.handleRadioChange.bind(this);
+  // }
+
+  constructor(props) {
+    super(props);
     this.state = {
-      date: moment()
-    };
+      number: '',
+      title: '',
+      date: moment(),
+      mins: '',
+      secs: '',
+      inKey: '',
+      tempo: '',
+      topic: '',
+      beard: '',
+      link: '',
+      description: '',
+      acousticProduced: '',
+      instruments: [],
+    }
     this.handleChange = this.handleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
- 
-  handleChange(date) {
+
+  // handleRadioChange(e, data) {
+  //   console.log(data.value)
+  //   this.setState({
+  //     acousticProduced: data.value
+  //   })
+  // }
+
+  handleDateChange(date) {
     this.setState({
       date
     });
   }
 
+  handleChange(e, { name, value }) {
+    this.setState({[name]: value}, () => {
+      console.log('Set This: ', value);
+    })
+  }
+
+  handleSubmit() {
+    axios.post('/api/song', this.state)
+    .then(response => {
+      console.log(response);
+    })
+    // console.log(this.state)
+  }
+
   render() {
+    const {
+      number,
+      title,
+      mins,
+      secs,
+      inKey,
+      tempo,
+      topic,
+      beard,
+      link,
+      description,
+      acousticProduced,
+      instruments
+    } = this.state
+
     return (
       <Container>
         <Header size='large' style={{marginTop: '2em'}}>Add New Song</Header>
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Number</label>
-            <input type='number' width={4} />
+            <Form.Input name='number' type='number' value={number} width={4} onChange={this.handleChange} />
           </Form.Field>
           <Form.Field>
             <label>Title</label>
-            <input placeholder='Song Title' />
+            <Form.Input name='title' placeholder='Song Title' value={title} onChange={this.handleChange} />
           </Form.Field>
           <Form.Field>
           <label>Date</label>
           <DatePicker
             selected={this.state.date}
-            onChange={this.handleChange}
+            onChange={this.handleDateChange}
           />
           </Form.Field>
           <Form.Group inline>
             <Form.Field>
               <label>Length</label>
-              <Input placeholder='HH' />
+              <Input name='mins' placeholder='MM' onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
-              <Input placeholder='MM' />
+              <Input name='secs' placeholder='SS' onChange={this.handleChange} />
             </Form.Field>
           </Form.Group>
-          <Form.Field control={Select} label='Song Key' options={keyOptions} placeholder='Choose Key' />
+          <Form.Field control={Select} label='Song Key' name='inKey' options={keyOptions} placeholder='Choose Key' onChange={this.handleChange} />
           <Form.Field>
             <label>Tempo</label>
-            <input type='number' width={4} />
+            <Input name='tempo' type='number' width={4} onChange={this.handleChange} />
           </Form.Field>
-          <Form.Field control={Select} label='Topic' options={topicOptions} placeholder='Choose a Topic' />
-          <Form.Field control={Select} label='Beard' options={beardOptions} placeholder='Choose a Beard' />
+          <Form.Field control={Select} name='topic' label='Topic' options={topicOptions} placeholder='Choose a Topic' onChange={this.handleChange} />
+          <Form.Field control={Select} name='beard' label='Beard' options={beardOptions} placeholder='Choose a Beard' onChange={this.handleChange} />
           <Form.Field>
+            <label>YT Video ID or Link</label>
+            <Input name='link' placeholder='YT Video ID' onChange={this.handleChange} />
+          </Form.Field>
+          <Form.TextArea name ='description' label='Description' placeholder='Enter the full original description...' onChange={this.handleChange} />
+          <Form.Field>
+            <label>Acoustic or Produced</label>
+            <Radio
+              label='Acoustic'
+              name='acousticProduced'
+              value='acoustic'
+              checked={this.state.acousticProduced === 'acoustic'}
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label='Produced'
+              name='acousticProduced'
+              value='produced'
+              checked={this.state.acousticProduced === 'produced'}
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Instruments</label>
             <Dropdown
+              name='instruments'
               search
               selection
               multiple
-              options={topicOptions}
+              options={instrumentOptions}
               allowAdditions
               onAddItem={(e, d)=> {
                 console.log(d);
-                topicOptions.push({key: d.value, text: d.value, value: d.value})
+                instrumentOptions.push({key: d.value, text: d.value, value: d.value})
               }}
-              onChange={(e,d)=>{console.log('change: ', d.value)}}
+              onChange={this.handleChange}
             />
           </Form.Field>
           <Button type='submit'>Submit</Button>
