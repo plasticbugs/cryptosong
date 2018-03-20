@@ -220,7 +220,6 @@ export default class SongInputForm extends Component {
               options={instrumentOptions}
               allowAdditions
               onAddItem={(e, d)=> {
-                console.log(d);
                 instrumentOptions.push({key: d.value, text: d.value, value: d.value})
               }}
               onChange={this.handleChange}

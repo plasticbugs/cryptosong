@@ -9,8 +9,6 @@ const app = express();
 app.use(express.static('build'));
 app.use(bodyParser.json());
 
-app.get('/hello', userController.hello);
-
 app.post('/api/song', songController.newSong);
 
 module.exports = app;
