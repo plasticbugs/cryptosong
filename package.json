@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "build": "webpack --watch",
     "lint": "eslint ./ --ext .jsx --ext .js ."
   },
@@ -27,6 +27,7 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "file-loader": "^1.1.11",
