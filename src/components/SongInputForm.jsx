@@ -91,19 +91,22 @@ export default class SongInputForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: '',
-      title: '',
-      date: moment(),
-      mins: '',
-      secs: '',
-      inKey: '',
-      tempo: '',
-      topic: '',
-      beard: '',
-      link: '',
-      description: '',
-      acousticProduced: '',
-      instruments: [],
+      song: {
+        number: '',
+        title: '',
+        date: moment(),
+        mins: '',
+        secs: '',
+        inKey: '',
+        tempo: '',
+        topic: '',
+        beard: '',
+        link: '',
+        description: '',
+        acousticProduced: '',
+        instruments: [],
+      },
+      editing: false,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -118,17 +121,19 @@ export default class SongInputForm extends Component {
   // }
 
   handleDateChange(date) {
+    let song = Object.assign({}, this.state.song, {date})
     this.setState({
-      date
+      song
     });
   }
 
   handleChange(e, { name, value }) {
-    this.setState({[name]: value})
+    let song = Object.assign({}, this.state.song, {[name]: value});
+    this.setState({song})
   }
 
   handleSubmit() {
-    axios.post('/api/song', this.state)
+    axios.post('/api/song', this.state.song)
     .then(response => {
       console.log(response);
     })
@@ -149,7 +154,7 @@ export default class SongInputForm extends Component {
       description,
       acousticProduced,
       instruments
-    } = this.state
+    } = this.state.song
 
     return (
       <Container>
@@ -166,7 +171,7 @@ export default class SongInputForm extends Component {
           <Form.Field>
           <label>Date</label>
           <DatePicker
-            selected={this.state.date}
+            selected={this.state.song.date}
             onChange={this.handleDateChange}
           />
           </Form.Field>
@@ -197,7 +202,7 @@ export default class SongInputForm extends Component {
               label='Acoustic'
               name='acousticProduced'
               value='acoustic'
-              checked={this.state.acousticProduced === 'acoustic'}
+              checked={this.state.song.acousticProduced === 'acoustic'}
               onChange={this.handleChange}
             />
           </Form.Field>
@@ -206,7 +211,7 @@ export default class SongInputForm extends Component {
               label='Produced'
               name='acousticProduced'
               value='produced'
-              checked={this.state.acousticProduced === 'produced'}
+              checked={this.state.song.acousticProduced === 'produced'}
               onChange={this.handleChange}
             />
           </Form.Field>
