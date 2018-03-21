@@ -2970,6 +2970,7 @@ const calcLength = (string) => {
   let secs = parseInt(arr[arr.length - 1]);
   let mins = parseInt(arr[0]);
   secs = secs + mins * 60;
+  return secs;
 }
 
 const insertSongs = (array) => {
