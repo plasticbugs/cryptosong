@@ -14,3 +14,10 @@ module.exports.getAllSongs = (req, res) => {
     res.send(results);
   })
 }
+
+module.exports.getSong = (req, res) => {
+  Song.find({number: parseInt(req.query.id)})
+  .then(song => {
+    res.send(song);
+  })
+}
