@@ -186,6 +186,18 @@ export default class SongInputForm extends Component {
     // console.log(this.state)
   }
 
+  renderHeader() {
+    if (this.props.editing) {
+      return (
+        <Header size='large' style={{marginTop: '2em'}}>Edit Song</Header>
+      )
+    } else {
+      return (
+        <Header size='large' style={{marginTop: '2em'}}>Add New Song</Header>
+      )
+    }
+  }
+
   render() {
     const {
       number,
@@ -204,7 +216,7 @@ export default class SongInputForm extends Component {
 
     return (
       <Container>
-        <Header size='large' style={{marginTop: '2em'}}>Add New Song</Header>
+        {this.renderHeader()}
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Number</label>
