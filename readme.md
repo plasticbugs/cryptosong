@@ -55,6 +55,14 @@ http://127.0.0.1:3000/songs
 To view the 'new song' form, visit:
 http://127.0.0.1:3000/song/new
 
+To edit a song, visit:
+
+http://localhost:3000/song/SONG_NUMBER_HERE/edit
+
+for example:
+
+http://localhost:3000/song/25/edit
+
 When you want to stop the build process or the web server:
 
 **Control + C**
