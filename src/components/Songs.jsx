@@ -28,7 +28,8 @@ export default class Songs extends Component {
     {this.state.songs.map( (song) => {
       return (
         <Card key={song.number}>
-          <Image src={`http://via.placeholder.com/800x800/${randomColor({hue: 'blue'}).slice(1)}/ffffff`} />
+          {/* <Image src={`http://via.placeholder.com/800x800/${randomColor({hue: 'blue'}).slice(1)}/ffffff`} /> */}
+          <Image src={`https://img.youtube.com/vi/${song.videoid}/mqdefault.jpg`} />
           <Card.Content>
             <Card.Header>
               {song.title}
