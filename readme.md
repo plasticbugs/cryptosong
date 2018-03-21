@@ -13,6 +13,11 @@ You don't have git?! C'mon!
 brew install git
 ```
 
+You need MongoDB, too:
+```
+brew install mongodb
+```
+
 Now, navigate to where you want to download this code and clone this repo:
 ```
 git clone https://github.com/plasticbugs/cryptosong.git
@@ -29,16 +34,27 @@ Build the app (this will take about 10 seconds or so):
 ```
 yarn run build
 ```
+In another terminal window, run MongoDB:
+```
+mongod
+```
+
+Once the MongoDB daemon is running, you can seed the database in another terminal window:
+```
+yarn run seed
+```
+
 Then in a separate Terminal window or tab, run:
 ```
 yarn start
 ```
-Now, open your favorite web browser and navigate to:
 
-http://127.0.0.1:3000/ or http://localhost:3000/
+Once the DB is seeded, view all the songs in the database at:
+http://127.0.0.1:3000/songs
 
-One of those should work
+To view the 'new song' form, visit:
+http://127.0.0.1:3000/song/new
 
-When you want to stop the build process and the web server:
+When you want to stop the build process or the web server:
 
 **Control + C**
