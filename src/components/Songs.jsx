@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Card, Icon, Image } from 'semantic-ui-react';
 import axios from 'axios';
+var randomColor = require('randomcolor'); // import the script
+// var color = randomColor(); // a hex code for an attractive color
 
 export default class Songs extends Component {
   constructor(props) {
@@ -15,17 +17,18 @@ export default class Songs extends Component {
     .then(songs => {
       this.setState({songs: songs.data})
     })
+    // console.log(randomColor())
   }
 
 
   // <a href="https://placeholder.com"><img src="http://via.placeholder.com/350x150"></a>
   render() {
     return (<Container>
-      <Card.Group>
+      <Card.Group itemsPerRow={4}>
     {this.state.songs.map( (song) => {
       return (
         <Card key={song.number}>
-          <Image src='http://via.placeholder.com/800x800/E8117F/ffffff' />
+          <Image src={`http://via.placeholder.com/800x800/${randomColor({hue: 'blue'}).slice(1)}/ffffff`} />
           <Card.Content>
             <Card.Header>
               {song.title}
@@ -47,7 +50,7 @@ export default class Songs extends Component {
             <br />
             <a href={`https://www.youtube.com/watch?v=${song.videoid}`}>
               <Icon name='video' />
-              {song.videoid}
+              Watch
             </a>
           </Card.Content>
         </Card>
