@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/cryptosong', {
   promiseLibrary: global.Promise
 });
 const db = mongoose.connection;
-
+db.dropDatabase();
 
 
 // "number": 1,
