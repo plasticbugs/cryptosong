@@ -7,8 +7,8 @@ const userController = require('./controllers/users');
 const songController = require('./controllers/songs');
 
 const app = express();
-app.use(express.static('build'));
 app.use(bodyParser.json());
+app.use(express.static('build'));
 
 app.post('/api/song', songController.newSong);
 
