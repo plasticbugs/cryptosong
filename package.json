@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "build": "webpack --watch",
-    "lint": "eslint ./ --ext .jsx --ext .js ."
+    "lint": "eslint ./ --ext .jsx --ext .js .",
+    "seed": "node ./server/scripts/seedDB.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -32,6 +33,7 @@
     "express": "^4.16.2",
     "file-loader": "^1.1.11",
     "moment": "^2.21.0",
+    "mongoose": "^5.0.11",
     "nodemon": "^1.17.2",
     "react": "^16.2.0",
     "react-datepicker": "^1.2.2",
