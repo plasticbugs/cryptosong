@@ -39,12 +39,12 @@ In another terminal window, run MongoDB:
 mongod
 ```
 
-Once the MongoDB daemon is running, you can seed the database in another terminal window:
+Once the MongoDB daemon is running, you can seed the database in another terminal window. Make sure you're inside the 'cryptosong' directory when you run this command:
 ```
 yarn run seed
 ```
 
-Then in a separate Terminal window or tab, run:
+After the seed file runs and exits successfully (you'll see a bunch of stuff scroll by), run:
 ```
 yarn start
 ```
