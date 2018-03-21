@@ -42,19 +42,19 @@ const topicOptions = [
 ]
 
 const instrumentOptions = [
-  {key:"Vocals","text":"Vocals","value":"Vocals"},
-  {key:"Baritone Uke","text":"Baritone Uke","value":"Baritone Uke"},
-  {key:"Synths","text":"Synths","value":"Synths"},
-  {key:"Drum Machine","text":"Drum Machine","value":"Drum Machine"},
-  {key:"Snaps","text":"Snaps","value":"Snaps"},
-  {key:"Drums","text":"Drums","value":"Drums"},
-  {key:"Organ","text":"Organ","value":"Organ"},
-  {key:"Electric Guitar","text":"Electric Guitar","value":"Electric Guitar"}
+  {key:"vocals","text":"Vocals","value":"vocals"},
+  {key:"baritone uke","text":"Baritone Uke","value":"baritone uke"},
+  {key:"synths","text":"Synths","value":"synths"},
+  {key:"drum machine","text":"Drum Machine","value":"drum machine"},
+  {key:"snaps","text":"Snaps","value":"snaps"},
+  {key:"drums","text":"Drums","value":"drums"},
+  {key:"organ","text":"Organ","value":"organ"},
+  {key:"electric guitar","text":"Electric Guitar","value":"electric guitar"}
 ]
 
 const beardOptions = [
   {key: "Stubble", text: "Stubble", value: "Stubble"},
-  {key: "None", text: "None", value: "None"},
+  {key: "N/A", text: "N/A", value: "N/A"},
   {key: "Clean", text: "Clean", value: "Clean"},
   {key: "Shadow", text: "Shadow", value: "Shadow"},
 ]
@@ -97,22 +97,52 @@ export default class SongInputForm extends Component {
         date: moment(),
         mins: '',
         secs: '',
-        inKey: '',
+        inkey: '',
         tempo: '',
         topic: '',
         beard: '',
-        link: '',
+        videoid: '',
         description: '',
-        acousticProduced: '',
+        acousticproduced: '',
         instruments: [],
       },
-      editing: false,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
   }
-
+  componentDidMount() {
+    if(this.props.match.params.id) {
+      axios.get('/api/song', {
+        params:
+          {
+            id: this.props.match.params.id
+          }
+        })
+      .then(response => {
+        console.log(response.data[0])
+        let song = Object.assign({}, response.data[0]);
+        let date = moment(song.date);
+        song.secs = song.length % 60
+        song.mins = Math.floor(song.length / 60);
+        this.handleDateChange(date);
+        delete song.date
+        this.setState({selected: ['vocals']})
+        // this.setState({song})
+        // this.setState({song: {instruments: song.instruments}}, ()=> {
+        //   delete song.instruments
+        // })
+        for (let key in song) {
+          this.handleChange(null, {
+            name: key,
+            value: song[key]
+          })
+        }
+      })
+    }
+    // if (this.props.match)
+  }
   // handleRadioChange(e, data) {
   //   console.log(data.value)
   //   this.setState({
@@ -127,10 +157,26 @@ export default class SongInputForm extends Component {
     });
   }
 
-  handleChange(e, { name, value }) {
-    let song = Object.assign({}, this.state.song, {[name]: value});
-    this.setState({song})
+  handleChange(e, { name, value }, fullSong) {
+    // if (fullSong) {
+    //   let song = Object.assign({}, fullSong);
+
+    // } else {
+      let song = Object.assign({}, this.state.song, {[name]: value});
+      this.setState({song})
+    // }
   }
+
+  handleDropdownChange(e, { name, value }, fullSong) {
+    // if (fullSong) {
+    //   let song = Object.assign({}, fullSong);
+
+    // } else {
+      let song = Object.assign({}, this.state.song, {[name]: value});
+      this.setState({song})
+    // }
+  }
+
 
   handleSubmit() {
     axios.post('/api/song', this.state.song)
@@ -146,13 +192,13 @@ export default class SongInputForm extends Component {
       title,
       mins,
       secs,
-      inKey,
+      inkey,
       tempo,
       topic,
       beard,
-      link,
+      videoid,
       description,
-      acousticProduced,
+      acousticproduced,
       instruments
     } = this.state.song
 
@@ -178,31 +224,31 @@ export default class SongInputForm extends Component {
           <Form.Group inline>
             <Form.Field>
               <label>Length</label>
-              <Input name='mins' placeholder='MM' onChange={this.handleChange} />
+              <Input name='mins' placeholder='MM' value={mins} onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
-              <Input name='secs' placeholder='SS' onChange={this.handleChange} />
+              <Input name='secs' placeholder='SS' value={secs} onChange={this.handleChange} />
             </Form.Field>
           </Form.Group>
-          <Form.Field control={Select} label='Song Key' name='inKey' options={keyOptions} placeholder='Choose Key' onChange={this.handleChange} />
+          <Form.Field control={Select} label='Song Key' value={inkey} name='inkey' options={keyOptions} placeholder='Choose Key' onChange={this.handleChange} />
           <Form.Field>
             <label>Tempo</label>
-            <Input name='tempo' type='number' width={4} onChange={this.handleChange} />
+            <Input name='tempo' value={tempo} type='number' width={4} onChange={this.handleChange} />
           </Form.Field>
-          <Form.Field control={Select} name='topic' label='Topic' options={topicOptions} placeholder='Choose a Topic' onChange={this.handleChange} />
-          <Form.Field control={Select} name='beard' label='Beard' options={beardOptions} placeholder='Choose a Beard' onChange={this.handleChange} />
+          <Form.Field control={Select} value={topic} name='topic' label='Topic' options={topicOptions} placeholder='Choose a Topic' onChange={this.handleChange} />
+          <Form.Field control={Select} value={beard} name='beard' label='Beard' options={beardOptions} placeholder='Choose a Beard' onChange={this.handleChange} />
           <Form.Field>
             <label>YT Video ID or Link</label>
-            <Input name='link' placeholder='YT Video ID' onChange={this.handleChange} />
+            <Input name='videoid' value={videoid} placeholder='YT Video ID' onChange={this.handleChange} />
           </Form.Field>
-          <Form.TextArea name ='description' label='Description' placeholder='Enter the full original description...' onChange={this.handleChange} />
+          <Form.TextArea value={description} name ='description' label='Description' placeholder='Enter the full original description...' onChange={this.handleChange} />
           <Form.Field>
             <label>Acoustic or Produced</label>
             <Radio
               label='Acoustic'
               name='acousticProduced'
-              value='acoustic'
-              checked={this.state.song.acousticProduced === 'acoustic'}
+              value='Acoustic'
+              checked={acousticproduced === 'Acoustic'}
               onChange={this.handleChange}
             />
           </Form.Field>
@@ -210,8 +256,8 @@ export default class SongInputForm extends Component {
             <Radio
               label='Produced'
               name='acousticProduced'
-              value='produced'
-              checked={this.state.song.acousticProduced === 'produced'}
+              value='Produced'
+              checked={acousticproduced === 'Produced'}
               onChange={this.handleChange}
             />
           </Form.Field>
@@ -222,12 +268,13 @@ export default class SongInputForm extends Component {
               search
               selection
               multiple
+              value={instruments}
               options={instrumentOptions}
               allowAdditions
               onAddItem={(e, d)=> {
                 instrumentOptions.push({key: d.value, text: d.value, value: d.value})
               }}
-              onChange={this.handleChange}
+              onChange={this.handleDropdownChange}
             />
           </Form.Field>
           <Button type='submit'>Submit</Button>
