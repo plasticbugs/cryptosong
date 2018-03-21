@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 app.use(express.static('build'));
 
 app.post('/api/song', songController.newSong);
+app.get('/api/song', songController.getSong);
 
 app.get('/api/songs', songController.getAllSongs);
 
