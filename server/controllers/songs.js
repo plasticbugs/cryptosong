@@ -11,7 +11,6 @@ module.exports.editSong = (req, res) => {
 
 module.exports.getAllSongs = (req, res) => {
   Song.find().then( results => {
-    console.log(results);
     res.send(results);
   })
 }
