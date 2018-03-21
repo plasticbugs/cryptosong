@@ -7,6 +7,7 @@ mongoose.connect('mongodb://localhost/cryptosong', {
 const db = mongoose.connection;
 
 
+
 // "number": 1,
 //       "date": "2009-01-01T05:00:00.000Z",
 //       "title": "In the Time of the Gods",
@@ -2907,7 +2908,8 @@ const gatherFields = (array) => {
         uniques.topics.collection.push(song.topic);
       }
       if (song.inkey) {
-        uniques.keys.collection.push(song.inkey);
+        let upcase = song.inkey.charAt(0).toUpperCase().concat(song.inkey.slice(1));
+        uniques.keys.collection.push(upcase);
       }
     })
     resolve(uniques);
@@ -2982,6 +2984,10 @@ const insertSongs = (array) => {
     if (typeof array[i].tempo === 'number') {
       tempo = array[i].tempo;
     }
+    let upcasedKey = undefined;
+    if (array[i].inkey) {
+      upcasedKey = array[i].inkey.charAt(0).toUpperCase().concat(array[i].inkey.slice(1));
+    }
 
     let song = {
       number: array[i].number,
@@ -2994,7 +3000,7 @@ const insertSongs = (array) => {
       acousticproduced: array[i].acousticproduced,
       firsts: array[i].firsts,
       comments: array[i].comments,
-      inkey: array[i].inkey,
+      inkey: upcasedKey,
       beard: array[i].beard,
       instruments,
       location: array[i].location,
@@ -3007,7 +3013,8 @@ const insertSongs = (array) => {
       if (err) {
         console.log(err);
       }
-      console.log('successfully inserted ');
+      console.log('successfully inserted all songs');
+      process.exit()
   })
 }
 
