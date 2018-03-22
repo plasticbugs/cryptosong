@@ -5,15 +5,13 @@ const path = require('path');
 
 const userController = require('./controllers/users');
 const songController = require('./controllers/songs');
+const router = require('./routes/index');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static('build'));
 
-app.post('/api/song', songController.newSong);
-app.get('/api/song', songController.getSong);
-
-app.get('/api/songs', songController.getAllSongs);
+app.use('/api', router.api)
 
 app.get('/*', function(request, response) {
   response.sendFile(path.resolve(__dirname, '../build/index.html'));
