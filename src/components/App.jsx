@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 import SongInputForm from './SongInputForm.jsx';
 import Songs from './Songs.jsx';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-// import ScatterChart from './ScatterChart.jsx';
+
 const App = () => {
   return (
     <BrowserRouter>
