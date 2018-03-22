@@ -10,7 +10,7 @@ const songSchema = new Schema({
   tempo: Number,
   topic: String,
   location: String,
-  instruments: [String],
+  instruments: [{ type: Schema.Types.ObjectId, ref: 'Instrument' }],
   beard: String,
   videoid: String,
   description: String,
