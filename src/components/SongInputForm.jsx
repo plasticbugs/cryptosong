@@ -106,12 +106,28 @@ export default class SongInputForm extends Component {
         acousticproduced: '',
         instruments: [],
       },
+      images: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    this.getInstrumentNames = this.getInstrumentNames.bind(this);
   }
+
+  formatSong(songData) {
+    let song = Object.assign({}, songData);
+    song.date = moment(song.date);
+    song.secs = song.length % 60
+    song.mins = Math.floor(song.length / 60);
+    song.images = [];
+    song.instruments = song.instruments.map(instrument => {
+      song.images.push(instrument.image)
+      return instrument.name;
+    })
+    return song;
+  }
+
   componentDidMount() {
     if(this.props.match.params.id) {
       axios.get('/api/song', {
@@ -122,23 +138,21 @@ export default class SongInputForm extends Component {
         })
       .then(response => {
         console.log(response.data[0])
-        let song = Object.assign({}, response.data[0]);
-        let date = moment(song.date);
-        song.secs = song.length % 60
-        song.mins = Math.floor(song.length / 60);
-        this.handleDateChange(date);
-        delete song.date
-        this.setState({selected: ['vocals']})
-        // this.setState({song})
+        let song = this.formatSong(response.data[0]);
+        this.handleDateChange(song.date);
+        // this.setState({selected: ['vocals']})
+        this.setState({song}, () => {
+          console.log(song)
+        })
         // this.setState({song: {instruments: song.instruments}}, ()=> {
         //   delete song.instruments
         // })
-        for (let key in song) {
-          this.handleChange(null, {
-            name: key,
-            value: song[key]
-          })
-        }
+        // for (let key in song) {
+        //   this.handleChange(null, {
+        //     name: key,
+        //     value: song[key]
+        //   })
+        // }
       })
     }
     // if (this.props.match)
@@ -157,10 +171,10 @@ export default class SongInputForm extends Component {
     });
   }
 
-  handleChange(e, { name, value }, fullSong) {
+  handleChange(e, { name, value }) {
     // if (fullSong) {
     //   let song = Object.assign({}, fullSong);
-
+    console.log(name, value)
     // } else {
       let song = Object.assign({}, this.state.song, {[name]: value});
       this.setState({song})
@@ -196,6 +210,14 @@ export default class SongInputForm extends Component {
         <Header size='large' style={{marginTop: '2em'}}>Add New Song</Header>
       )
     }
+  }
+
+  getInstrumentNames() {
+    let strings = [];
+    this.state.song.instruments.forEach(instrument => {
+      strings.push(instrument.name);
+    })
+    return strings;
   }
 
   render() {
@@ -258,7 +280,7 @@ export default class SongInputForm extends Component {
             <label>Acoustic or Produced</label>
             <Radio
               label='Acoustic'
-              name='acousticProduced'
+              name='acousticproduced'
               value='Acoustic'
               checked={acousticproduced === 'Acoustic'}
               onChange={this.handleChange}
@@ -267,7 +289,7 @@ export default class SongInputForm extends Component {
           <Form.Field>
             <Radio
               label='Produced'
-              name='acousticProduced'
+              name='acousticproduced'
               value='Produced'
               checked={acousticproduced === 'Produced'}
               onChange={this.handleChange}
