@@ -7,7 +7,8 @@ mongoose.connect('mongodb://localhost/cryptosong', {
 const db = mongoose.connection;
 db.dropDatabase();
 
-
+// const Instrument = require('../models/instrument.js');
+// const Song = require('../models/song.js');
 // "number": 1,
 //       "date": "2009-01-01T05:00:00.000Z",
 //       "title": "In the Time of the Gods",
@@ -2973,12 +2974,24 @@ const calcLength = (string) => {
   return secs;
 }
 
-const insertSongs = (array) => {
+async function insertSongs(array) {
   let records = [];
   for (let i = 0; i < array.length; i++) {
-    let instruments = []
+    let instruments = [];
     if (array[i].instruments) {
-      instruments = array[i].instruments.toLowerCase().replace('\n', '').split(', ');
+      const Instrument = mongoose.model('Instrument')
+      let instrumentArray = array[i].instruments.toLowerCase().replace('\n', '').split(', ');
+      const query = await Instrument.find({name: { $in: instrumentArray}}).exec()
+      // const result = await query1.exec()
+
+      query.forEach(item => {
+        instruments.push(item._id);
+      })
+      // .then(results => {
+      //   results.forEach(result => {
+      //     instruments.push(result._id);
+      //   })
+      // })
     }
 
     let tempo = 0;
@@ -3018,4 +3031,3 @@ const insertSongs = (array) => {
       process.exit()
   })
 }
-
