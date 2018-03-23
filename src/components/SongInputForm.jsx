@@ -125,6 +125,14 @@ export default class SongInputForm extends Component {
       song.images.push(instrument.image)
       return instrument.name;
     })
+    song.images.push(song.beard.image)
+    song.images.push(song.location.image)
+    song.images.push(song.inkey.image)
+    song.images.push(song.topic.image)
+    song.beard = song.beard.name;
+    song.location = song.location.name;
+    song.topic = song.topic.name;
+    song.inkey = song.inkey.name;
     return song;
   }
 
@@ -157,6 +165,8 @@ export default class SongInputForm extends Component {
     }
     // if (this.props.match)
   }
+
+
   // handleRadioChange(e, data) {
   //   console.log(data.value)
   //   this.setState({
