@@ -2848,6 +2848,12 @@ const songList = [
   }
 ]
 
+const Instrument = mongoose.model('Instrument', {name: String, image: String});
+const Inkey = mongoose.model('Inkey', {name: String, image: String});
+const Topic = mongoose.model('Topic', {name: String, image: String});
+const Beard = mongoose.model('Beard', {name: String, image: String});
+const City = mongoose.model('Location', {name: String, image: String});
+
 const Song = mongoose.model('Song', {
   number: Number,
   title: String,
@@ -2886,7 +2892,7 @@ const gatherFields = (array) => {
         collection: []
       },
       keys: {
-        name: 'inKey',
+        name: 'Inkey',
         collection: []
       } 
     };
@@ -2947,7 +2953,7 @@ const insertUniques = (obj) => {
           image: dict[key]
         })
       }
-      const theModel = mongoose.model(identifier, {name: String, image: String});
+      const theModel = mongoose.model(identifier);
       theModel.insertMany(objArray, (err, docs) => {
         if(err) {
           reject(err);
@@ -2979,7 +2985,6 @@ async function insertSongs(array) {
   for (let i = 0; i < array.length; i++) {
     let instruments = [];
     if (array[i].instruments) {
-      const Instrument = mongoose.model('Instrument')
       let instrumentArray = array[i].instruments.toLowerCase().replace('\n', '').split(', ');
       const query = await Instrument.find({name: { $in: instrumentArray}}).exec()
       // const result = await query1.exec()
@@ -3001,6 +3006,26 @@ async function insertSongs(array) {
     let upcasedKey = undefined;
     if (array[i].inkey) {
       upcasedKey = array[i].inkey.charAt(0).toUpperCase().concat(array[i].inkey.slice(1));
+      const query = await Inkey.find({name: upcasedKey}).exec()
+      upcasedKey = query[0].id
+    }
+
+    let beard;
+    if (array[i].beard) {
+      const query = await Beard.find({name: array[i].beard}).exec()
+      beard = query[0].id;
+    }
+
+    let location;
+    if (array[i].location) {
+      const query = await City.find({name: array[i].location}).exec()
+      location = query[0].id
+    }
+
+    let topic;
+    if (array[i].topic) {
+      const query = await Topic.find({name: array[i].topic}).exec()
+      topic = query[0].id
     }
 
     let song = {
@@ -3015,10 +3040,10 @@ async function insertSongs(array) {
       firsts: array[i].firsts,
       comments: array[i].comments,
       inkey: upcasedKey,
-      beard: array[i].beard,
+      beard,
       instruments,
-      location: array[i].location,
-      topic: array[i].topic
+      location,
+      topic,
     }
     records.push(song);
   }
