@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Segment, Radio, Input, Header, Form, Select, Button, Dropdown } from 'semantic-ui-react';
+import { Container, Grid, Segment, Radio, Input, Header, Form, Select, Button, Dropdown } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
@@ -113,6 +113,7 @@ export default class SongInputForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.getInstrumentNames = this.getInstrumentNames.bind(this);
+    this.setUpCanvas = this.setUpCanvas.bind(this);
   }
 
   formatSong(songData) {
@@ -122,13 +123,13 @@ export default class SongInputForm extends Component {
     song.mins = Math.floor(song.length / 60);
     song.images = [];
     song.instruments = song.instruments.map(instrument => {
-      song.images.push(instrument.image)
+      // song.images.push(instrument.image)
       return instrument.name;
     })
     song.images.push(song.beard.image)
-    song.images.push(song.location.image)
+    // song.images.push(song.location.image)
     song.images.push(song.inkey.image)
-    song.images.push(song.topic.image)
+    // song.images.push(song.topic.image)
     song.beard = song.beard.name;
     song.location = song.location.name;
     song.topic = song.topic.name;
@@ -150,7 +151,8 @@ export default class SongInputForm extends Component {
         this.handleDateChange(song.date);
         // this.setState({selected: ['vocals']})
         this.setState({song}, () => {
-          console.log(song)
+          console.log(song);
+          this.setUpCanvas()
         })
         // this.setState({song: {instruments: song.instruments}}, ()=> {
         //   delete song.instruments
@@ -164,6 +166,76 @@ export default class SongInputForm extends Component {
       })
     }
     // if (this.props.match)
+  }
+
+  setUpCanvas() {
+    console.log('hey')
+// canvas related variables
+    const canvas = this.state.myCanvas;
+    var ctx=canvas.getContext("2d");
+    var cw=canvas.width;
+    var ch=canvas.height;
+
+    // put the paths to your images in imageURLs[]
+    var imageURLs = this.state.song.images;
+
+    console.log(imageURLs)
+    // the loaded images will be placed in imgs[]
+    var imgs=[];
+
+    // Create a new Image() for each item in imageURLs[]
+    // When all images are loaded, run the callback (==imagesAreNowLoaded)
+    function startLoadingAllImages(callback){
+      console.log('starting loading images')
+      // iterate through the imageURLs array and create new images for each
+      for (var i=0; i<imageURLs.length; i++) {
+        // create a new image an push it into the imgs[] array
+        var img = new Image();
+        // Important! By pushing (saving) this img into imgs[],
+        //     we make sure the img variable is free to
+        //     take on the next value in the loop.
+        imgs.push(img);
+        // when this image loads, call this img.onload
+        img.onload = function(){ 
+          // this img loaded, increment the image counter
+          imagesOK++; 
+          // if we've loaded all images, call the callback
+          if (imagesOK>=imageURLs.length ) {
+            callback();
+          }
+        };
+        // notify if there's an error
+        img.onerror=function(){alert("image load failed");} 
+        // set img properties
+        img.src = `/images/${imageURLs[i]}`;
+        console.log(img)
+      }      
+    }
+
+    // All the images are now loaded
+    // Do drawImage & fillText
+    function imagesAreNowLoaded(){
+
+      // the imgs[] array now holds fully loaded images
+      // the imgs[] are in the same order as imageURLs[]
+
+      ctx.font="30px sans-serif";
+      ctx.fillStyle="#333333";
+
+      // drawImage the first image (face1.png) from imgs[0]
+      // and fillText its label below the image
+      for(let i = 0; i< imageURLs.length; i++) {
+        
+      ctx.drawImage(imgs[i],0,0);
+        }
+
+      // drawImage the first image (face2.png) from imgs[1]
+      // and fillText its label below the image
+
+    }
+
+    var imagesOK=0;
+    startLoadingAllImages(imagesAreNowLoaded);
   }
 
 
@@ -248,82 +320,93 @@ export default class SongInputForm extends Component {
 
     return (
       <Container>
-        {this.renderHeader()}
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <label>Number</label>
-            <Form.Input name='number' type='number' value={number} width={4} onChange={this.handleChange} />
-          </Form.Field>
-          <Form.Field>
-            <label>Title</label>
-            <Form.Input name='title' placeholder='Song Title' value={title} onChange={this.handleChange} />
-          </Form.Field>
-          <Form.Field>
-          <label>Date</label>
-          <DatePicker
-            selected={this.state.song.date}
-            onChange={this.handleDateChange}
-          />
-          </Form.Field>
-          <Form.Group inline>
-            <Form.Field>
-              <label>Length</label>
-              <Input name='mins' placeholder='MM' value={mins} onChange={this.handleChange} />
-            </Form.Field>
-            <Form.Field>
-              <Input name='secs' placeholder='SS' value={secs} onChange={this.handleChange} />
-            </Form.Field>
-          </Form.Group>
-          <Form.Field control={Select} label='Song Key' value={inkey} name='inkey' options={keyOptions} placeholder='Choose Key' onChange={this.handleChange} />
-          <Form.Field>
-            <label>Tempo</label>
-            <Input name='tempo' value={tempo} type='number' width={4} onChange={this.handleChange} />
-          </Form.Field>
-          <Form.Field control={Select} value={topic} name='topic' label='Topic' options={topicOptions} placeholder='Choose a Topic' onChange={this.handleChange} />
-          <Form.Field control={Select} value={beard} name='beard' label='Beard' options={beardOptions} placeholder='Choose a Beard' onChange={this.handleChange} />
-          <Form.Field>
-            <label>YT Video ID or Link</label>
-            <Input name='videoid' value={videoid} placeholder='YT Video ID' onChange={this.handleChange} />
-          </Form.Field>
-          <Form.TextArea value={description} name ='description' label='Description' placeholder='Enter the full original description...' onChange={this.handleChange} />
-          <Form.Field>
-            <label>Acoustic or Produced</label>
-            <Radio
-              label='Acoustic'
-              name='acousticproduced'
-              value='Acoustic'
-              checked={acousticproduced === 'Acoustic'}
-              onChange={this.handleChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <Radio
-              label='Produced'
-              name='acousticproduced'
-              value='Produced'
-              checked={acousticproduced === 'Produced'}
-              onChange={this.handleChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Instruments</label>
-            <Dropdown
-              name='instruments'
-              search
-              selection
-              multiple
-              value={instruments}
-              options={instrumentOptions}
-              allowAdditions
-              onAddItem={(e, d)=> {
-                instrumentOptions.push({key: d.value, text: d.value, value: d.value})
-              }}
-              onChange={this.handleDropdownChange}
-            />
-          </Form.Field>
-          <Button type='submit'>Submit</Button>
-        </Form>
+        <Grid columns={2} divided>
+          <Grid.Row>
+            <Grid.Column>
+                {this.renderHeader()}
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Field>
+                    <label>Number</label>
+                    <Form.Input name='number' type='number' value={number} width={4} onChange={this.handleChange} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Title</label>
+                    <Form.Input name='title' placeholder='Song Title' value={title} onChange={this.handleChange} />
+                  </Form.Field>
+                  <Form.Field>
+                  <label>Date</label>
+                  <DatePicker
+                    selected={this.state.song.date}
+                    onChange={this.handleDateChange}
+                  />
+                  </Form.Field>
+                  <Form.Group inline>
+                    <Form.Field>
+                      <label>Length</label>
+                      <Input name='mins' placeholder='MM' value={mins} onChange={this.handleChange} />
+                    </Form.Field>
+                    <Form.Field>
+                      <Input name='secs' placeholder='SS' value={secs} onChange={this.handleChange} />
+                    </Form.Field>
+                  </Form.Group>
+                  <Form.Field control={Select} label='Song Key' value={inkey} name='inkey' options={keyOptions} placeholder='Choose Key' onChange={this.handleChange} />
+                  <Form.Field>
+                    <label>Tempo</label>
+                    <Input name='tempo' value={tempo} type='number' width={4} onChange={this.handleChange} />
+                  </Form.Field>
+                  <Form.Field control={Select} value={topic} name='topic' label='Topic' options={topicOptions} placeholder='Choose a Topic' onChange={this.handleChange} />
+                  <Form.Field control={Select} value={beard} name='beard' label='Beard' options={beardOptions} placeholder='Choose a Beard' onChange={this.handleChange} />
+                  <Form.Field>
+                    <label>YT Video ID or Link</label>
+                    <Input name='videoid' value={videoid} placeholder='YT Video ID' onChange={this.handleChange} />
+                  </Form.Field>
+                  <Form.TextArea value={description} name ='description' label='Description' placeholder='Enter the full original description...' onChange={this.handleChange} />
+                  <Form.Field>
+                    <label>Acoustic or Produced</label>
+                    <Radio
+                      label='Acoustic'
+                      name='acousticproduced'
+                      value='Acoustic'
+                      checked={acousticproduced === 'Acoustic'}
+                      onChange={this.handleChange}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <Radio
+                      label='Produced'
+                      name='acousticproduced'
+                      value='Produced'
+                      checked={acousticproduced === 'Produced'}
+                      onChange={this.handleChange}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Instruments</label>
+                    <Dropdown
+                      name='instruments'
+                      search
+                      selection
+                      multiple
+                      value={instruments}
+                      options={instrumentOptions}
+                      allowAdditions
+                      onAddItem={(e, d)=> {
+                        instrumentOptions.push({key: d.value, text: d.value, value: d.value})
+                      }}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Form.Field>
+                  <Button type='submit'>Submit</Button>
+                </Form>
+            </Grid.Column>
+            <Grid.Column>
+              <canvas ref={(canvas) => { this.state.myCanvas = canvas; }} width={500} height={500}></canvas>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Container>
     )
   }
 }
+
+
