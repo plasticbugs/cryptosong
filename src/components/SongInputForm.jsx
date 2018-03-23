@@ -175,6 +175,10 @@ export default class SongInputForm extends Component {
     var ctx=canvas.getContext("2d");
     var cw=canvas.width;
     var ch=canvas.height;
+    ctx.fillStyle = "pink";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // ctx.scale(.8,.8);
+
 
     // put the paths to your images in imageURLs[]
     var imageURLs = this.state.song.images;
@@ -228,7 +232,6 @@ export default class SongInputForm extends Component {
         
       ctx.drawImage(imgs[i],0,0);
         }
-
       // drawImage the first image (face2.png) from imgs[1]
       // and fillText its label below the image
 
@@ -400,7 +403,7 @@ export default class SongInputForm extends Component {
                 </Form>
             </Grid.Column>
             <Grid.Column>
-              <canvas ref={(canvas) => { this.state.myCanvas = canvas; }} width={500} height={500}></canvas>
+              <canvas style={{marginTop: '2em'}} ref={(canvas) => { this.state.myCanvas = canvas; }} width={500} height={500}></canvas>
             </Grid.Column>
           </Grid.Row>
         </Grid>
