@@ -20,6 +20,11 @@ module.exports.getAllSongs = (req, res) => {
 module.exports.getSong = (req, res) => {
   Song.find({number: parseInt(req.query.id)})
   .populate('instruments')
+  .populate('beard')
+  .populate('topic')
+  .populate('inkey')
+  .populate('location')
+  // .exec()
   .then(song => {
     console.log(song)
     // Instrument.find({name: { $in: song[0].instruments}})
