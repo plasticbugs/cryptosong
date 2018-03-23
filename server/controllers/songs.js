@@ -12,7 +12,10 @@ module.exports.editSong = (req, res) => {
 }
 
 module.exports.getAllSongs = (req, res) => {
-  Song.find().then( results => {
+  Song.find()
+  .populate('inkey')
+  .then( results => {
+    console.log(results[0])
     res.send(results);
   })
 }
