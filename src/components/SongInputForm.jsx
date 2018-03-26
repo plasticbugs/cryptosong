@@ -155,10 +155,7 @@ export default class SongInputForm extends Component {
       })
       instruments.push(selected)
     }
-    // console.log(instruments)
     let song = Object.assign({}, this.state.song);
-    // let instruments = Object.assign([], song.instruments)
-    // instruments.push(selected);
     song.instruments = instruments;
     this.setState({song});
   }

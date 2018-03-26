@@ -9,9 +9,17 @@ module.exports.newSong = (req, res) => {
 }
 
 module.exports.editSong = (req, res) => {
-  
-  console.log(req.body);
-  res.send(req.body.title)
+  let newData = req.body;
+  newData.beard = newData.beard._id;
+  newData.location = newData.location._id;
+  newData.topic = newData.topic._id;
+  newData.inkey = newData.inkey._id;
+  newData.instruments = newData.instruments.map(instrument => {
+    return instrument._id;
+  })
+  Models.Song.findOneAndUpdate({_id: req.body._id}, newData, (err, results) => {
+    res.send(results);
+  })
 }
 
 module.exports.getAllSongs = (req, res) => {
