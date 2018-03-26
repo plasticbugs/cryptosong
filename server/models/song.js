@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-// const Instrument = mongoose.model('Instrument', {name: String, image: String});
-const Inkey = mongoose.model('Inkey', {name: String, image: String});
-const Topic = mongoose.model('Topic', {name: String, image: String});
-const Beard = mongoose.model('Beard', {name: String, image: String});
-const City = mongoose.model('Location', {name: String, image: String});
+const Models = require('./index.js');
 
 const songSchema = new Schema({
   number: Number,
