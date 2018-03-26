@@ -35,6 +35,18 @@ module.exports.getAllSongs = (req, res) => {
   })
 }
 
+module.exports.getSongCount = (req, res) => {
+  Models.Song.totalSongs()
+  .then(number => {
+    // console.log(number)
+    res.send({number});
+  })
+  .catch(err => {
+    // console.log(err)
+    res.send(err);
+  })
+}
+
 module.exports.getSong = (req, res) => {
   Models.Song.find({number: parseInt(req.query.id)})
   .populate('instruments')

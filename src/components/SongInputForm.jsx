@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import AlbumCanvas from './AlbumCanvas.jsx';
 
+const GENESIS = '1/1/2009';
 
 export default class SongInputForm extends Component {
 
@@ -25,7 +26,7 @@ export default class SongInputForm extends Component {
       location: [],
       beard: [],
       song: {
-        number: '',
+        number: this.datediff(GENESIS, moment().format('MM/DD/YYYY')),
         title: '',
         date: moment(),
         mins: '',
@@ -47,6 +48,18 @@ export default class SongInputForm extends Component {
     this.setUpDropdowns =       this.setUpDropdowns.bind(this);
     this.getTagImages =         this.getTagImages.bind(this);
     this.getInstrumentNames =   this.getInstrumentNames.bind(this);
+  }
+
+  datediff(first, second) {
+    const parseDate = (str) => {
+      var mdy = str.split('/');
+      return new Date(mdy[2], mdy[0]-1, mdy[1]);
+    }
+    first = parseDate(first);
+    second = parseDate(second);
+    // Take the difference between the dates and divide by milliseconds per day.
+    // Round to nearest whole number to deal with DST.
+    return Math.round((second-first)/(1000*60*60*24)) + 1;
   }
 
   getInstrumentNames() {
@@ -98,7 +111,13 @@ export default class SongInputForm extends Component {
     } else {
       axios.get('/api/options')
       .then(response => {
-        this.setUpDropdowns(response.data, ()=>{});
+        this.setUpDropdowns(response.data, ()=>{
+          // axios.get('/api/songs/count')
+          // .then(response => {
+          //   let song = Object.assign({}, this.state.song, {number: response.data.number + 1});
+          //   this.setState({song});
+          // })
+        });
       })
     }
 
@@ -122,7 +141,9 @@ export default class SongInputForm extends Component {
   }
 
   handleDateChange(date) {
-    let song = Object.assign({}, this.state.song, {date})
+    let selected = moment(date).format('MM/DD/YYYY');
+    let number = this.datediff(GENESIS, selected)
+    let song = Object.assign({}, this.state.song, {date, number})
     this.setState({
       song
     });

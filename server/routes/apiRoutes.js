@@ -11,7 +11,10 @@ router.route('/song')
 router.route('/songs')
   .get(songController.getAllSongs);
 
+router.route('/songs/count')
+  .get(songController.getSongCount);
+
 router.route('/options')
   .get(optionsController.getAllOptions)
-  
+
 module.exports = router;
