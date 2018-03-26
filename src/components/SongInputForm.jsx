@@ -45,7 +45,7 @@ export default class SongInputForm extends Component {
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.getInstrumentNames = this.getInstrumentNames.bind(this);
     this.setUpDropdowns = this.setUpDropdowns.bind(this);
-    // this.setUpCanvas = this.setUpCanvas.bind(this);
+    this.getTagImages = this.getTagImages.bind(this);
   }
 
   formatSong(songData) {
@@ -58,6 +58,17 @@ export default class SongInputForm extends Component {
       return instrument.name;
     })
     return song;
+  }
+
+  getTagImages() {
+    if (this.state.song) {
+      return ([
+        this.state.song.inkey.image,
+        this.state.song.beard.image,
+      ])
+    } else {
+      return [];
+    }
   }
 
   componentWillMount() {
@@ -268,7 +279,7 @@ export default class SongInputForm extends Component {
                 </Form>
             </Grid.Column>
             <Grid.Column>
-              {/* <AlbumCanvas images={this.state.song.images}/> */}
+              <AlbumCanvas images={this.getTagImages()}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
