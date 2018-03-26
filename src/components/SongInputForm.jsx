@@ -26,7 +26,7 @@ export default class SongInputForm extends Component {
       location: [],
       beard: [],
       song: {
-        number: this.datediff(GENESIS, moment().format('MM/DD/YYYY')),
+        number: this.dateDiff(GENESIS, moment().format('MM/DD/YYYY')),
         title: '',
         date: moment(),
         mins: '',
@@ -50,7 +50,7 @@ export default class SongInputForm extends Component {
     this.getInstrumentNames =   this.getInstrumentNames.bind(this);
   }
 
-  datediff(first, second) {
+  dateDiff(first, second) {
     const parseDate = (str) => {
       var mdy = str.split('/');
       return new Date(mdy[2], mdy[0]-1, mdy[1]);
@@ -142,7 +142,7 @@ export default class SongInputForm extends Component {
 
   handleDateChange(date) {
     let selected = moment(date).format('MM/DD/YYYY');
-    let number = this.datediff(GENESIS, selected)
+    let number = this.dateDiff(GENESIS, selected)
     let song = Object.assign({}, this.state.song, {date, number})
     this.setState({
       song

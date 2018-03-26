@@ -3,7 +3,7 @@ const Location = require('./location.js');
 const Inkey = require('./inkey.js');
 const Topic = require('./topic.js');
 const Instrument = require('./instrument.js');
-const Song = require('./song.js');
+import Song from './song.js';
 
 module.exports = {
   Beard,

@@ -1,5 +1,6 @@
 const db = require('../../db-config')
 const Models = require('../models/index.js');
+// const totalSongs = require('../models/song.js').totalSongs;
 // const Song = require('../models/song.js');
 // const Instrument = require('../models/instrument.js');
 

@@ -21,7 +21,6 @@ const songSchema = new Schema({
 
 const Song = mongoose.model('Song', songSchema);
 
-
 module.exports.totalSongs = () => {
   return new Promise((resolve, reject) => {
     Song.count({}, (err, number) => {
@@ -34,4 +33,4 @@ module.exports.totalSongs = () => {
   })
 }
 
-exports.default = Song;
+export default Song;

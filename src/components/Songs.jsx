@@ -13,7 +13,6 @@ export default class Songs extends Component {
   componentDidMount() {
     axios.get('/api/songs')
     .then(songs => {
-      console.log(songs.data)
       this.setState({songs: songs.data})
     })
     // console.log(randomColor())
