@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Grid, Segment, Radio, Input, Header, Form, Select, Button, Dropdown } from 'semantic-ui-react';
+import { Transition, Message, Container, Grid, Segment, Radio, Input, Header, Form, Select, Button, Dropdown, Popup } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
@@ -13,6 +13,7 @@ export default class SongInputForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isOpen: false,
       inkeyOptions: [{key:"",text:"",value:""}],
       beardOptions: [{key:"",text:"",value:""}],
       instrumentOptions: [{key:"",text:"",value:""}],
@@ -163,8 +164,12 @@ export default class SongInputForm extends Component {
 
   handleSubmit() {
     if (this.props.editing) {
+      // this.setState({isOpen: true})
       axios.put('/api/song', this.state.song)
       .then(response => {
+        this.setState({isOpen: true}, ()=> {
+          setTimeout(()=>{this.setState({isOpen: false})}, 3000)
+        })
         console.log(response)
       })
       return;
@@ -184,6 +189,13 @@ export default class SongInputForm extends Component {
     return (
       <Header size='large' style={{marginTop: '2em'}}>Add New Song</Header>
     )
+  }
+
+  renderSubmitButton() {
+    if (this.props.editing) {
+      return <Button type='submit'>Save Changes</Button>
+    }
+    return <Button type='submit'>Submit</Button>
   }
 
   render() {
@@ -315,11 +327,20 @@ export default class SongInputForm extends Component {
                       onChange={this.handleDropdownChange}
                     />
                   </Form.Field>
-                  <Button type='submit'>Submit</Button>
+                  {this.renderSubmitButton()}
                 </Form>
             </Grid.Column>
             <Grid.Column>
-              <div style={{position: 'fixed', marginTop: '3em'}}><AlbumCanvas images={this.getTagImages()}/></div>
+              <div style={{position: 'fixed', marginTop: '3em'}}>
+                <AlbumCanvas images={this.getTagImages()}/>
+                <Transition visible={this.state.isOpen} animation='scale' duration={400}>
+                  <Message
+                    success
+                    header='Song Updated'
+                    content='All changes have been saved'
+                  />
+                </Transition>
+              </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
