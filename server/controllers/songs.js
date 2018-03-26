@@ -1,6 +1,7 @@
 const db = require('../../db-config')
-const Song = require('../models/song.js');
-const Instrument = require('../models/instrument.js');
+const Models = require('../models/index.js');
+// const Song = require('../models/song.js');
+// const Instrument = require('../models/instrument.js');
 
 module.exports.newSong = (req, res) => {
   console.log(req.body)
@@ -12,7 +13,7 @@ module.exports.editSong = (req, res) => {
 }
 
 module.exports.getAllSongs = (req, res) => {
-  Song.find()
+  Models.Song.find()
   .populate('inkey')
   .then( results => {
     console.log(results[0])
@@ -21,7 +22,7 @@ module.exports.getAllSongs = (req, res) => {
 }
 
 module.exports.getSong = (req, res) => {
-  Song.find({number: parseInt(req.query.id)})
+  Models.Song.find({number: parseInt(req.query.id)})
   .populate('instruments')
   .populate('beard')
   .populate('topic')
@@ -29,7 +30,17 @@ module.exports.getSong = (req, res) => {
   .populate('location')
   // .exec()
   .then(song => {
-    console.log(song)
+    async function getAllTags() {
+      let instrument = await Models.Instrument.find();
+      let beard = await Models.Beard.find();
+      let location = await Models.Location.find();
+      let topic = await Models.Topic.find();
+      let inkey = await Models.Inkey.find();
+      console.log(topic)
+      res.send({instrument, beard, location, topic, inkey, song: song[0]});
+    }
+    getAllTags();
+    // console.log(song)
     // Instrument.find({name: { $in: song[0].instruments}})
     // .then(results => {
     //   console.log(results)
@@ -38,6 +49,5 @@ module.exports.getSong = (req, res) => {
     // .then(results => {
     //   console.log(results)
     // })
-    res.send(song);
   })
 }
