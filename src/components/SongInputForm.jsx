@@ -95,7 +95,13 @@ export default class SongInputForm extends Component {
         });
 
       })
+    } else {
+      axios.get('/api/options')
+      .then(response => {
+        this.setUpDropdowns(response.data, ()=>{});
+      })
     }
+
   }
 
   setUpDropdowns({beard, instrument, inkey, location, topic}, cb) {

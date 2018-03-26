@@ -17,6 +17,10 @@ module.exports.editSong = (req, res) => {
   newData.instruments = newData.instruments.map(instrument => {
     return instrument._id;
   })
+  newData.length = newData.mins * 60 + newData.secs;
+  console.log(typeof newData.mins, newData.mins, typeof newData.secs, newData.secs)
+  // console.log(typeof newData.secs)
+  console.log(newData.length)
   Models.Song.findOneAndUpdate({_id: req.body._id}, newData, (err, results) => {
     res.send(results);
   })
@@ -46,7 +50,6 @@ module.exports.getSong = (req, res) => {
       let location = await Models.Location.find();
       let topic = await Models.Topic.find();
       let inkey = await Models.Inkey.find();
-      console.log(topic)
       res.send({instrument, beard, location, topic, inkey, song: song[0]});
     }
     getAllTags();
