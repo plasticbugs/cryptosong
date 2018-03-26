@@ -22,6 +22,6 @@ export default class SongImage extends Component {
   }
 
   render() {
-    return <Image image={this.state.image} top={0} left={0} />;
+    return <Image key={this.state.image} image={this.state.image} top={0} left={0} />;
   }
 }
