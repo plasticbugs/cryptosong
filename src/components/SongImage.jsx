@@ -11,7 +11,6 @@ export default class SongImage extends Component {
   componentDidMount() {
     const image = new window.Image();
     image.src = this.props.imageSrc;
-    console.log(image.src)
     image.onload = () => {
       // setState will redraw layer
       // because "image" property is changed

@@ -9,7 +9,9 @@ module.exports.newSong = (req, res) => {
 }
 
 module.exports.editSong = (req, res) => {
-
+  
+  console.log(req.body);
+  res.send(req.body.title)
 }
 
 module.exports.getAllSongs = (req, res) => {

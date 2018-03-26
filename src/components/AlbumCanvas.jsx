@@ -20,7 +20,6 @@ export default class AlbumCanvas extends Component {
             shadowBlur={2}
           />
           {this.props.images.map(image => {
-            console.log(image)
             return <SongImage key={image} imageSrc={`/images/${image}`} />
           })}
         </Layer>
