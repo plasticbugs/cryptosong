@@ -279,7 +279,7 @@ export default class SongInputForm extends Component {
                 </Form>
             </Grid.Column>
             <Grid.Column>
-              <AlbumCanvas images={this.getTagImages()}/>
+              <div style={{position: 'fixed', marginTop: '3em'}}><AlbumCanvas images={this.getTagImages()}/></div>
             </Grid.Column>
           </Grid.Row>
         </Grid>

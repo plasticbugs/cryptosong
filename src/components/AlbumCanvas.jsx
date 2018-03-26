@@ -9,7 +9,7 @@ export default class AlbumCanvas extends Component {
 
   render() {
     return (
-      <Stage width={500} height={500} >
+      <Stage width={500} height={500}>
         <Layer>
           <Rect
             x={0}
