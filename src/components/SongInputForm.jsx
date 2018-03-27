@@ -40,6 +40,9 @@ export default class SongInputForm extends Component {
         description: '',
         acousticproduced: '',
         instruments: [],
+        press: '',
+        comments: '',
+        firsts: '',
       },
     }
     this.handleChange =         this.handleChange.bind(this);
@@ -237,7 +240,10 @@ export default class SongInputForm extends Component {
       videoid,
       description,
       acousticproduced,
-      instruments
+      instruments,
+      press,
+      comments,
+      firsts,
     } = this.state.song
     return (
       <Container>
@@ -360,6 +366,18 @@ export default class SongInputForm extends Component {
                       }}
                       onChange={this.handleDropdownChange}
                     />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Firsts</label>
+                    <Form.Input name='firsts' placeholder='Any firsts?' value={firsts} onChange={this.handleChange} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Comments</label>
+                    <Form.Input name='comments' placeholder='Add Comment' value={comments} onChange={this.handleChange} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Press</label>
+                    <Form.Input name='press' placeholder='Press link' value={press} onChange={this.handleChange} />
                   </Form.Field>
                   {this.renderSubmitButton()}
                 </Form>

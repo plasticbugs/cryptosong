@@ -16,13 +16,23 @@ const songSchema = new Schema({
   videoid: String,
   description: String,
   acousticproduced: String,
-  firsts: String
+  firsts: String,
+  comments: String,
+  press: String,
 });
 
 const Song = mongoose.model('Song', songSchema);
 
 const getLength = (mins, secs) => {
-  return Number.parseInt(mins) * 60 + Number.parseInt(secs);
+  if (mins && secs) {
+    return Number.parseInt(mins) * 60 + Number.parseInt(secs);
+  } else if (mins) {
+    return Number.parseInt(mins) * 60;
+  } else if (secs) {
+    return Number.parseInt(secs);
+  } else {
+    return undefined;
+  }
 }
 
 module.exports.getSongByNumber = (number) => {
@@ -60,6 +70,8 @@ module.exports.updateSong = (songData) => {
       return instrument._id;
     })
     songData.length = getLength(songData.mins, songData.secs);
+
+    
     Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
       if (err) {
         reject(err);

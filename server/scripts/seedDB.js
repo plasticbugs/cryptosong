@@ -2868,7 +2868,9 @@ const Song = mongoose.model('Song', {
   videoid: String,
   description: String,
   acousticproduced: String,
-  firsts: String
+  firsts: String,
+  comments: String,
+  press: String,
 });
 
 
@@ -3039,6 +3041,7 @@ async function insertSongs(array) {
       acousticproduced: array[i].acousticproduced,
       firsts: array[i].firsts,
       comments: array[i].comments,
+      press: array[i].press,
       inkey: upcasedKey,
       beard,
       instruments,
