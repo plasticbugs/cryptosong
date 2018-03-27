@@ -21,7 +21,7 @@ module.exports.newSong = (req, res) => {
 
 module.exports.editSong = (req, res) => {
   let newData = req.body;
-  console.log(newData)
+  // console.log(newData)
   Song.updateSong(newData)
   .then( results => {
     res.send(results)

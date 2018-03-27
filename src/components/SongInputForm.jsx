@@ -103,10 +103,16 @@ export default class SongInputForm extends Component {
         console.log(response.data)
         let song = this.formatSong(response.data.song);
         this.handleDateChange(song.date);
+        console.log(song)
         this.setUpDropdowns(response.data, () => {
-          this.setState({song});
+          this.setState(prevState => ({
+            ...prevState,
+            song: {
+              ...prevState.song,
+              ...song
+            }
+          }))
         });
-
       })
     } else {
       axios.get('/api/options')
@@ -188,11 +194,26 @@ export default class SongInputForm extends Component {
     this.setState({song});
   }
 
+  cleanSong(obj) {
+    for (let key in obj) {
+      // console.log(obj, key, obj[key], obj[key].name)
+      if (typeof obj[key] === 'object') {
+        if (obj[key].name === '') {
+          console.log('empty')
+          delete obj[key]
+        }
+      }
+    }
+    return obj;
+  }
 
   handleSubmit() {
+    let song = Object.assign({}, this.state.song);
+    song = this.cleanSong(song);
+    console.log('SONG: ', song);
     if (this.props.editing) {
       // this.setState({isOpen: true})
-      axios.put('/api/song', this.state.song)
+      axios.put('/api/song', song)
       .then(response => {
         this.setState({isOpen: true}, ()=> {
           setTimeout(()=>{this.setState({isOpen: false})}, 3000)
@@ -201,7 +222,7 @@ export default class SongInputForm extends Component {
       })
       return;
     }
-    axios.post('/api/song', this.state.song)
+    axios.post('/api/song', song)
     .then(response => {
       console.log(response.data)
     })
