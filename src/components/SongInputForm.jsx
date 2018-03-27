@@ -75,7 +75,9 @@ export default class SongInputForm extends Component {
 
   formatSong(songData) {
     let song = Object.assign({}, songData);
-    song.date = moment(song.date);
+    if (song.date) {
+      song.date = moment(song.date);
+    }
     if (song.length) {
       song.secs = song.length % 60
       song.mins = Math.floor(song.length / 60);
@@ -95,6 +97,17 @@ export default class SongInputForm extends Component {
 
   componentDidMount() {
     if(this.props.match.params.id) {
+      let number = Number.parseInt(this.props.match.params.id);
+      let date = moment(GENESIS).add(number - 1, 'days');
+      console.log(date.toString())
+      let nextState = {number, date}
+      this.setState(prevState => ({
+        ...prevState,
+        song: {
+          ...prevState.song,
+          ...nextState
+        }
+      }))
       axios.get('/api/song', {
         params:
           {
@@ -104,7 +117,9 @@ export default class SongInputForm extends Component {
       .then(response => {
         console.log(response.data)
         let song = this.formatSong(response.data.song);
-        this.handleDateChange(song.date);
+        if (song.date) {
+          this.handleDateChange(song.date);
+        }
         console.log(song)
         this.setUpDropdowns(response.data, () => {
           this.setState(prevState => ({

@@ -3030,10 +3030,13 @@ async function insertSongs(array) {
       topic = query[0].id
     }
 
+    let date = new Date(array[i].date);
+    date.setDate(date.getDate() + 1);
+
     let song = {
       number: array[i].number,
       title: array[i].title,
-      date: new Date(array[i].date),
+      date,
       length: calcLength(array[i].length),
       videoid: array[i].videoid.slice(-11),
       tempo,
