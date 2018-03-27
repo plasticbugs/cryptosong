@@ -35,6 +35,7 @@ export default class SongInputForm extends Component {
         tempo: '',
         topic: {name: ''},
         beard: {name: ''},
+        location: {name: ''},
         videoid: '',
         description: '',
         acousticproduced: '',
@@ -74,10 +75,6 @@ export default class SongInputForm extends Component {
     song.date = moment(song.date);
     song.secs = song.length % 60
     song.mins = Math.floor(song.length / 60);
-    // song.instruments = song.instruments.map(instrument => {
-    //   // song.images.push(instrument.image)
-    //   return instrument.name;
-    // })
     return song;
   }
 
@@ -236,6 +233,7 @@ export default class SongInputForm extends Component {
       tempo,
       topic,
       beard,
+      location,
       videoid,
       description,
       acousticproduced,
@@ -266,10 +264,10 @@ export default class SongInputForm extends Component {
                   <Form.Group inline>
                     <Form.Field>
                       <label>Length</label>
-                      <Input name='mins' placeholder='MM' value={mins} onChange={this.handleChange} />
+                      <Input name='mins' type='number' placeholder='MM' value={mins} onChange={this.handleChange} />
                     </Form.Field>
                     <Form.Field>
-                      <Input name='secs' placeholder='SS' value={secs} onChange={this.handleChange} />
+                      <Input name='secs' type='number' placeholder='SS' value={secs} onChange={this.handleChange} />
                     </Form.Field>
                   </Form.Group>
                   <Form.Field
@@ -279,6 +277,15 @@ export default class SongInputForm extends Component {
                     name='inkey'
                     options={this.state.inkeyOptions}
                     placeholder='Choose Key'
+                    onChange={this.handleChange}
+                  />
+                  <Form.Field
+                    control={Select}
+                    label='Location'
+                    value={location.name}
+                    name='location'
+                    options={this.state.locationOptions}
+                    placeholder='Choose Location'
                     onChange={this.handleChange}
                   />
                   <Form.Field>
