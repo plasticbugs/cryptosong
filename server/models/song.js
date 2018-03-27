@@ -36,10 +36,10 @@ const getLength = (mins, secs) => {
 }
 
 const cleanObj = (obj) => {
+  obj = obj.toObject();
   for (let key in obj) {
     if (obj[key] === undefined || obj[key] === null) {
-      // console.log(key)
-      delete obj[key];
+      delete obj[key]
     }
   }
   // console.log(obj)
@@ -49,26 +49,28 @@ const cleanObj = (obj) => {
 module.exports.getSongByNumber = (number) => {
   return new Promise((resolve, reject) => {
     Song.find({number})
-    .populate('instruments')
-    .populate('beard')
-    .populate('topic')
-    .populate('inkey')
-    .populate('location')
+    // .populate('instruments')
+    // .populate('beard')
+    // .populate('topic')
+    // .populate('inkey')
+    // .populate('location')
     .then(song => {
       song = cleanObj(song[0]);
-      // console.log(song)
       (async function getAllTags() {
         let instrument = await Models.Instrument.find();
         let beard = await Models.Beard.find();
         let location = await Models.Location.find();
         let topic = await Models.Topic.find();
         let inkey = await Models.Inkey.find();
+        console.log(instrument, beard, location, topic, inkey, song)
         resolve({instrument, beard, location, topic, inkey, song});
       })();
 
     })
     .catch(err => {
-      reject(err);
+      if (err) {
+        reject(err);
+      }
     })
   })
 }
@@ -108,10 +110,11 @@ module.exports.updateSong = (songData) => {
 module.exports.insertSong = (newSong) => {
   console.log('inserting...')
   return new Promise((resolve, reject) => {
-    newSong.beard = newSong.beard._id;
-    newSong.location = newSong.location._id;
-    newSong.topic = newSong.topic._id;
-    newSong.inkey = newSong.inkey._id;
+    newSong = assignIDsToTags(newSong);
+    // newSong.beard = newSong.beard._id;
+    // newSong.location = newSong.location._id;
+    // newSong.topic = newSong.topic._id;
+    // newSong.inkey = newSong.inkey._id;
     newSong.instruments = newSong.instruments.map(instrument => {
       return instrument._id;
     })

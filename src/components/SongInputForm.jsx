@@ -76,8 +76,10 @@ export default class SongInputForm extends Component {
   formatSong(songData) {
     let song = Object.assign({}, songData);
     song.date = moment(song.date);
-    song.secs = song.length % 60
-    song.mins = Math.floor(song.length / 60);
+    if (song.length) {
+      song.secs = song.length % 60
+      song.mins = Math.floor(song.length / 60);
+    }
     return song;
   }
 
@@ -91,7 +93,7 @@ export default class SongInputForm extends Component {
     return [];
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if(this.props.match.params.id) {
       axios.get('/api/song', {
         params:
@@ -113,6 +115,9 @@ export default class SongInputForm extends Component {
             }
           }))
         });
+      })
+      .catch(err => {
+        console.log(err);
       })
     } else {
       axios.get('/api/options')
