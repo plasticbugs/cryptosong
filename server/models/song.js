@@ -42,18 +42,17 @@ const cleanObj = (obj) => {
       delete obj[key]
     }
   }
-  // console.log(obj)
   return obj;
 }
 
 module.exports.getSongByNumber = (number) => {
   return new Promise((resolve, reject) => {
     Song.find({number})
-    // .populate('instruments')
-    // .populate('beard')
-    // .populate('topic')
-    // .populate('inkey')
-    // .populate('location')
+    .populate('instruments')
+    .populate('beard')
+    .populate('topic')
+    .populate('inkey')
+    .populate('location')
     .then(song => {
       song = cleanObj(song[0]);
       (async function getAllTags() {
@@ -62,7 +61,6 @@ module.exports.getSongByNumber = (number) => {
         let location = await Models.Location.find();
         let topic = await Models.Topic.find();
         let inkey = await Models.Inkey.find();
-        console.log(instrument, beard, location, topic, inkey, song)
         resolve({instrument, beard, location, topic, inkey, song});
       })();
 
