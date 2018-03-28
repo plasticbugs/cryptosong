@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const songController = require('../controllers/songs')
 const optionsController = require('../controllers/options');
+const instrumentController = require('../controllers/instruments');
+
+router.route('/instruments')
+  .get(instrumentController.getInstruments)
+  .put(instrumentController.updateInstruments)
 
 router.route('/song')
   .get(songController.getSong)

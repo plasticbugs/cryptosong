@@ -74,9 +74,13 @@ export default class SongInputForm extends Component {
   }
 
   formatSong(songData) {
+    console.log('formatting song')
     let song = Object.assign({}, songData);
     if (song.date) {
-      song.date = moment(song.date);
+      let date = new Date(song.date);
+      date = (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear());
+      console.log(date)
+      song.date = moment(date, 'M/D/YYYY');
     }
     if (song.length) {
       song.secs = song.length % 60
@@ -86,19 +90,26 @@ export default class SongInputForm extends Component {
   }
 
   getTagImages() {
-    if (this.state.song.inkey.image && this.state.song.beard.image) {
-      return ([
-        this.state.song.inkey.image,
-        this.state.song.beard.image,
-      ])
-    }
-    return [];
+    let { inkey, beard, location, instruments, topic } = this.state.song;
+    let tags = [inkey, beard, location, topic]
+    let images = [];
+
+    tags.forEach(tag => {
+      if (tag.image) {
+        images.push(tag.image)
+      }
+    })
+    let instrumentImages = instruments.map(instrument => {
+      return instrument.image;
+    })
+    images = images.concat(instrumentImages);
+    return images;
   }
 
   componentDidMount() {
     if(this.props.match.params.id) {
       let number = Number.parseInt(this.props.match.params.id);
-      let date = moment(GENESIS).add(number - 1, 'days');
+      let date = moment(GENESIS, 'M-D-YYYY').add(number - 1, 'days');
       console.log(date.toString())
       let nextState = {number, date}
       this.setState(prevState => ({
