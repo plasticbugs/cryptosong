@@ -7,6 +7,7 @@
     "babel-node": "babel-node --presets env",
     "start": "nodemon --exec yarn run babel-node -- ./index.js",
     "build": "webpack --watch",
+    "build-and-start": "webpack && yarn start",
     "lint": "eslint ./ --ext .jsx --ext .js .",
     "seed": "node ./server/scripts/seedDB.js"
   },
