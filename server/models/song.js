@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Models = require('./index.js');
+const Models = require('./index.js')
 
 const songSchema = new Schema({
   number: Number,
@@ -67,6 +67,7 @@ module.exports.getSongByNumber = (number) => {
     })
     .catch(err => {
       if (err) {
+        console.log(err);
         reject(err);
       }
     })

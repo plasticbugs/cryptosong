@@ -50,9 +50,4 @@ module.exports.getSong = (req, res) => {
     console.log(result)
     res.send(result);
   })
-  // .catch(err => {
-  //   if (err) {
-  //     res.send({err});
-  //   }
-  // })
 }

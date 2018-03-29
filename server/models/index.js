@@ -1,7 +1,7 @@
-const Beard = require('./beard.js');
-const Location = require('./location.js');
-const Inkey = require('./inkey.js');
-const Topic = require('./topic.js');
+const Beard = require('./beard.js').Beard;
+const Location = require('./location.js').Location;
+const Inkey = require('./inkey.js').Inkey;
+const Topic = require('./topic.js').Topic;
 const Instrument = require('./instrument.js').Instrument;
 const Song = require('./song.js').Song;
 

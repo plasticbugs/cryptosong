@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import SongInputForm from './SongInputForm.jsx';
 import Songs from './Songs.jsx';
-import Instruments from './Instruments.jsx';
+import Collection from './Collection.jsx';
 
 const App = () => {
   return (
@@ -12,7 +12,11 @@ const App = () => {
         <Route path='/song/new' render={(props) => <SongInputForm {...props} />} />
         <Route path='/song/:id/edit' render={(props) => <SongInputForm editing={true} {...props} />} />
         <Route path='/songs' render={(props) => <Songs {...props} />} />
-        <Route path='/instruments' render={(props) => <Instruments {...props} />} />
+        <Route path='/instruments' render={(props) => <Collection {...props} apiCollectionPath="/api/instruments" collectionName="Instrument" />} />
+        <Route path='/topics' render={(props) => <Collection {...props} apiCollectionPath="/api/topics" collectionName="Topic" />} />
+        <Route path='/locations' render={(props) => <Collection {...props} apiCollectionPath="/api/locations" collectionName="Location" />} />
+        <Route path='/inkeys' render={(props) => <Collection {...props} apiCollectionPath="/api/inkeys" collectionName="Key" />} />
+        <Route path='/beards' render={(props) => <Collection {...props} apiCollectionPath="/api/beards" collectionName="Beard" />} />
       </Switch>
     </BrowserRouter>
   )

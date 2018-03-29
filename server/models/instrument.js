@@ -11,6 +11,7 @@ const Instrument = mongoose.model('Instrument', instrumentSchema);
 const getAll = () => {
   return new Promise((resolve, reject) => {
     Instrument.find({})
+    .sort([['_id', -1]])
     .then(results => {
       resolve(results);
     })
@@ -22,14 +23,27 @@ const getAll = () => {
   })
 }
 
+const deleteMany = (instruments) => {
+  console.log(instruments)
+  return new Promise((resolve, reject) => {
+    Instrument.remove({_id: {$in: instruments}})
+    .then( success => {
+      "removed a bunch"
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+      }
+    })
+  })
+}
+
 const updateAll = (instruments) => {
-  for (let i = 0; i < instruments.length; i++) {
-    console.log(instruments[i]._id)
-  }
   return new Promise((resolve, reject) => {
     const recurse = (array) => {
       if (!array.length) {
         return Instrument.find({})
+        .sort([['_id', -1]])
         .then(instruments => {
           resolve(instruments);
           return;
@@ -43,6 +57,7 @@ const updateAll = (instruments) => {
       if (num.match(/^[0-9a-fA-F]{24}$/)) {
         Instrument.findById(instrument._id)
         .then(doc => {
+          doc.name = instrument.name;
           doc.image = instrument.image;
           doc.save((err, updated) => {
             if (err) {
@@ -72,4 +87,4 @@ const updateAll = (instruments) => {
   })
 }
 
-module.exports = { Instrument, getAll, updateAll }
+module.exports = { Instrument, getAll, updateAll, deleteMany }

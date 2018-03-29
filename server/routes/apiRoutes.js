@@ -3,10 +3,36 @@ const router = express.Router();
 const songController = require('../controllers/songs')
 const optionsController = require('../controllers/options');
 const instrumentController = require('../controllers/instruments');
+const beardController = require('../controllers/beards');
+const topicController = require('../controllers/topics');
+const inkeyController = require('../controllers/inkeys');
+const locationController = require('../controllers/locations');
 
 router.route('/instruments')
   .get(instrumentController.getInstruments)
   .put(instrumentController.updateInstruments)
+  .delete(instrumentController.deleteInstruments)
+
+router.route('/beards')
+  .get(beardController.getBeards)
+  .put(beardController.updateBeards)
+  .delete(beardController.deleteBeards)
+
+router.route('/topics')
+  .get(topicController.getTopics)
+  .put(topicController.updateTopics)
+  .delete(topicController.deleteTopics)
+    
+
+router.route('/inkeys')
+  .get(inkeyController.getInkeys)
+  .put(inkeyController.updateInkeys)
+  .delete(inkeyController.deleteInkeys)
+
+router.route('/locations')
+  .get(locationController.getLocations)
+  .put(locationController.updateLocations)
+  .delete(locationController.deleteLocations)
 
 router.route('/song')
   .get(songController.getSong)

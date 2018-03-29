@@ -8,7 +8,6 @@ module.exports.getInstruments = (req, res) => {
 }
 
 module.exports.updateInstruments = (req, res) => {
-  console.log(req.body.length)
   let instruments = req.body;
   Instrument.updateAll(instruments)
   .then(results => {
@@ -18,6 +17,20 @@ module.exports.updateInstruments = (req, res) => {
     if (err) {
       console.log(err)
       res.sendStatus(501);
+    }
+  })
+}
+
+module.exports.deleteInstruments = (req, res) => {
+  let instruments = req.query.delete;
+  Instrument.deleteMany(instruments)
+  .then(results => {
+    res.sendStatus(200);
+  })
+  .catch(err => {
+    if (err) {
+      console.log(err);
+      res.send(err)
     }
   })
 }

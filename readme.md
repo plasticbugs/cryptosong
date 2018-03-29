@@ -1,4 +1,35 @@
-How to run this application:
+# List of routes:
+### New & Edit Instruments, Locations, Keys, Topics, Beards:
+
+http://localhost:3000/instruments
+
+http://localhost:3000/locations
+
+http://localhost:3000/keys
+
+http://localhost:3000/topics
+
+http://localhost:3000/beards
+
+
+### New Song:
+
+http://localhost:3000/song/new
+
+
+### Edit Song:
+
+http://localhost:3000/song/SONG_NUMBER_HERE/edit
+
+*example:* http://localhost:3000/song/25/edit
+
+
+### All Songs:
+
+http://localhost:3000/songs
+
+
+# How to run this application:
 
 Install Hombrew from http://brew.sh
 
@@ -17,6 +48,14 @@ You need MongoDB, too:
 ```
 brew install mongodb
 ```
+
+Make a directory called 'data' on your root, and a directory inside that called 'db', so MongoDB has a default place to store DB files
+**If this directory already exists, don't recreate it!**
+
+```
+sudo mkdir -p /data/db
+```
+
 
 Now, navigate to where you want to download this code and clone this repo:
 ```
@@ -39,7 +78,7 @@ In another terminal window, run MongoDB:
 mongod
 ```
 
-Once the MongoDB daemon is running, you can seed the database in another terminal window. Make sure you're inside the 'cryptosong' directory when you run this command:
+Once the MongoDB daemon is running, you can seed the database in another terminal window. You can re-run this seed file at any time to reset the database to the original dataset based on the Google Spreadsheet. Make sure you're inside the 'cryptosong' directory when you run this command:
 ```
 yarn run seed
 ```
@@ -48,20 +87,6 @@ After the seed file runs and exits successfully (you'll see a bunch of stuff scr
 ```
 yarn start
 ```
-
-Once the DB is seeded, view all the songs in the database at:
-http://127.0.0.1:3000/songs
-
-To view the 'new song' form, visit:
-http://127.0.0.1:3000/song/new
-
-To edit a song, visit:
-
-http://localhost:3000/song/SONG_NUMBER_HERE/edit
-
-for example:
-
-http://localhost:3000/song/25/edit
 
 When you want to stop the build process or the web server:
 
