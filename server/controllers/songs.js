@@ -1,6 +1,5 @@
 const db = require('../../db-config')
-const Models = require('../models/index.js');
-import Song from '../models/song';
+const Song = require('../models/song').Song;
 // const totalSongs = require('../models/song.js').totalSongs;
 // const Song = require('../models/song.js');
 // const Instrument = require('../models/instrument.js');
@@ -25,7 +24,7 @@ module.exports.editSong = (req, res) => {
 }
 
 module.exports.getAllSongs = (req, res) => {
-  Models.Song.find()
+  Song.find()
   .populate('inkey')
   .then( results => {
     res.send(results);
@@ -33,7 +32,7 @@ module.exports.getAllSongs = (req, res) => {
 }
 
 module.exports.getSongCount = (req, res) => {
-  Models.Song.totalSongs()
+  Song.totalSongs()
   .then(number => {
     res.send({number});
   })
