@@ -29,6 +29,26 @@ http://localhost:3000/song/SONG_NUMBER_HERE/edit
 http://localhost:3000/songs
 
 
+# What should I do to get the latest changes and start the app running again?
+
+Run these commands in your terminal (explanation below):
+
+1. ```git pull origin master```
+2. ```yarn```
+3. If the Mongo server isn't currently running, run: ```mongod```
+4. ```yarn run seed```
+5. ```yarn run build-and-start```
+6. Visit http://localhost:3000/ in your browser
+
+What do these things do?
+
+1. Gets the latest master version of the code base
+2. Installs any newly added packages/modules
+3. Runs the Mongo daemon, a service that lets you connect to the database. If it's already running, this command will leave the service running and will exit with an error message.
+4. This drops the development DB and restores the dataset to mirror what's in the Google Sheet
+5. This both transpiles the React code (JSX/ES6) into JavaScript that the browser can execute and runs a Node-based web server that your web browser can connect to.
+6. This is you typing a URL into your browser.
+
 # How to run this application:
 
 Install Hombrew from http://brew.sh
