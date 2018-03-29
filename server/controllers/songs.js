@@ -1,12 +1,13 @@
 const db = require('../../db-config')
-const Song = require('../models/song').Song;
+// const Song = require('../models/song').Song;
+const SongModel = require('../models/song');
 // const totalSongs = require('../models/song.js').totalSongs;
 // const Song = require('../models/song.js');
 // const Instrument = require('../models/instrument.js');
 
 module.exports.newSong = (req, res) => {
   let newSong = req.body;
-  Song.insertSong(newSong)
+  SongModel.insertSong(newSong)
   .then(result => {
     res.send(result)
   })
@@ -17,14 +18,14 @@ module.exports.newSong = (req, res) => {
 
 module.exports.editSong = (req, res) => {
   let newData = req.body;
-  Song.updateSong(newData)
+  SongModel.updateSong(newData)
   .then( results => {
     res.send(results)
   })
 }
 
 module.exports.getAllSongs = (req, res) => {
-  Song.find()
+  SongModel.Song.find()
   .populate('inkey')
   .then( results => {
     res.send(results);
@@ -32,7 +33,7 @@ module.exports.getAllSongs = (req, res) => {
 }
 
 module.exports.getSongCount = (req, res) => {
-  Song.totalSongs()
+  SongModel.totalSongs()
   .then(number => {
     res.send({number});
   })
@@ -44,7 +45,7 @@ module.exports.getSongCount = (req, res) => {
 module.exports.getSong = (req, res) => {
   let number = parseInt(req.query.id);
   console.log(number)
-  Song.getSongByNumber(number)
+  SongModel.getSongByNumber(number)
   .then(result => {
     console.log(result)
     res.send(result);
