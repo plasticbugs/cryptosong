@@ -123,14 +123,6 @@ export default class Collection extends Component {
     })
   }
 
-  renderSaveButton() {
-    if (this.state.isSaving) {
-      return <Button disabled type='submit'>Saving...</Button>
-    } else {
-      return <Button type='submit'>Save Changes</Button>
-    }
-  }
-
   handleDelete(e, id) {
     e.preventDefault();
     console.log(id);
@@ -159,7 +151,7 @@ export default class Collection extends Component {
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                {this.renderSaveButton()}
+                <Button disabled={this.state.isSaving} type='submit'>Save Changes</Button>
               </Grid.Column>
               <Grid.Column>
               <Transition onShow={()=>{setTimeout(()=>{this.setState({successIsOpen: false})}, 2000)}} visible={successIsOpen} duration={400} animation='fade' >
