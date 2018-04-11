@@ -62,6 +62,21 @@ module.exports.getSongByNumber = (number) => {
     .populate('topic')
     .populate('inkey')
     .populate('location')
+    .then(results => {
+      const song = results[0];
+      resolve(song)
+    })
+  })
+}
+
+module.exports.getSongByNumberWithAllPossibleTags = (number) => {
+  return new Promise((resolve, reject) => {
+    Song.find({number})
+    .populate('instruments')
+    .populate('beard')
+    .populate('topic')
+    .populate('inkey')
+    .populate('location')
     .then(song => {
       song = cleanObj(song[0]);
       (async function getAllTags() {
@@ -157,6 +172,21 @@ module.exports.insertSong = (newSong) => {
       }
       console.log('it saved');
       resolve('OK');
+    })
+  })
+}
+
+module.exports.updateTagsOnSongs = (newTagData) => {
+  return new Promise((resolve, reject) => {
+    Song.find({"tags._id": newTagData._id})
+    .then(results => {
+      results.forEach(song => {
+        let tagDoc = song.tags.id(newTagData._id);
+        tagDoc.name = newTagData.name;
+        tagDoc.image = newTagData.image;
+        song.save()
+      })
+      resolve();
     })
   })
 }
