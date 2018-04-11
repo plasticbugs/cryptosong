@@ -42,12 +42,17 @@ module.exports.getSongCount = (req, res) => {
   })
 }
 
-module.exports.getSong = (req, res) => {
-  let number = parseInt(req.query.id);
-  console.log(number)
-  SongModel.getSongByNumber(number)
+module.exports.getSongWithTags = (req, res) => {
+  const number = parseInt(req.query.id);
+  SongModel.getSongByNumberWithAllPossibleTags(number)
   .then(result => {
     // console.log(result)
     res.send(result);
   })
+}
+
+module.exports.getSongByID = (req, res) => {
+  const songNum = req.params.id;
+  SongModel.getSongByNumber(songNum)
+  .then(song => res.send(song))
 }
