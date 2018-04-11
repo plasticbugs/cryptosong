@@ -4005,7 +4005,7 @@ const gatherFields = (array) => {
         uniques.keys.collection.push(upcase);
       }
       if (song.tags) {
-        let tags = song.tags.toLowerCase().replace('\n', '').split(', ').map(tag => tag.trim())
+        let tags = song.tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim())
         uniques.tags.collection = uniques.tags.collection.concat(tags)
       }
     })
@@ -4182,7 +4182,7 @@ async function insertSongs(array) {
     
     let tagNames = [];
     if (array[i].tags) {
-      tagNames =  array[i].tags.toLowerCase().replace('\n', '').split(', ').map(tag => tag.trim())
+      tagNames =  array[i].tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim())
     }
 
     let song = {
