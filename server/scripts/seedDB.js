@@ -4016,18 +4016,25 @@ const gatherFields = (array) => {
 const insertUniques = (obj) => {
   return new Promise((resolve, reject) => {
     let keyArray = Object.keys(obj).slice();
+    var uniqueBar = new ProgressBar('  inserting uniques [:bar] :percent', {
+      complete: '=',
+      incomplete: ' ',
+      width: 40,
+      total: keyArray.length
+    });
+
 
     const recurse = (array) => {
       if (array.length === 0) {
         resolve();
         return;
       }
+      uniqueBar.tick(1)
       let key = array.shift();
       if (key.length) {
         let dict = {};
         let counter = 0;
         
-        console.log(key, obj, obj[key])
         let arr = obj[key].collection
         let identifier = obj[key].name
         for (let i = 0; i < arr.length; i++) {
@@ -4084,7 +4091,7 @@ const insertTagsonSongsOnTags = () => {
       var bar = new ProgressBar('  doing tag insertion [:bar] :percent', {
         complete: '=',
         incomplete: ' ',
-        width: 20,
+        width: 40,
         total: len
       });
 
@@ -4130,8 +4137,15 @@ const insertTagsonSongsOnTags = () => {
 }
 
 async function insertSongs(array) {
+  var insertSongBar = new ProgressBar('  inserting songs [:bar] :percent', {
+    complete: '=',
+    incomplete: ' ',
+    width: 40,
+    total: array.length
+  });
   let records = [];
   for (let i = 0; i < array.length; i++) {
+    insertSongBar.tick(1);
     let instruments = [];
     if (array[i].instruments) {
       let instrumentArray = array[i].instruments.toLowerCase().replace('\n', '').split(', ');
@@ -4206,7 +4220,7 @@ async function insertSongs(array) {
     }
     records.push(song);
   }
-  console.log(records.length)
+  console.log(`Inserted ${records.length} songs`)
   Song.insertMany(records, (err, docs) => {
     if (err) {
       console.log(err);
