@@ -7,6 +7,7 @@ const beardController = require('../controllers/beards');
 const topicController = require('../controllers/topics');
 const inkeyController = require('../controllers/inkeys');
 const locationController = require('../controllers/locations');
+const tagController = require('../controllers/tags');
 
 router.route('/instruments')
   .get(instrumentController.getInstruments)
@@ -22,7 +23,12 @@ router.route('/topics')
   .get(topicController.getTopics)
   .put(topicController.updateTopics)
   .delete(topicController.deleteTopics)
-    
+
+router.route('/tags')
+  .post(tagController.saveNewTag)
+  .get(tagController.getTags)
+  .put(tagController.updateTags)
+  .delete(tagController.deleteTags)
 
 router.route('/inkeys')
   .get(inkeyController.getInkeys)
