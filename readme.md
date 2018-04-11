@@ -13,6 +13,11 @@ http://localhost:3000/beards
 
 http://localhost:3000/tags
 
+## Show Song
+
+http://localhost:3000/song/:id
+
+*example:* http://localhost:3000/song/25
 
 ## New Song:
 
