@@ -1,5 +1,5 @@
 # List of routes:
-### New & Edit Instruments, Locations, Keys, Tags, Topics, Beards:
+## New & Edit Instruments, Locations, Keys, Tags, Topics, Beards:
 
 http://localhost:3000/instruments
 
@@ -14,21 +14,32 @@ http://localhost:3000/beards
 http://localhost:3000/tags
 
 
-### New Song:
+## New Song:
 
 http://localhost:3000/song/new
 
 
-### Edit Song:
+## Edit Song:
 
 http://localhost:3000/song/SONG_NUMBER_HERE/edit
 
 *example:* http://localhost:3000/song/25/edit
 
 
-### All Songs:
+## All Songs:
 
 http://localhost:3000/songs
+
+
+# API Routes:
+
+## All api routes are prefixed with ```api/```.
+
+Some routes you may find useful:
+
+```GET /api/song/:id``` ===> returns song data by song number
+
+```GET /api/tag/:tag_name``` => returns an array of songs that match the provided tag
 
 
 # What should I do to get the latest changes and start the app running again?
@@ -112,4 +123,4 @@ yarn start
 
 When you want to stop the build process or the web server:
 
-**Control + C**
+**Control + C** in your terminal window
