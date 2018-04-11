@@ -17,6 +17,7 @@ const App = () => {
         <Route path='/locations' render={(props) => <Collection {...props} apiCollectionPath="/api/locations" collectionName="Location" />} />
         <Route path='/inkeys' render={(props) => <Collection {...props} apiCollectionPath="/api/inkeys" collectionName="Key" />} />
         <Route path='/beards' render={(props) => <Collection {...props} apiCollectionPath="/api/beards" collectionName="Beard" />} />
+        <Route path='/tags' render={(props) => <Collection {...props} apiCollectionPath="/api/tags" collectionName="Tag" />} />
       </Switch>
     </BrowserRouter>
   )
