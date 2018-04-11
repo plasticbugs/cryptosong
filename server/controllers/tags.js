@@ -49,3 +49,12 @@ module.exports.deleteTags = (req, res) => {
   //   }
   // })
 }
+
+module.exports.getSongsForTag = (req, res) => {
+  let tagName = req.params.tagname;
+  console.log(tagName)
+  TagModel.getSongsForTag(tagName)
+  .then(results => {
+    res.send(results)
+  })
+}
