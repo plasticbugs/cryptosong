@@ -20,11 +20,13 @@ export default class SongInputForm extends Component {
       instrumentOptions: [{key:"",text:"",value:""}],
       topicOptions: [{key:"",text:"",value:""}],
       locationOptions: [{key:"",text:"",value:""}],
+      tagOptions: [{key:"",text:"",value:""}],
       instrument: [],
       inkey: [],
       topic: [],
       location: [],
       beard: [],
+      tag: [],
       song: {
         number: this.dateDiff(GENESIS, moment().format('MM/DD/YYYY')),
         title: '',
@@ -40,6 +42,7 @@ export default class SongInputForm extends Component {
         description: '',
         acousticproduced: '',
         instruments: [],
+        tags: [],
         press: '',
         comments: '',
         firsts: '',
@@ -49,8 +52,10 @@ export default class SongInputForm extends Component {
     this.handleDateChange =     this.handleDateChange.bind(this);
     this.handleSubmit =         this.handleSubmit.bind(this);
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    this.handleTagDropdownChange = this.handleTagDropdownChange.bind(this);
     this.setUpDropdowns =       this.setUpDropdowns.bind(this);
     this.getTagImages =         this.getTagImages.bind(this);
+    this.getTagNames =          this.getTagNames.bind(this);
     this.getInstrumentNames =   this.getInstrumentNames.bind(this);
   }
 
@@ -69,6 +74,14 @@ export default class SongInputForm extends Component {
   getInstrumentNames() {
     let names = this.state.song.instruments.map(instrument => {
       return instrument.name;
+    })
+    return names;
+  }
+
+  getTagNames() {
+    console.log(this.state.song)
+    let names = this.state.song.tags.map(tag => {
+      return tag.name;
     })
     return names;
   }
@@ -108,6 +121,7 @@ export default class SongInputForm extends Component {
 
   componentDidMount() {
     if(this.props.match.params.id) {
+      console.log(this.props.match.params.id)
       let number = Number.parseInt(this.props.match.params.id);
       let date = moment(GENESIS, 'M-D-YYYY').add(number - 1, 'days');
       console.log(date.toString())
@@ -160,8 +174,8 @@ export default class SongInputForm extends Component {
 
   }
 
-  setUpDropdowns({beard, instrument, inkey, location, topic}, cb) {
-    let tagArray = [{beard}, {instrument}, {inkey}, {location}, {topic}]
+  setUpDropdowns({beard, instrument, inkey, location, topic, tag}, cb) {
+    let tagArray = [{beard}, {instrument}, {inkey}, {location}, {topic}, {tag}]
     let options = {};
     tagArray.forEach(tag => {
       let optionArray = [];
@@ -172,7 +186,7 @@ export default class SongInputForm extends Component {
       let theKey = key + 'Options';
       options[theKey] = optionArray;
     })
-    this.setState({beard, instrument, inkey, location, topic, ...options}, () => {
+    this.setState({beard, instrument, inkey, location, topic, tag, ...options}, () => {
       cb();
     });
   }
@@ -212,14 +226,49 @@ export default class SongInputForm extends Component {
     }))
   }
 
+  handleTagDropdownChange(e, { name, value }, fullSong) {
+    let tags = [];
+    for (let i = 0; i < value.length; i++) {
+      let selected = this.state.tag.find( tag => {
+        return tag.name === value[i];
+      })
+      if (selected) {
+        tags.push(selected)
+      } else {
+        let newTag = {
+          _id: this.state.tag.length,
+          name: value[value.length - 1],
+          image: undefined,
+        }
+        tags.push(newTag)
+        this.setState({tag: [...this.state.tag, newTag]})
+      }
+    }
+
+    let song = Object.assign({}, this.state.song);
+    song.tags = tags;
+    this.setState({song});
+  }
+
   handleDropdownChange(e, { name, value }, fullSong) {
     let instruments = [];
     for (let i = 0; i < value.length; i++) {
       let selected = this.state.instrument.find( instrument => {
         return instrument.name === value[i];
       })
-      instruments.push(selected)
+      if (selected) {
+        instruments.push(selected)
+      } else {
+        let newInstrument = {
+          _id: this.state.instrument.length,
+          name: value[value.length - 1],
+          image: undefined,
+        }
+        instruments.push(newInstrument)
+        this.setState({instrument: [...this.state.instrument, newInstrument]})
+      }
     }
+
     let song = Object.assign({}, this.state.song);
     song.instruments = instruments;
     this.setState({song});
@@ -414,9 +463,31 @@ export default class SongInputForm extends Component {
                       options={this.state.instrumentOptions}
                       allowAdditions
                       onAddItem={(e, d)=> {
-                        this.state.instrumentOptions.push({key: d.value, text: d.value, value: d.value})
+                        this.setState({
+                          instrumentOptions: [{ key: d.value, text: d.value, value: d.value }, ...this.state.instrumentOptions],
+                        })
+                        // this.state.instrumentOptions.push({key: d.value, text: d.value, value: d.value})
                       }}
                       onChange={this.handleDropdownChange}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Tags</label>
+                    <Dropdown
+                      name='tags'
+                      search
+                      selection
+                      multiple
+                      value={this.getTagNames()}
+                      options={this.state.tagOptions}
+                      allowAdditions
+                      onAddItem={(e, d)=> {
+                        this.setState({
+                          tagOptions: [{ key: d.value, text: d.value, value: d.value }, ...this.state.tagOptions],
+                        })
+                        // this.state.tagOptions.push({key: d.value, text: d.value, value: d.value})
+                      }}
+                      onChange={this.handleTagDropdownChange}
                     />
                   </Form.Field>
                   <Form.Field>
