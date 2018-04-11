@@ -47,7 +47,7 @@ module.exports.getSong = (req, res) => {
   console.log(number)
   SongModel.getSongByNumber(number)
   .then(result => {
-    console.log(result)
+    // console.log(result)
     res.send(result);
   })
 }
