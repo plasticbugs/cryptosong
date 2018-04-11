@@ -43,16 +43,30 @@ const saveTagsAndSongs = (number, tag) => {
     .then(song => {
       song.tags.push(tag)
       song.save((err, savedSong) => {
-        tag.songs.push(song)
-        tag.save((err, success) => {
-          resolve()
-        })
+        const hasSong = tag.songs.id(song._id);
+        if (!hasSong) {
+          tag.songs.push(song)
+          tag.save(err => {
+            resolve()
+          })
+        } else {
+          resolve();
+        }
       })
     })
-    .catch(err => {
-      if (err) {
-        reject(err);
-      }
+    // .catch(err => {
+    //   if (err) {
+    //     reject(err);
+    //   }
+    // })
+  })
+}
+
+const getSongsForTag = (name) => {
+  return new Promise((resolve, reject) => {
+    Tag.find({name})
+    .then(results => {
+      resolve(results[0])
     })
   })
 }
@@ -65,15 +79,11 @@ const deleteTagsForSong = (forSongId) => {
       song.save((success => {
         resolve()
       }))
-    })  
+    })
   })
 }
 
 const addOrInsertTags = (tagArray, forSongId) => {
-  // iterate over tags, try to find in DB
-  // if found, save song to tag, save tag to song
-  // if not found, make new tag,
-  // save song to tag, save tag to song
 
   return new Promise((resolve, reject) => {
     const number = forSongId;
@@ -175,9 +185,6 @@ const insertTag = (tagData, forSongId) => {
   })
 }
 
-
-
-
 const getAll = () => {
   return new Promise((resolve, reject) => {
     Tag.find({})
@@ -212,7 +219,6 @@ const deleteTags = (tags) => {
 
 
 const deleteMany = (tags, cb) => {
-
   SongModel.removeTagsFromSongs(tags)
   .then(success => {
     console.log('done removing tags from Songs, next: deleteTags', tags)
@@ -255,7 +261,10 @@ const updateAll = (tags) => {
               console.log(err)
               reject(err);
             } else {
-              recurse(array);
+              SongModel.updateTagsOnSongs(tag)
+              .then(success => {
+                recurse(array);
+              })
             }
           })
         })
@@ -287,5 +296,6 @@ module.exports = {
   deleteTagsForSong,
   getAll,
   updateAll,
-  deleteMany
+  deleteMany,
+  getSongsForTag,
 }
