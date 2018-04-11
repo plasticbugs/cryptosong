@@ -1,6 +1,14 @@
+import { Model } from 'mongoose';
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Models = require('./index.js')
+const TagModel = require('./tag')
+
+const tagSchema = new Schema({
+  image: String,
+  name: String,
+})
 
 const songSchema = new Schema({
   number: Number,
@@ -19,6 +27,7 @@ const songSchema = new Schema({
   firsts: String,
   comments: String,
   press: String,
+  tags: [tagSchema],
 });
 
 const Song = mongoose.model('Song', songSchema);
@@ -61,7 +70,8 @@ module.exports.getSongByNumber = (number) => {
         let location = await Models.Location.find();
         let topic = await Models.Topic.find();
         let inkey = await Models.Inkey.find();
-        resolve({instrument, beard, location, topic, inkey, song});
+        let tag = await Models.Tag.find();
+        resolve({instrument, beard, location, topic, inkey, song, tag});
       })();
 
     })
@@ -94,14 +104,34 @@ module.exports.updateSong = (songData) => {
        return instrument._id;
      })
     }
-    songData.length = getLength(songData.mins, songData.secs);
-    Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
-      if (err) {
-        console.log(err);
-        reject(err);
-        return;
+    TagModel.deleteTagsForSong(Number.parseInt(songData.number))
+    .then(success => {
+      if (songData.tags.length) {
+        TagModel.addOrInsertTags(songData.tags, Number.parseInt(songData.number))
+        .then(success => {
+          delete songData.tags;
+          songData.length = getLength(songData.mins, songData.secs);
+          Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
+            if (err) {
+              console.log(err);
+              reject(err);
+              return;
+            }
+            resolve(results);
+          })
+        })
+      } else {
+        songData.length = getLength(songData.mins, songData.secs);
+        Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
+          if (err) {
+            console.log(err);
+            reject(err);
+            return;
+          }
+          resolve(results);
+        })
       }
-      resolve(results);
+
     })
   })
 }
@@ -117,6 +147,7 @@ module.exports.insertSong = (newSong) => {
     newSong.instruments = newSong.instruments.map(instrument => {
       return instrument._id;
     })
+
     newSong.length = getLength(newSong.mins, newSong.secs);
     let song = new Song(newSong);
     song.save(err => {
@@ -143,3 +174,4 @@ module.exports.totalSongs = () => {
 }
 
 module.exports.Song = Song;
+module.exports.songSchema = songSchema;
