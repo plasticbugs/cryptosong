@@ -193,18 +193,39 @@ const getAll = () => {
   })
 }
 
-const deleteMany = (tags) => {
-  console.log(tags)
+const deleteTags = (tags) => {
   return new Promise((resolve, reject) => {
     Tag.remove({_id: {$in: tags}})
     .then( success => {
+      console.log(success)
       "removed a bunch"
+      resolve()
     })
     .catch(err => {
       if (err) {
         console.log(err);
+        reject(err);
       }
     })
+  })
+}
+
+
+const deleteMany = (tags, cb) => {
+
+  SongModel.removeTagsFromSongs(tags)
+  .then(success => {
+    console.log('done removing tags from Songs, next: deleteTags', tags)
+    deleteTags(tags)
+    .then(success => {
+      console.log('deleted tags DONE')
+      cb(null)
+    })
+  })
+  .catch(err => {
+    if (err) {
+      cb(err)
+    }
   })
 }
 

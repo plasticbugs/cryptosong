@@ -32,14 +32,20 @@ module.exports.updateTags = (req, res) => {
 
 module.exports.deleteTags = (req, res) => {
   let tags = req.query.delete;
-  TagModel.deleteMany(tags)
-  .then(results => {
-    res.sendStatus(200);
-  })
-  .catch(err => {
+  TagModel.deleteMany(tags, (err, results) => {
     if (err) {
-      console.log(err);
-      res.send(err)
+      res.sendStatus(501)
+    } else {
+      res.sendStatus(200)
     }
   })
+  // .then(results => {
+  //   res.sendStatus(200);
+  // })
+  // .catch(err => {
+  //   if (err) {
+  //     console.log(err);
+  //     res.send(err)
+  //   }
+  // })
 }

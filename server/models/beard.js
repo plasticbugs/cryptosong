@@ -28,11 +28,12 @@ const deleteMany = (beards) => {
   return new Promise((resolve, reject) => {
     Beard.remove({_id: {$in: beards}})
     .then( success => {
-      "removed a bunch"
+      resolve();
     })
     .catch(err => {
       if (err) {
         console.log(err);
+        reject(err);
       }
     })
   })

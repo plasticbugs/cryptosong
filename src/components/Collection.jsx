@@ -97,8 +97,10 @@ export default class Collection extends Component {
       axios.delete(this.props.apiCollectionPath, {params: {
         delete: deleteThese
       }})
-      this.setState({markedForDeletion: []}, ()=>{
-        cb()
+      .then(success => {
+        this.setState({markedForDeletion: []}, ()=>{
+          cb()
+        })
       })
     } else {
       this.setState({markedForDeletion: []}, ()=> {

@@ -161,6 +161,28 @@ module.exports.insertSong = (newSong) => {
   })
 }
 
+module.exports.removeTagsFromSongs = (tagArray) => {
+  return new Promise((resolve, reject) => {
+    (function recurse(array) {
+      console.log('recursing')
+      if (!array.length) {
+        resolve()
+      } else {
+        let tag = array.shift();
+        console.log(tag)
+        Song.find({"tags._id": tag})
+        .then(results => {
+          results.forEach(song => {
+            song.tags.pull(tag)
+            song.save()
+          })
+          recurse(array)
+        })
+      }
+    })(tagArray.slice())
+  })
+}
+
 module.exports.totalSongs = () => {
   return new Promise((resolve, reject) => {
     Song.count({}, (err, number) => {

@@ -1,5 +1,5 @@
 # List of routes:
-### New & Edit Instruments, Locations, Keys, Topics, Beards:
+### New & Edit Instruments, Locations, Keys, Tags, Topics, Beards:
 
 http://localhost:3000/instruments
 
@@ -10,6 +10,8 @@ http://localhost:3000/keys
 http://localhost:3000/topics
 
 http://localhost:3000/beards
+
+http://localhost:3000/tags
 
 
 ### New Song:
