@@ -30,6 +30,9 @@ router.route('/tags')
   .put(tagController.updateTags)
   .delete(tagController.deleteTags)
 
+router.route('/tag/:tagname')
+  .get(tagController.getSongsForTag)
+
 router.route('/inkeys')
   .get(inkeyController.getInkeys)
   .put(inkeyController.updateInkeys)
@@ -41,9 +44,12 @@ router.route('/locations')
   .delete(locationController.deleteLocations)
 
 router.route('/song')
-  .get(songController.getSong)
+  .get(songController.getSongWithTags)
   .post(songController.newSong)
   .put(songController.editSong)
+
+router.route('/song/:id')
+  .get(songController.getSongByID)
 
 router.route('/songs')
   .get(songController.getAllSongs);
