@@ -1,4 +1,5 @@
-var ProgressBar = require('progress');
+const ProgressBar = require('progress');
+const fs = require('fs');
 
 const Schema = require('mongoose').Schema;
 
@@ -4033,14 +4034,16 @@ const insertUniques = (obj) => {
       let key = array.shift();
       if (key.length) {
         let dict = {};
-        let counter = 0;
+        // let counter = 0;
         
         let arr = obj[key].collection
         let identifier = obj[key].name
         for (let i = 0; i < arr.length; i++) {
           if (!dict[arr[i]]) {
-            dict[arr[i]] = `${identifier.toLowerCase()}_${counter}.png`;
-            counter++;
+            let filename = `${identifier.toLowerCase()}-${arr[i].replace(/[#_/!., ]/g,'').toLowerCase()}.png`
+            fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
+            dict[arr[i]] = filename;
+            // counter++;
           }
         }
         
@@ -4065,13 +4068,6 @@ const insertUniques = (obj) => {
     recurse(keyArray);
   })
 }
-
-gatherFields(songList).then( results => {
-  insertUniques(results).then( success => {
-    console.log('inserted all uniques!')
-    insertSongs(songList)
-  })
-})
 
 const calcLength = (string) => {
   let arr = string.split(':');
@@ -4237,3 +4233,11 @@ async function insertSongs(array) {
 
   })
 }
+
+gatherFields(songList).then( results => {
+  fs.writeFileSync('filenames.txt', '', 'utf8')
+  insertUniques(results).then( success => {
+    console.log('inserted all uniques!')
+    insertSongs(songList)
+  })
+})
