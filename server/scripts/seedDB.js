@@ -4040,7 +4040,7 @@ const insertUniques = (obj) => {
         let identifier = obj[key].name
         for (let i = 0; i < arr.length; i++) {
           if (!dict[arr[i]]) {
-            let filename = `${identifier.toLowerCase()}-${arr[i].replace(/[#_/!., ]/g,'').toLowerCase()}.png`
+            let filename = `${identifier.toLowerCase()}-${arr[i].replace(/[_/!., ]/g,'').replace('#', '-sharp').toLowerCase()}.png`
             fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
             dict[arr[i]] = filename;
             // counter++;

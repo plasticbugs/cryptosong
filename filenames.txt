@@ -41,8 +41,8 @@ inkey-gm.png
 inkey-bb.png
 inkey-b.png
 inkey-bm.png
-inkey-f.png
-inkey-dm.png
+inkey-f-sharp.png
+inkey-d-sharpm.png
 inkey-bbm.png
 inkey-g.png
 inkey-a.png
