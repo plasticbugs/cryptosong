@@ -4017,7 +4017,7 @@ const gatherFields = (array) => {
 const insertUniques = (obj) => {
   return new Promise((resolve, reject) => {
     let keyArray = Object.keys(obj).slice();
-    var uniqueBar = new ProgressBar('  inserting uniques [:bar] :percent', {
+    var uniqueBar = new ProgressBar('  inserting uniques & writing out to filenames.txt [:bar] :percent', {
       complete: '=',
       incomplete: ' ',
       width: 40,
@@ -4041,7 +4041,9 @@ const insertUniques = (obj) => {
         for (let i = 0; i < arr.length; i++) {
           if (!dict[arr[i]]) {
             let filename = `${identifier.toLowerCase()}-${arr[i].replace(/[_/!., ]/g,'').replace('#', '-sharp').toLowerCase()}.png`
-            fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
+            if (identifier.toLowerCase() !== 'tag') {
+              fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
+            }
             dict[arr[i]] = filename;
             // counter++;
           }
