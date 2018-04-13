@@ -1,9 +1,8 @@
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import Fawn from 'fawn';
 
-const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const SongModel = require('./song')
-// const songSchema = require('./song').songSchema
 
 const songSchema = new Schema({
   _id: Schema.Types.ObjectId,
@@ -37,31 +36,6 @@ const cleanObj = (obj) => {
   return obj;
 }
 
-const saveTagsAndSongs = (number, tag) => {
-  return new Promise((resolve, reject) => {
-    SongModel.Song.findOne({number})
-    .then(song => {
-      song.tags.push(tag)
-      song.save((err, savedSong) => {
-        const hasSong = tag.songs.id(song._id);
-        if (!hasSong) {
-          tag.songs.push(song)
-          tag.save(err => {
-            resolve()
-          })
-        } else {
-          resolve();
-        }
-      })
-    })
-    // .catch(err => {
-    //   if (err) {
-    //     reject(err);
-    //   }
-    // })
-  })
-}
-
 const getSongsForTag = (name) => {
   return new Promise((resolve, reject) => {
     Tag.find({name})
@@ -71,28 +45,13 @@ const getSongsForTag = (name) => {
   })
 }
 
-const deleteTagsForSong = (forSongId) => {
-  return new Promise((resolve, reject) => {
-    SongModel.Song.findOne({number: forSongId})
-    .then(song => {
-      song.tags = [];
-      song.save((success => {
-        resolve()
-      }))
-    })
-  })
-}
-
-const addOrInsertTags = (tagArray, forSongId) => {
-
+const addOrInsertTags = (tagArray, forSongId, task) => {
   return new Promise((resolve, reject) => {
     const number = forSongId;
     const recurse = (array) => {
       if (!array.length) {
-        return SongModel.Song.find({number})
-        .then(song => {
-          resolve(song);
-        })
+          resolve(task);
+          return;
       }
       let tag = array.shift();
       if (!tag._id) {
@@ -100,28 +59,32 @@ const addOrInsertTags = (tagArray, forSongId) => {
       }
       let num = tag._id.toString();
       if (num.match(/^[0-9a-fA-F]{24}$/)) {
-        Tag.findById(tag._id)
-        .then(tagDoc => {
-          saveTagsAndSongs(number, tagDoc)
-          .then(success => {
+        SongModel.Song.findOne({number})
+        .then(song => {
+          Tag.findById(tag._id)
+          .then(tagDoc => {
+            task.update("Song", {number}, {$push: {tags: tagDoc}})
+            const hasSong = tagDoc.songs.id(song._id);
+            if (!hasSong) {
+              task.update("Tag", {_id: tag._id}, {$push: {songs: song}});
+            }
             recurse(array);
           })
         })
       } else {
         if (tag.name.length) {
           let newTag = new Tag({name: tag.name, image: tag.image})
-          newTag.save((err, savedTag) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            saveTagsAndSongs(number, savedTag)
-            .then(success => {
-              recurse(array)
+          SongModel.Song.findOne({number})
+          .then(song => {
+            newTag.save()
+            .then(tag => {
+              task.update("Song", {number}, {$push: {tags: tag}})
+              task.update("Tag", {_id: tag._id}, {$push: {songs: song}})
+              recurse(array);
             })
           })
         } else {
-          recurse(array);
+          recurse(array)
         }
       }
     }
@@ -129,28 +92,14 @@ const addOrInsertTags = (tagArray, forSongId) => {
   })
 }
 
+
 const insertTag = (tagData, forSongId) => {
   return new Promise((resolve, reject) => {
     console.log(tagData, forSongId)
     if (forSongId) {
       let song = SongModel.Song.findOne({number: Number.parseInt(forSongId)})
-      // .populate('instruments')
-      // .populate('tag')
-      // .populate('topic')
-      // .populate('inkey')
-      // .populate('location')
       .then(song => {
         return song;
-        // return cleanObj(song);
-        // (async function getAllTags() {
-        //   let instrument = await Models.Instrument.find();
-        //   let tag = await Models.Tag.find();
-        //   let location = await Models.Location.find();
-        //   let topic = await Models.Topic.find();
-        //   let inkey = await Models.Inkey.find();
-        //   resolve({instrument, tag, location, topic, inkey, song});
-        // })();
-  
       })
       .then(song => {
         let tag = new Tag(tagData);
@@ -172,6 +121,7 @@ const insertTag = (tagData, forSongId) => {
         })
       })
     } else {
+      
       let tag = new Tag(tagData);
       tag.save((err, newTag) => {
         if (err) {
@@ -188,6 +138,7 @@ const insertTag = (tagData, forSongId) => {
 const getAll = () => {
   return new Promise((resolve, reject) => {
     Tag.find({})
+    .select('_id name image')
     .sort([['_id', -1]])
     .then(results => {
       resolve(results);
@@ -205,7 +156,6 @@ const deleteTags = (tags) => {
     Tag.remove({_id: {$in: tags}})
     .then( success => {
       console.log(success)
-      "removed a bunch"
       resolve()
     })
     .catch(err => {
@@ -217,83 +167,72 @@ const deleteTags = (tags) => {
   })
 }
 
-
 const deleteMany = (tags, cb) => {
-  SongModel.removeTagsFromSongs(tags)
-  .then(success => {
-    console.log('done removing tags from Songs, next: deleteTags', tags)
-    deleteTags(tags)
-    .then(success => {
-      console.log('deleted tags DONE')
-      cb(null)
-    })
-  })
-  .catch(err => {
-    if (err) {
-      cb(err)
+  const recurse = (array) => {
+    let task = new Fawn.Task();
+    if (!array.length) {
+      cb(null);
+      return;
     }
-  })
+    let tag = array.shift();
+    Tag.findOne({_id: tag})
+    .then(tagDoc => {
+      console.log(tagDoc.name)
+      task.update("Song", {"tags.name": tagDoc.name}, { $pull: { tags: { name: tagDoc.name}}}, { multi: true })
+      task.remove("Tag", {_id: tag} );
+      task.run({useMongoose: true})
+      .then(success => {
+        recurse(array);
+      })
+    })
+  }
+  recurse(tags.slice());
 }
 
 const updateAll = (tags) => {
   return new Promise((resolve, reject) => {
     const recurse = (array) => {
       if (!array.length) {
-        return Tag.find({})
+        Tag.find({})
+        .select('_id name image')
         .sort([['_id', -1]])
         .then(tags => {
           resolve(tags);
-          return;
-        })
-      }
-      let tag = array.shift();
-      if (!tag._id) {
-        console.log(tag)
-      }
-      let num = tag._id.toString();
-      if (num.match(/^[0-9a-fA-F]{24}$/)) {
-        Tag.findById(tag._id)
-        .then(doc => {
-          doc.name = tag.name;
-          doc.image = tag.image;
-          doc.save((err, updated) => {
-            if (err) {
-              console.log(err)
-              reject(err);
-            } else {
-              SongModel.updateTagsOnSongs(tag)
-              .then(success => {
-                recurse(array);
-              })
-            }
-          })
         })
       } else {
-        if (tag.name.length) {
-          let newTag = new Tag({name: tag.name, image: tag.image})
-          newTag.save((err, saved) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            recurse(array);
-          })  
+        let tag = array.shift();
+        if (tag._id.match(/^[0-9a-fA-F]{24}$/)) {
+          let task = new Fawn.Task();
+          task.update('Tag', {_id: tag._id}, tag)
+          SongModel.updateTagsOnSongs(tag, task)
+          .then(task => {
+            task.run({useMongoose: true})
+            .then(success => {
+              recurse(array)
+            })
+          })
         } else {
-          recurse(array);
+          if (tag.name.length) {
+            console.log('making new! ', tag.name, tag._id)
+            let newTag = new Tag({name: tag.name, image: tag.image})
+            newTag.save(err => {
+              recurse(array)
+            })
+          } else {
+            recurse(array)
+          }
         }
       }
     }
-    recurse(tags);
+    recurse(tags.slice())
   })
 }
-
 
 module.exports = {
   Tag,
   tagSchema,
   insertTag,
   addOrInsertTags,
-  deleteTagsForSong,
   getAll,
   updateAll,
   deleteMany,
