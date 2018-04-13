@@ -121,7 +121,7 @@ export default class SongInputForm extends Component {
 
   componentDidMount() {
     if(this.props.match.params.id) {
-      console.log(this.props.match.params.id)
+      console.log("params: ", this.props.match.params.id)
       let number = Number.parseInt(this.props.match.params.id);
       let date = moment(GENESIS, 'M-D-YYYY').add(number - 1, 'days');
       console.log(date.toString())
@@ -160,9 +160,11 @@ export default class SongInputForm extends Component {
         console.log(err);
       })
     } else {
+      console.log('getting options')
       axios.get('/api/options')
       .then(response => {
         this.setUpDropdowns(response.data, ()=>{
+          console.log(response.data)
           // axios.get('/api/songs/count')
           // .then(response => {
           //   let song = Object.assign({}, this.state.song, {number: response.data.number + 1});
@@ -175,6 +177,7 @@ export default class SongInputForm extends Component {
   }
 
   setUpDropdowns({beard, instrument, inkey, location, topic, tag}, cb) {
+    console.log(beard, instrument, inkey, location, topic, tag)
     let tagArray = [{beard}, {instrument}, {inkey}, {location}, {topic}, {tag}]
     let options = {};
     tagArray.forEach(tag => {
@@ -304,7 +307,10 @@ export default class SongInputForm extends Component {
     }
     axios.post('/api/song', song)
     .then(response => {
-      console.log(response.data)
+      this.props.history.push(`/song/${this.state.song.number}/edit`)
+      this.setState({isOpen: true}, () => {
+        setTimeout(() => {this.setState({isOpen: false})}, 3000)
+      })
     })
   }
 
@@ -507,7 +513,7 @@ export default class SongInputForm extends Component {
             </Grid.Column>
             <Grid.Column>
               <div style={{position: 'fixed', marginTop: '3em'}}>
-                <AlbumCanvas images={this.getTagImages()}/>
+                <AlbumCanvas width={500} height={500} images={this.getTagImages()} songnumber={this.state.song.number}/>
                 <Transition visible={this.state.isOpen} animation='scale' duration={400}>
                   <Message
                     success
