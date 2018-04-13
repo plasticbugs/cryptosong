@@ -120,7 +120,7 @@ const deleteTagsForSong = (forSongId, task) => {
 
     //   song.tags = [];
     //   song.save((success => {
-    //     resolve()
+    //     resolve(task)
     //   }))
     // })
   })
@@ -308,18 +308,9 @@ module.exports.insertSong = (newSong) => {
 
 module.exports.updateTagsOnSongs = (newTagData, task) => {
   return new Promise((resolve, reject) => {
-    // Song.find({"tags._id": newTagData._id})
-    // .then(results => {
-      // results.forEach(song => {
-    // let tagDoc = song.tags.id(newTagData._id);
     task.update("Song", {"tags._id": newTagData._id}, {$set: {"tags.$.name": newTagData.name, "tags.$.image": newTagData.image}})
-    
-        // tagDoc.name = newTagData.name;
-        // tagDoc.image = newTagData.image;
-        // song.save()
-      // })
-      resolve(task);
-    })
+    resolve(task);
+  })
 }
 
 module.exports.removeTagsFromSongs = (tagArray) => {
