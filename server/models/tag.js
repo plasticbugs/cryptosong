@@ -48,16 +48,20 @@ const getSongsForTag = (name) => {
 const addOrInsertTags = (tagArray, forSongId, task) => {
   return new Promise((resolve, reject) => {
     const number = forSongId;
-    const recurse = (array) => {
-      if (!array.length) {
-          resolve(task);
-          return;
-      }
-      let tag = array.shift();
-      if (!tag._id) {
-        console.log(tag)
-      }
+    let counter = tagArray.length;
+    // const recurse = (array) => {
+    //   if (!array.length) {
+    //       resolve(task);
+    //       return;
+    //   }
+    // console.log(tagArray)
+    for (let tag of tagArray) {
+      // let tag = array.shift();
+      // if (!tag._id) {
+      //   console.log(tag)
+      // }
       let num = tag._id.toString();
+      // console.log(num, tag.name)
       if (num.match(/^[0-9a-fA-F]{24}$/)) {
         SongModel.Song.findOne({number})
         .then(song => {
@@ -68,7 +72,11 @@ const addOrInsertTags = (tagArray, forSongId, task) => {
             if (!hasSong) {
               task.update("Tag", {_id: tag._id}, {$push: {songs: song}});
             }
-            recurse(array);
+            counter -= 1;
+            if (counter === 0) {
+              resolve(task);
+              return;
+            }
           })
         })
       } else {
@@ -77,18 +85,27 @@ const addOrInsertTags = (tagArray, forSongId, task) => {
           SongModel.Song.findOne({number})
           .then(song => {
             newTag.save()
-            .then(tag => {
-              task.update("Song", {number}, {$push: {tags: tag}})
-              task.update("Tag", {_id: tag._id}, {$push: {songs: song}})
-              recurse(array);
+            .then(savedTag => {
+              task.update("Song", {number}, {$push: {tags: savedTag}})
+              task.update("Tag", {_id: savedTag._id}, {$push: {songs: song}})
+              counter -=1;
+              if (counter === 0) {
+                resolve(task);
+                return;
+              }
             })
           })
         } else {
-          recurse(array)
+          counter -=1;
+          if (counter === 0) {
+            resolve(task);
+            return;
+          }
         }
       }
     }
-    recurse(tagArray);
+    // }
+    // recurse(tagArray);
   })
 }
 
