@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Card, Icon, Image, Popup, Embed } from 'semantic-ui-react';
 import axios from 'axios';
+import AlbumCanvas from './AlbumCanvas.jsx';
 
 export default class Songs extends Component {
   constructor(props) {
@@ -10,13 +11,13 @@ export default class Songs extends Component {
     }
   }
 
-  _onMouseMove(e) {
-    let y = event.clientY - event.target.offsetTop
+  // _onMouseMove(e) {
+  //   let y = event.clientY - event.target.offsetTop
 
-    this.setState({ x: e.clientX, y });
-    console.log(this.state.x, this.state.y)
+  //   this.setState({ x: e.clientX, y });
+  //   console.log(this.state.x, this.state.y)
 
-  }
+  // }
 
   componentDidMount() {
     axios.get('/api/songs')
@@ -56,7 +57,7 @@ export default class Songs extends Component {
         <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}>
         {this.state.songs.map(song => {
           return (
-            <Popup size='tiny' style={style} hoverable inverted trigger={<Image style={{margin: '2px', width: 150, height: 150}} src={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`} />}>
+            <Popup size='tiny' style={style} hoverable inverted trigger={<AlbumCanvas width={40} height={40} images={[]} songnumber={song.number} />}>
               <Popup.Header>{song.title}</Popup.Header>
               <Popup.Content>
                 <Embed style={{width:'340px', height: '160px'}}
