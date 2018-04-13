@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Stage, Image, Layer, Rect } from "react-konva";
+import { Stage, Image, Layer, Rect, Text } from "react-konva";
 import SongImage from './SongImage.jsx';
 
 export default class AlbumCanvas extends Component {
@@ -10,10 +10,9 @@ export default class AlbumCanvas extends Component {
 
   render() {
     let currentNumber = Number.parseInt(this.props.songnumber, 10);
-    let hue = (currentNumber + 239) % 360
+    let hue = 359 - ((currentNumber + 118) % 360)
     return (
-      <div>
-      <Stage width={this.props.width} height={this.props.height} style={{display: 'inherit'}}>
+      <Stage width={this.props.width} height={this.props.height} className="album-art" style={{float: 'left', border: '5px solid black'}}>
         <Layer>
           <Rect
             x={0}
@@ -28,8 +27,10 @@ export default class AlbumCanvas extends Component {
             return <SongImage key={image} imageSrc={`/images/${image}`} />
           })}
         </Layer>
+        <Layer>
+          <Text text={currentNumber} fontSize={30} fontFamily='Helvetica' fill='black'/>
+        </Layer>
       </Stage>
-      </div>
     )
   }
 }
