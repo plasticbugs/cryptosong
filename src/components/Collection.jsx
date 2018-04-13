@@ -33,7 +33,6 @@ export default class Collection extends Component {
         return element._id === id;
       })
 
-    console.log(item)
     if (item.length > 0) {
       let ind = this.state.collection.indexOf(item[0]);
       item = Object.assign({}, item[0], {[name]: value});
@@ -111,7 +110,6 @@ export default class Collection extends Component {
 
   handleSubmit() {
     this.setState({isSaving: true})
-    console.log('got a submit')
     this.removeItemsFromDB(()=> {
       this.saveAnyChangesToDB((err, collection) => {
         if (err) {
@@ -127,7 +125,6 @@ export default class Collection extends Component {
 
   handleDelete(e, id) {
     e.preventDefault();
-    console.log(id);
     let item = this.state.collection.filter((element) => {
       return element._id === id;
     })
