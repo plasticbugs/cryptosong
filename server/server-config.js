@@ -8,7 +8,7 @@ const songController = require('./controllers/songs');
 const router = require('./routes/index');
 
 const app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '100kb'}));
 app.use(express.static('build'));
 
 app.use('/api', router.api)
