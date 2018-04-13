@@ -28,6 +28,9 @@ module.exports.getAllSongs = (req, res) => {
   SongModel.Song.find()
   .populate('inkey')
   .then( results => {
+    results.sort((a,b) => {
+      return a.number - b.number;
+    })
     res.send(results);
   })
 }
