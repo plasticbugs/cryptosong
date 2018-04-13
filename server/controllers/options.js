@@ -6,5 +6,6 @@ module.exports.getAllOptions = async (req,res) => {
   let location = await Models.Location.find();
   let topic = await Models.Topic.find();
   let inkey = await Models.Inkey.find();
-  res.send({instrument, beard, location, topic, inkey})
+  let tag = await Models.Tag.find();
+  res.send({instrument, beard, location, topic, inkey, tag})
 }
