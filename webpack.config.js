@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -16,6 +17,15 @@ module.exports = {
     // './src/styles/style.css',
   ],
   plugins: [
+    // PRODUCTION
+    // new webpack.DefinePlugin({
+    //   'process.env': {
+    //     'NODE_ENV': '"production"'
+    //   }
+    // }),
+    // new webpack.optimize.UglifyJsPlugin(),
+    // PRODUCTION
+
     // uglifyjs,
     extractSass,
   ],
