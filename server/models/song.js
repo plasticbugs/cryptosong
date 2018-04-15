@@ -135,7 +135,22 @@ module.exports.updateSong = (songData) => {
 
     if (songData.instruments.length > 0) {
       songData.instruments = songData.instruments.map(instrument => {
-       return instrument._id;
+        let num = instrument._id.toString();
+        if (!num.match(/^[0-9a-fA-F]{24}$/)) {
+          let newInstrument = new Models.Instrument({name: instrument.name})
+          return newInstrument.save( (err, savedInstrument) => {
+            console.log(savedInstrument.name)
+            return savedInstrument._id
+            // if (doc) {
+            //   console.log(doc)
+            //   return null;
+            // } else {
+            //   return saved._id
+            // }
+          })
+        } else {
+          return instrument._id;
+        }
      })
     }
     deleteTagsForSong(Number.parseInt(songData.number, 10), task)
