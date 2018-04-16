@@ -29,6 +29,10 @@ const songSchema = new Schema({
   comments: String,
   press: String,
   tags: [tagSchema],
+  itunes: String,
+  spotify: String,
+  bandcamp: String,
+  mood: String,
 });
 
 const Song = mongoose.model('Song', songSchema);
