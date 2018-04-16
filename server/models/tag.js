@@ -15,6 +15,10 @@ const songSchema = new Schema({
   videoid: String,
   description: String,
   acousticproduced: String,
+  itunes: String,
+  spotify: String,
+  bandcamp: String,
+  mood: String,
   // tags: [Models.Tag.tagSchema],
 });
 
