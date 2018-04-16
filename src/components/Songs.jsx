@@ -22,6 +22,7 @@ export default class Songs extends Component {
   componentDidMount() {
     axios.get('/api/songs')
     .then(songs => {
+      console.log(songs.data)
       this.setState({songs: songs.data})
     })
     // console.log(randomColor())
@@ -48,29 +49,35 @@ export default class Songs extends Component {
     }
     return (
 
-      <Container>
+      <Container style={{padding: '2px'}}>
+
         <Embed
         id='7Af6b9-yqa8'
         placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
         source='youtube'
         />
-        <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}>
+
+        {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
         {this.state.songs.map(song => {
           return (
-            <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} songnumber={song.number} />}>
-              <Popup.Header>{song.title}</Popup.Header>
-              <Popup.Content>
-                <Embed style={{width:'340px', height: '160px'}}
-                  id={song.videoid}
-                  placeholder={`https://img.youtube.com/vi/${song.videoid}/mqdefault.jpg`}
-                  source='youtube'
-                />
-                {this.renderKey(song)}
-              </Popup.Content>
-            </Popup>
+            <AlbumCanvas width={106} height={106} images={[]} song={song} songnumber={song.number} />
           )
+          //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>
+          //     <Popup.Header>{song.title}</Popup.Header>
+          //     <Popup.Content>
+          //       <Embed style={{width:'340px', height: '160px'}}
+          //         id={song.videoid}
+          //         placeholder={`https://img.youtube.com/vi/${song.videoid}/mqdefault.jpg`}
+          //         source='youtube'
+          //       />
+          //       {this.renderKey(song)}
+          //     </Popup.Content>
+          //   </Popup>
+          // )
+        // })}
+      {/* </Image.Group> */}
         })}
-      </Image.Group></Container>
+      </Container>
     )
   }
     //   <Container>
