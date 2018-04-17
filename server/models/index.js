@@ -5,6 +5,7 @@ const Topic = require('./topic.js').Topic;
 const Instrument = require('./instrument.js').Instrument;
 const Song = require('./song.js').Song;
 const Tag = require('./tag').Tag;
+const Mood = require('./mood.js').Mood;
 
 module.exports = {
   Beard,
@@ -14,4 +15,5 @@ module.exports = {
   Instrument,
   Song,
   Tag,
+  Mood,
 }
