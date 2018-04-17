@@ -6043,6 +6043,7 @@ const Inkey = mongoose.model('Inkey', {name: String, image: String});
 const Topic = mongoose.model('Topic', {name: String, image: String});
 const Beard = mongoose.model('Beard', {name: String, image: String});
 const City = mongoose.model('Location', {name: String, image: String});
+const Mood = mongoose.model('Mood', {name: String, image: String});
 
 const songTagSchema = new Schema({
   image: String,
@@ -6060,6 +6061,7 @@ const tagSongSchema = new Schema({
   videoid: String,
   description: String,
   acousticproduced: String,
+  mood: { type: Schema.Types.ObjectId, ref: 'Mood'}
   // tags: [Models.Tag.tagSchema],
 });
 
@@ -6086,6 +6088,7 @@ const Song = mongoose.model('Song', {
   spotify: String,
   bandcamp: String,
   mood: String,
+  mainInstrument: String,
 });
 
 const Tag = mongoose.model('Tag', {
@@ -6120,13 +6123,23 @@ const gatherFields = (array) => {
       tags: {
         name: 'Tag',
         collection: []
-      }
+      },
+      moods: {
+        name: 'Mood',
+        collection: []
+      },
     };
   
     songList.forEach(song => {
       if (song.instruments) {
-        let instruments = song.instruments.toLowerCase().replace('\n', '').split(', ');
+        let instruments = song.instruments.toLowerCase().replace('\n', '').split(',').map(inst => {
+          return inst.trim();
+        });
         uniques.instruments.collection = uniques.instruments.collection.concat(instruments);
+      }
+
+      if (song.mood) {
+        uniques.moods.collection.push(song.mood);
       }
   
       if (song.beard) {
@@ -6172,19 +6185,37 @@ const insertUniques = (obj) => {
       uniqueBar.tick(1)
       let key = array.shift();
       if (key.length) {
-        let dict = {};
+        const dict = {};
         // let counter = 0;
-        
+
         let arr = obj[key].collection
         let identifier = obj[key].name
+        let filenamesToSort = [];
+
+        if (identifier.toLowerCase() !== 'tag') {
+          fs.appendFileSync('filenames.txt', '\n\n' + identifier + '\n********************\n', 'utf8');
+        }
+
         for (let i = 0; i < arr.length; i++) {
-          if (!dict[arr[i]]) {
-            let filename = `${identifier.toLowerCase()}-${arr[i].replace(/[_/!., ]/g,'').replace('#', '-sharp').toLowerCase()}.png`
-            if (identifier.toLowerCase() !== 'tag') {
-              fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
+          if (arr[i].trim().length) {
+            let thekey;
+            if (identifier === 'Mood') {
+              thekey = arr[i].replace(/^\n|\n$/g, '').trim().toLowerCase();
+            } else {
+              thekey = arr[i].replace(/^\n|\n$/g, '').trim()
             }
-            dict[arr[i]] = filename;
-            // counter++;
+  
+            if (!dict[thekey]) {
+              let filename = `${identifier.toLowerCase()}_${arr[i].replace(/[_/!., ]/g,'').replace('#', '-sharp').replace(/^\n|\n$/g, '').trim().toLowerCase()}.png`
+              dict[thekey] = filename;
+              filenamesToSort.push(filename)
+            }
+          }
+        }
+        if (identifier.toLowerCase() !== 'tag') {
+          filenamesToSort.sort();
+          for (let filename of filenamesToSort) {
+            fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
           }
         }
         
@@ -6195,6 +6226,17 @@ const insertUniques = (obj) => {
             image: dict[key]
           })
         }
+
+        /// write out uniques to help with spellchecking...
+        let sortedArray = objArray.slice();
+        sortedArray = sortedArray.map(item => {
+          return item.name;
+        })
+        sortedArray.sort()
+        for (name of sortedArray) {
+          fs.appendFileSync('unique-tags.txt', name + '\n', 'utf8');
+        }
+
         const theModel = mongoose.model(identifier);
         theModel.insertMany(objArray, (err, docs) => {
           if(err) {
@@ -6281,22 +6323,29 @@ async function insertSongs(array) {
     total: array.length
   });
   let records = [];
+  let mainInstrument;
   for (let i = 0; i < array.length; i++) {
     insertSongBar.tick(1);
     let instruments = [];
     if (array[i].instruments) {
-      let instrumentArray = array[i].instruments.toLowerCase().replace('\n', '').split(', ');
-      const query = await Instrument.find({name: { $in: instrumentArray}}).exec()
-      // const result = await query1.exec()
+      let instrumentArray = array[i].instruments.toLowerCase().replace('\n', '').split(',').map(inst => {
+        return inst.trim();
+      });
+
+      // ignore Vocals if it's the first instrument listed among multiple
+      instrumentIndex = 0;
+      if (instrumentArray[0] === 'vocals' && instrumentArray.length > 1) {
+        instrumentIndex = 1;
+      }
+
+      const firstInstQuery = await Instrument.findOne({name: instrumentArray[instrumentIndex]}).exec();
+      mainInstrument = firstInstQuery._id;
+
+      const query = await Instrument.find({name: { $in: instrumentArray}}).exec();
 
       query.forEach(item => {
         instruments.push(item._id);
       })
-      // .then(results => {
-      //   results.forEach(result => {
-      //     instruments.push(result._id);
-      //   })
-      // })
     }
     
     let tempo = 0;
@@ -6312,19 +6361,19 @@ async function insertSongs(array) {
 
     let beard;
     if (array[i].beard) {
-      const query = await Beard.find({name: array[i].beard}).exec()
+      const query = await Beard.find({name: array[i].beard.replace(/^\n|\n$/g, '').trim()}).exec()
       beard = query[0].id;
     }
 
     let location;
     if (array[i].location) {
-      const query = await City.find({name: array[i].location}).exec()
+      const query = await City.find({name: array[i].location.replace(/^\n|\n$/g, '').trim()}).exec()
       location = query[0].id
     }
 
     let topic;
     if (array[i].topic) {
-      const query = await Topic.find({name: array[i].topic}).exec()
+      const query = await Topic.find({name: array[i].topic.replace(/^\n|\n$/g, '').trim()}).exec()
       topic = query[0].id
     }
 
@@ -6333,7 +6382,13 @@ async function insertSongs(array) {
     
     let tagNames = [];
     if (array[i].tags) {
-      tagNames =  array[i].tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim())
+      tagNames =  array[i].tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim()).filter(tag => tag.length)
+    }
+
+    let mood;
+    if (array[i].mood) {
+      const query = await Mood.find({name: array[i].mood.replace(/^\n|\n$/g, '').trim().toLowerCase()}).exec()
+      mood = query[0].id
     }
 
     let song = {
@@ -6357,7 +6412,8 @@ async function insertSongs(array) {
       itunes: array[i].itunes,
       spotify: array[i].spotify,
       bandcamp: array[i].bandcamp,
-      mood: array[i].mood,
+      mood,
+      mainInstrument,
     }
     records.push(song);
   }
@@ -6381,6 +6437,7 @@ async function insertSongs(array) {
 
 gatherFields(songList).then( results => {
   fs.writeFileSync('filenames.txt', '', 'utf8')
+  fs.writeFileSync('unique-tags.txt', '', 'utf8')
   insertUniques(results).then( success => {
     console.log('inserted all uniques!')
     insertSongs(songList)
