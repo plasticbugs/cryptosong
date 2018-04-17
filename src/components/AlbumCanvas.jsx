@@ -31,8 +31,8 @@ export default class AlbumCanvas extends Component {
 
   getTagImages(song) {
     // let { inkey, beard, location, instruments, topic } = song;
-    let { inkey, beard } = song;
-    let tags = [inkey, beard]
+    let { inkey, beard, location, instruments, mood, topic } = song;
+    let tags = [location, topic, mood, beard];
     // let tags = [inkey, beard, location, topic]
 
     // let currentNumber = Number.parseInt(song.number, 10);
@@ -45,22 +45,22 @@ export default class AlbumCanvas extends Component {
 
     let images = [`${hue}.png`];
 
-    // tags.forEach(tag => {
-    //   if (tag && tag.image) {
-    //     images.push(tag.image) 
-    //   }
-    // })
+    tags.forEach(tag => {
+      if (tag && tag.image) {
+        images.push(tag.image) 
+      }
+    })
 
 
-    // let instrumentImages;
-    // if (instruments) {
-    //   instrumentImages = instruments.map(instrument => {
-    //     return instrument.image;
-    //   })
-    // }
-    // if (instrumentImages) {
-    //   images = images.concat(instrumentImages);
-    // }
+    let instrumentImages;
+    if (instruments) {
+      instrumentImages = instruments.map(instrument => {
+        return instrument.image;
+      })
+    }
+    if (instrumentImages) {
+      images = images.concat(instrumentImages);
+    }
     console.log(images)
     return images;
   }
