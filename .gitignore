@@ -25,6 +25,7 @@ coverage
 
 build/js/
 build/css/
+build/artlayers
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
