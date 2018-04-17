@@ -14,9 +14,10 @@ instrument_acousticguitar.png
 instrument_banjo.png
 instrument_baritoneuke.png
 instrument_bass.png
+instrument_claps.png
+instrument_congas.png
 instrument_drummachine.png
 instrument_drums.png
-instrument_electric.png
 instrument_electricguitar.png
 instrument_harpsichord.png
 instrument_organ.png
@@ -39,7 +40,7 @@ location_la.png
 location_losangeles.png
 location_newyork.png
 location_oakland.png
-location_southingonct.png
+location_southingtonct.png
 location_vermont.png
 location_vienna.png
 
@@ -61,13 +62,11 @@ topic_instrumental.png
 topic_internet.png
 topic_kids.png
 topic_life.png
-topic_life.png
 topic_love.png
 topic_nerd.png
 topic_object.png
 topic_poetic.png
 topic_politics.png
-topic_poltics.png
 topic_poltiics.png
 topic_popculture.png
 topic_psa.png
@@ -113,6 +112,5 @@ mood_intense.png
 mood_object.png
 mood_pensive.png
 mood_sad.png
-mood_siily.png
 mood_silly.png
 mood_tired.png

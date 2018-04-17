@@ -6,9 +6,10 @@ acoustic guitar
 banjo
 baritone uke
 bass
+claps
+congas
 drum machine
 drums
-electric
 electric guitar
 harpsichord
 organ
@@ -27,7 +28,7 @@ LA
 Los Angeles
 New York
 Oakland
-Southingon,CT
+Southington,CT
 Vermont
 Vienna
 Airport
@@ -44,7 +45,6 @@ Grandma
 Instrumental
 Internet
 Kids
-LIfe
 Life
 Love
 Nerd
@@ -52,7 +52,6 @@ Object
 PSA
 Poetic
 Politics
-Poltics
 Poltiics
 Pop Culture
 Ringtone
@@ -90,7 +89,6 @@ anthem
 apology
 artipithicus ramidus
 ashton kutcher
-astract
 atm
 backyard
 bad
@@ -113,7 +111,6 @@ botanical garden
 brad aldridge
 brendan whalen
 capitalism
-capitialism
 cat
 catchy
 cats
@@ -153,7 +150,6 @@ evolution
 famous person
 folk
 food
-food poisoining
 food poisoning
 fox
 fox news
@@ -193,7 +189,6 @@ holiday
 hopeful
 hp lovecraft
 hunchback
-inernet
 insect
 internet
 iran
@@ -255,7 +250,6 @@ palestine
 pants
 paul krugman
 penguins
-peronal
 person
 personal
 pikachu
@@ -328,7 +322,6 @@ weather
 web series
 website
 where the wild things are
-wisftul
 wistful
 work
 zelda
@@ -344,6 +337,5 @@ intense
 object
 pensive
 sad
-siily
 silly
 tired

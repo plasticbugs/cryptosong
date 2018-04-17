@@ -18,7 +18,7 @@ export default class AlbumCanvas extends Component {
     const { song } = this.props;
 
     let imgUrls = this.getTagImages(song).map(image => {
-      return '/artlayers/' + image;
+      return image;
     })
 
     console.log("image URLS: ", imgUrls)
@@ -43,11 +43,11 @@ export default class AlbumCanvas extends Component {
       hue = 'black'
     }
 
-    let images = [`${hue}.png`];
+    let images = [`/images/${hue}.png`];
 
     tags.forEach(tag => {
       if (tag && tag.image) {
-        images.push(tag.image) 
+        images.push(`/artlayers/${tag.image}`) 
       }
     })
 
@@ -55,7 +55,7 @@ export default class AlbumCanvas extends Component {
     let instrumentImages;
     if (instruments) {
       instrumentImages = instruments.map(instrument => {
-        return instrument.image;
+        return `/artlayers/${instrument.image}`;
       })
     }
     if (instrumentImages) {
@@ -69,7 +69,7 @@ export default class AlbumCanvas extends Component {
     const { song } = nextProps;
 
     let imgUrls = this.getTagImages(song).map(image => {
-      return '/images/' + image;
+      return image;
     })
 
     console.log("image URLS: ", imgUrls)
