@@ -18,7 +18,7 @@ export default class AlbumCanvas extends Component {
     const { song } = this.props;
 
     let imgUrls = this.getTagImages(song).map(image => {
-      return '/images/' + image;
+      return '/artlayers/' + image;
     })
 
     console.log("image URLS: ", imgUrls)
