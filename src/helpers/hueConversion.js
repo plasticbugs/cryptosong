@@ -14,7 +14,6 @@ const leapYear = (date) => {
   //   If there is a feb 29th... it's a leap year
   const year = date.getFullYear();
   const result = new Date(year, 1, 29).getMonth() == 1;
-  console.log(year + ' is a leap year?? '+result)
   return result
  }
 
@@ -64,28 +63,22 @@ const leapYear = (date) => {
     if ( dayOfYear > 60 && isLeapYear ) {
       // If it's a leap year, after Feb 29th, add a day?
       dayOfYearAdjusted = dayOfYearAdjusted - isLeapYear
-      console.log('after feb 29 on a leap year')
     }
     if ( dayOfYear > 99 + isLeapYear ) {
       dayOfYearAdjusted = dayOfYearAdjusted - 1
-      console.log('Happy B-Day Jonathan')
     }
     if ( dayOfYear > 185 + isLeapYear ) {
       dayOfYearAdjusted = dayOfYearAdjusted - 1
-      console.log('Happy Independance day')
     }
     if ( dayOfYear > 304 + isLeapYear ) {
       dayOfYearAdjusted = dayOfYearAdjusted - 1
-      console.log('Happy Independance day')
     }
     if ( dayOfYear > 359 + isLeapYear ) {
       dayOfYearAdjusted = dayOfYearAdjusted - 1
-      console.log('Happy Christmas')
     }
     if ( dayOfYear > 365 + isLeapYear ) {
       // This shouldn't happen
       dayOfYearAdjusted = dayOfYearAdjusted - 1
-      console.log('Happy New Year')
     }
     return 359 - ( dayOfYearAdjusted + 119 ) % 360;
   }

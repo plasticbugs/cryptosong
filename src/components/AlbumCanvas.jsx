@@ -3,7 +3,7 @@ import { Stage, Image, Layer, Rect, Text } from "react-konva";
 import SongImage from './SongImage.jsx';
 import { getHueForDate } from '../helpers/hueConversion.js'
 
-import mergeImages from 'merge-images';
+import mergeImages from '../helpers/mergeImages.js';
 
 export default class AlbumCanvas extends Component {
   constructor(props) {
@@ -53,30 +53,49 @@ export default class AlbumCanvas extends Component {
 
 
     let instrumentImages;
-    if (instruments) {
-      instrumentImages = instruments.map(instrument => {
-        return `/artlayers/${instrument.image}`;
-      })
+    if (instruments && instruments[0]) {
+      if (instruments[0].name === 'vocals') {
+        if (instruments[1]) {
+          switch (instruments[1].name) {
+            case "keyboard":
+            case "organ":
+            case "piano":
+            case "synths":
+              instrumentImages = [`/artlayers/${instruments[1].image}`, `/artlayers/${instruments[0].image}`];
+              break;
+            default: 
+              instrumentImages = [`/artlayers/${instruments[0].image}`, `/artlayers/${instruments[1].image}`];
+          }
+        }
+      } else {
+        instrumentImages = [`/artlayers/${instruments[0].image}`]
+      }
     }
+
+    // instrumentImages = instruments.map(instrument => {
+    //   return `/artlayers/${instrument.image}`;
+    // })
+
     if (instrumentImages) {
       images = images.concat(instrumentImages);
     }
-    console.log(images)
     return images;
   }
 
+  
   componentWillReceiveProps(nextProps) {
     const { song } = nextProps;
 
-    let imgUrls = this.getTagImages(song).map(image => {
-      return image;
-    })
+    let imgUrls = this.getTagImages(song);
 
     console.log("image URLS: ", imgUrls)
     mergeImages(imgUrls)
     .then(b64 => {
-      console.log(b64)
       this.setState({mergedImage: b64})
+    })
+    .catch(err => {
+      console.log(err)
+      throw new Error(err)
     })
   }
 
