@@ -27,6 +27,7 @@ export default class SongInputForm extends Component {
       location: [],
       beard: [],
       tag: [],
+      mood: [],
       song: {
         number: this.dateDiff(GENESIS, moment().format('MM/DD/YYYY')),
         title: '',
@@ -46,6 +47,7 @@ export default class SongInputForm extends Component {
         press: '',
         comments: '',
         firsts: '',
+        mood: {name: ''},
       },
     }
     this.handleChange =         this.handleChange.bind(this);
@@ -176,9 +178,9 @@ export default class SongInputForm extends Component {
 
   }
 
-  setUpDropdowns({beard, instrument, inkey, location, topic, tag}, cb) {
+  setUpDropdowns({beard, instrument, inkey, location, topic, tag, mood}, cb) {
     console.log(beard, instrument, inkey, location, topic, tag)
-    let tagArray = [{beard}, {instrument}, {inkey}, {location}, {topic}, {tag}]
+    let tagArray = [{beard}, {instrument}, {inkey}, {location}, {topic}, {tag}, {mood}]
     let options = {};
     tagArray.forEach(tag => {
       let optionArray = [];
@@ -189,7 +191,7 @@ export default class SongInputForm extends Component {
       let theKey = key + 'Options';
       options[theKey] = optionArray;
     })
-    this.setState({beard, instrument, inkey, location, topic, tag, ...options}, () => {
+    this.setState({beard, instrument, inkey, location, topic, mood, tag, ...options}, () => {
       cb();
     });
   }
@@ -351,6 +353,7 @@ export default class SongInputForm extends Component {
       press,
       comments,
       firsts,
+      mood,
     } = this.state.song
     return (
       <Container>
@@ -421,6 +424,15 @@ export default class SongInputForm extends Component {
                     label='Beard'
                     options={this.state.beardOptions}
                     placeholder='Choose a Beard'
+                    onChange={this.handleChange}
+                  />
+                  <Form.Field
+                    control={Select}
+                    value={mood.name}
+                    name='mood'
+                    label='Mood'
+                    options={this.state.moodOptions}
+                    placeholder='Choose a Mood'
                     onChange={this.handleChange}
                   />
                   <Form.Field>
