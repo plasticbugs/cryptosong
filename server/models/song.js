@@ -1,5 +1,7 @@
-import { Model } from 'mongoose';
-
+/**
+ * Song Model module.
+ * @module models/song
+ */
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Models = require('./index.js')
@@ -32,7 +34,8 @@ const songSchema = new Schema({
   itunes: String,
   spotify: String,
   bandcamp: String,
-  mood: String,
+  mainInstrument: { type: Schema.Types.ObjectId, ref: 'Instrument' },
+  mood: { type: Schema.Types.ObjectId, ref: 'Mood' },
 });
 
 const Song = mongoose.model('Song', songSchema);
@@ -59,6 +62,12 @@ const cleanObj = (obj) => {
   return obj;
 }
 
+/**
+* Get a song by the given song number.
+* @param {number} number - The song number.
+* @return {object} The song object populated with object names and images from these collections:
+* instruments, beard, topic, song key, location, mood, and main instrument (depicted in generated art)
+*/
 module.exports.getSongByNumber = (number) => {
   return new Promise((resolve, reject) => {
     Song.find({number})
@@ -67,13 +76,21 @@ module.exports.getSongByNumber = (number) => {
     .populate('topic')
     .populate('inkey')
     .populate('location')
+    .populate('mood')
+    .populate('mainInstrument')
     .then(results => {
       const song = results[0];
       resolve(song)
     })
   })
 }
-
+/**
+* Get a song by the given song number along with all possible tag options for selectable categories. This
+* method returns the same song info as the getSongByNumber method.
+* @param {number} number - The song number.
+* @return {object} An object with arrays for each taggable category used to populate dropdown selectors.
+* @see module:models/song.getSongByNumber
+*/
 module.exports.getSongByNumberWithAllPossibleTags = (number) => {
   return new Promise((resolve, reject) => {
     Song.find({number})
@@ -82,6 +99,8 @@ module.exports.getSongByNumberWithAllPossibleTags = (number) => {
     .populate('topic')
     .populate('inkey')
     .populate('location')
+    .populate('mood')
+    .populate('mainInstrument')
     .then(song => {
       song = cleanObj(song[0]);
       (async function getAllTags() {
@@ -91,7 +110,8 @@ module.exports.getSongByNumberWithAllPossibleTags = (number) => {
         let topic = await Models.Topic.find();
         let inkey = await Models.Inkey.find();
         let tag = await Models.Tag.find().select('_id name image');
-        resolve({instrument, beard, location, topic, inkey, song, tag});
+        let mood = await Models.Mood.find();
+        resolve({instrument, beard, location, topic, inkey, song, mood, tag});
       })();
 
     })
@@ -106,7 +126,7 @@ module.exports.getSongByNumberWithAllPossibleTags = (number) => {
 
 const assignIDsToTags = (data) => {
   let songData = Object.assign({}, data);
-  const TAGS = ['beard', 'location', 'topic', 'inkey'];
+  const TAGS = ['beard', 'location', 'topic', 'inkey', 'mood'];
   TAGS.forEach(tag => {
     if (typeof songData[tag] === 'object' && songData[tag]._id) {
       songData[tag] = songData[tag]._id;
@@ -119,19 +139,16 @@ const deleteTagsForSong = (forSongId, task) => {
   return new Promise((resolve, reject) => {
     task.update("Song", {number: forSongId}, {tags: []})
     resolve(task);
-    // Song.findOne({number: forSongId})
-    // .then(song => {
-
-    //   song.tags = [];
-    //   song.save((success => {
-    //     resolve(task)
-    //   }))
-    // })
   })
 }
 
 
-
+/**
+* A promise that updates a song based on the updated data sent from the client.
+* On success, this promise resolves the updated song object.
+* @param {object} songData - JSON data representing an updated song with modified fields.
+* @return {promise} A promise that, on success, resolves with an updated song object.
+*/
 module.exports.updateSong = (songData) => {
   const task = new Fawn.Task();
   return new Promise((resolve, reject) => {
@@ -178,84 +195,27 @@ module.exports.updateSong = (songData) => {
             
             console.log("oh snamp:", err)
           })
-
-          // Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
-          //   if (err) {
-          //     console.log(err);
-          //     reject(err);
-          //     return;
-          //   }
-          //   resolve(results);
-          // })
         })
       } else {
         songData.length = getLength(songData.mins, songData.secs);
         task.update("Song", {_id: songData._id}, songData);
         task.run({useMongoose: true});
-        // Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
-        //   if (err) {
-        //     console.log(err);
-        //     reject(err);
-        //     return;
-        //   }
-        //   resolve(results);
-        // })
       }
 
     })
   })
 }
 
-// module.exports.updateSong = (songData) => {
-//   const task = new Fawn.Task();
-//   return new Promise((resolve, reject) => {
-//     songData = assignIDsToTags(songData);
-
-//     if (songData.instruments.length > 0) {
-//       songData.instruments = songData.instruments.map(instrument => {
-//        return instrument._id;
-//      })
-//     }
-//     deleteTagsForSong(Number.parseInt(songData.number, 10), task)
-//     .then(success => {
-//       if (songData.tags.length) {
-//         TagModel.addOrInsertTags(songData.tags, Number.parseInt(songData.number))
-//         .then(success => {
-//           delete songData.tags;
-//           songData.length = getLength(songData.mins, songData.secs);
-//           Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
-//             if (err) {
-//               console.log(err);
-//               reject(err);
-//               return;
-//             }
-//             resolve(results);
-//           })
-//         })
-//       } else {
-//         songData.length = getLength(songData.mins, songData.secs);
-//         Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
-//           if (err) {
-//             console.log(err);
-//             reject(err);
-//             return;
-//           }
-//           resolve(results);
-//         })
-//       }
-
-//     })
-//   })
-// }
-
+/**
+* A promise that inserts a new song into the database based on the data sent from the client.
+* On success, this promise resolves the updated song object
+* @param {object} songData - JSON data representing an updated song with modified fields.
+* @return {promise} A promise that resolves with the newly inserted song object.
+*/
 module.exports.insertSong = (newSong) => {
   const task = new Fawn.Task();
   return new Promise((resolve, reject) => {
     newSong = assignIDsToTags(newSong);
-    // newSong.beard = newSong.beard._id;
-    // newSong.location = newSong.location._id;
-    // newSong.topic = newSong.topic._id;
-    // newSong.inkey = newSong.inkey._id;
     newSong.instruments = newSong.instruments.map(instrument => {
       return instrument._id;
     })
@@ -289,42 +249,28 @@ module.exports.insertSong = (newSong) => {
             console.log("oh snap:", err);
             reject(err);
           })
-  
-          // Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
-          //   if (err) {
-          //     console.log(err);
-          //     reject(err);
-          //     return;
-          //   }
-          //   resolve(results);
-          // })
         })
       } else {
         songData.length = getLength(songData.mins, songData.secs);
         task.update("Song", {_id: songData._id}, songData);
         task.run({useMongoose: true});
-        // Song.findOneAndUpdate({_id: songData._id}, songData, (err, results) => {
-        //   if (err) {
-        //     console.log(err);
-        //     reject(err);
-        //     return;
-        //   }
-        //   resolve(results);
-        // })
       }
-  
-
-
-
-
-
-
       console.log('it saved');
       resolve('OK');
     })
   })
 }
 
+/**
+* A promise that updates a tag subdocument on a song based on updated tag data. This
+* method is used when updating a tag's name or image file information as the song stores
+* a copy of its associated tags in a subdocument array.
+* On success, This promise resolves the updated song object.
+* @param {object} newTagData - JSON data representing a tag name  updated song with modified fields.
+* @param {object} task - A Fawn task which ensures synchronicity in updating both the tag and and song documents simultaneously.
+* @return {promise} A promise that resolves with the updated task object which is 'run' when all update tasks have been registered for all songs and tags being updated.
+* {@link module:models/tag.insertTag}
+*/
 module.exports.updateTagsOnSongs = (newTagData, task) => {
   return new Promise((resolve, reject) => {
     task.update("Song", {"tags._id": newTagData._id}, {$set: {"tags.$.name": newTagData.name, "tags.$.image": newTagData.image}})
@@ -332,6 +278,12 @@ module.exports.updateTagsOnSongs = (newTagData, task) => {
   })
 }
 
+
+/**
+* This method removes all tags from the song that match the array of tag ids (as strings) provided.
+* @param {array} tagArray - an array of tag ids (strings).
+* @return {promise} A promise that resolves when all tags in the array have been removed from the song.
+*/
 module.exports.removeTagsFromSongs = (tagArray) => {
   return new Promise((resolve, reject) => {
     (function recurse(array) {
@@ -340,7 +292,6 @@ module.exports.removeTagsFromSongs = (tagArray) => {
         resolve()
       } else {
         let tag = array.shift();
-        console.log(tag)
         Song.find({"tags._id": tag})
         .then(results => {
           results.forEach(song => {
@@ -354,6 +305,10 @@ module.exports.removeTagsFromSongs = (tagArray) => {
   })
 }
 
+/**
+* This method returns the total number of songs in the database.
+* @return {promise} A promise that resolves with the total number of songs in the database.
+*/
 module.exports.totalSongs = () => {
   return new Promise((resolve, reject) => {
     Song.count({}, (err, number) => {

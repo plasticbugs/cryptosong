@@ -1,3 +1,7 @@
+/**
+ * Tag Model module.
+ * @module models/tag
+ */
 import mongoose, { Model } from 'mongoose';
 import Fawn from 'fawn';
 
@@ -39,8 +43,12 @@ const cleanObj = (obj) => {
   }
   return obj;
 }
-
-const getSongsForTag = (name) => {
+/**
+* This method returns a tag document populated with tag's associated songs.
+* @param {string} name - A string representing the name of the requested tag.
+* @return {promise} the promise resolves with the matching tag document along with all the songs in the tag's subdocument array.
+*/
+module.exports.getSongsForTag = (name) => {
   return new Promise((resolve, reject) => {
     Tag.find({name})
     .then(results => {
@@ -48,24 +56,23 @@ const getSongsForTag = (name) => {
     })
   })
 }
-
-const addOrInsertTags = (tagArray, forSongId, task) => {
+/**
+* This method inserts newly created tags into the database and saves those new tags into the song's tags sub-document array.
+* It also saves the song onto the newly create tag's subdocument array of songs.
+* Per its name, this method also finds any already existing tags and saves them onto the song if it doesn't yet have that tag.
+* And it also saves the song onto the pre-existing tag.
+* A Fawn task is passed in to ensure atomicity when adding songs to tags and tags onto songs.
+* @param {string[]} tagArray - An array of tag ids (can be a string or integer)
+* @param {(string|number)} forSongId - A string or number representing the song's ordinal number.
+* @param {object} task - A Fawn task for keeping updates to the db atomic.
+* @return {promise} the promise resolves with the updated, not-yet-run Fawn task.
+*/
+module.exports.addOrInsertTags = (tagArray, forSongId, task) => {
   return new Promise((resolve, reject) => {
     const number = forSongId;
     let counter = tagArray.length;
-    // const recurse = (array) => {
-    //   if (!array.length) {
-    //       resolve(task);
-    //       return;
-    //   }
-    // console.log(tagArray)
     for (let tag of tagArray) {
-      // let tag = array.shift();
-      // if (!tag._id) {
-      //   console.log(tag)
-      // }
       let num = tag._id.toString();
-      // console.log(num, tag.name)
       if (num.match(/^[0-9a-fA-F]{24}$/)) {
         SongModel.Song.findOne({number})
         .then(song => {
@@ -108,17 +115,21 @@ const addOrInsertTags = (tagArray, forSongId, task) => {
         }
       }
     }
-    // }
-    // recurse(tagArray);
   })
 }
 
-
-const insertTag = (tagData, forSongId) => {
+/**
+* This method inserts a new tag from with an associated song document. This method is normally used to add a new
+* tag that doesn't yet exist to a song directly. The newly inserted tag will get a default associated image name based on the inserted tag name.
+* @param {{_id: string, name: string, image: string}} tagData - JSON data representing a tag. Normally in the shape of {name: 'tagname', image: 'filename.png'}
+* @param {number} forSongId - An integer representing the song's ordinal number.
+* @return {promise} If a SongId is provided, the promise resolves with the inserted tag and updated song. If not, the promise resolves with the newly inserted tag.
+*/
+module.exports.insertTag = (tagData, forSongId) => {
   return new Promise((resolve, reject) => {
     console.log(tagData, forSongId)
     if (forSongId) {
-      let song = SongModel.Song.findOne({number: Number.parseInt(forSongId)})
+      let song = SongModel.Song.findOne({number: Number.parseInt(forSongId, 10)})
       .then(song => {
         return song;
       })
@@ -155,8 +166,11 @@ const insertTag = (tagData, forSongId) => {
     
   })
 }
-
-const getAll = () => {
+/**
+* This method retrieves all existing tags in the database and returns them with their name and image properties.
+* @return {promise} the promise resolves with an array of the retrieved tags.
+*/
+module.exports.getAll = () => {
   return new Promise((resolve, reject) => {
     Tag.find({})
     .select('_id name image')
@@ -187,8 +201,12 @@ const deleteTags = (tags) => {
     })
   })
 }
-
-const deleteMany = (tags, cb) => {
+/**
+* This method deletes tags from the database and removes those deleted tags from any song's tag subdoc array which held that tag.
+* @param {string[]} tagIdArray - An array of tag ids (strings).
+* @return {promise} the promise resolves with all the tags in the database after the removal operation.
+*/
+module.exports.deleteMany = (tagIdArray, cb) => {
   const recurse = (array) => {
     let task = new Fawn.Task();
     if (!array.length) {
@@ -207,10 +225,14 @@ const deleteMany = (tags, cb) => {
       })
     })
   }
-  recurse(tags.slice());
+  recurse(tagIdArray.slice());
 }
-
-const updateAll = (tags) => {
+/**
+* This method collects all updates to tags as an array of tag objects in the shape of {id: somenum, name: 'tag name', image: 'filename string'}
+* @param {object[]} tagArray - An array of tag objects.
+* @return {promise} the promise resolves with all the tags in the database after the update operation.
+*/
+module.exports.updateAll = (tagArray) => {
   return new Promise((resolve, reject) => {
     const recurse = (array) => {
       if (!array.length) {
@@ -245,17 +267,9 @@ const updateAll = (tags) => {
         }
       }
     }
-    recurse(tags.slice())
+    recurse(tagArray.slice())
   })
 }
 
-module.exports = {
-  Tag,
-  tagSchema,
-  insertTag,
-  addOrInsertTags,
-  getAll,
-  updateAll,
-  deleteMany,
-  getSongsForTag,
-}
+module.exports.Tag = Tag;
+module.exports.tagSchema = tagSchema
