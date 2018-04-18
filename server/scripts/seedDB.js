@@ -6176,6 +6176,7 @@ const Song = mongoose.model('Song', {
   bandcamp: String,
   mood: String,
   mainInstrument: String,
+  secondaryInstrument: String,
 });
 
 const Tag = mongoose.model('Tag', {
@@ -6411,6 +6412,7 @@ async function insertSongs(array) {
   });
   let records = [];
   let mainInstrument;
+  let secondaryInstrument;
   for (let i = 0; i < array.length; i++) {
     insertSongBar.tick(1);
     let instruments = [];
@@ -6420,12 +6422,16 @@ async function insertSongs(array) {
       });
 
       // ignore Vocals if it's the first instrument listed among multiple
-      instrumentIndex = 0;
-      if (instrumentArray[0] === 'vocals' && instrumentArray.length > 1) {
-        instrumentIndex = 1;
-      }
+      // instrumentIndex = 0;
+      // if (instrumentArray[0] === 'vocals' && instrumentArray.length > 1) {
+      //   instrumentIndex = 1;
+      // }
 
-      const firstInstQuery = await Instrument.findOne({name: instrumentArray[instrumentIndex]}).exec();
+      const firstInstQuery = await Instrument.findOne({name: instrumentArray[0]}).exec();
+      if (instrumentArray[1]) {
+        const secondInstQuery = await Instrument.findOne({name: instrumentArray[1]});
+        secondaryInstrument = secondInstQuery._id
+      }
       mainInstrument = firstInstQuery._id;
 
       const query = await Instrument.find({name: { $in: instrumentArray}}).exec();
@@ -6501,6 +6507,7 @@ async function insertSongs(array) {
       bandcamp: array[i].bandcamp,
       mood,
       mainInstrument,
+      secondaryInstrument,
     }
     records.push(song);
   }
