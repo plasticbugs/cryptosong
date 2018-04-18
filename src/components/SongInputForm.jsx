@@ -15,12 +15,13 @@ export default class SongInputForm extends Component {
     super(props);
     this.state = {
       isOpen: false,
-      inkeyOptions: [{key:"",text:"",value:""}],
-      beardOptions: [{key:"",text:"",value:""}],
-      instrumentOptions: [{key:"",text:"",value:""}],
-      topicOptions: [{key:"",text:"",value:""}],
-      locationOptions: [{key:"",text:"",value:""}],
-      tagOptions: [{key:"",text:"",value:""}],
+      inkeyOptions: [],
+      beardOptions: [],
+      instrumentOptions: [],
+      topicOptions: [],
+      locationOptions: [],
+      tagOptions: [],
+      moodOptions: [],
       // mainInstrumentOptions: [{key:"",text:"",value:""}],
       // secondaryInstrumentOptions: [{key:"",text:"",value:""}],
       instrument: [],
@@ -541,24 +542,6 @@ export default class SongInputForm extends Component {
                       onChange={this.handleDropdownChange}
                     />
                   </Form.Field>
-                  {/* <Form.Field
-                    control={Select}
-                    value={mainInstrument.name}
-                    name='instrument'
-                    label='Main Instrument'
-                    options={this.state.mainInstrumentOptions}
-                    placeholder='Choose a Primary Instrument'
-                    onChange={this.handleChange}
-                  />
-                  <Form.Field
-                    control={Select}
-                    value={secondaryInstrument.name}
-                    name='instrument'
-                    label='Secondary Instrument'
-                    options={this.state.secondaryInstrumentOptions}
-                    placeholder='Choose a Secondary Instrument'
-                    onChange={this.handleChange}
-                  /> */}
                   <Form.Field>
                     <label>Tags</label>
                     <Dropdown
