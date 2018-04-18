@@ -27,6 +27,9 @@ export default class AlbumCanvas extends Component {
       // console.log(b64)
       this.setState({mergedImage: b64})
     })
+    .catch(err => {
+      throw new Error(`One or more layers did not load: ${err}`)
+    })
   }
 
   getTagImages(song) {
@@ -94,8 +97,7 @@ export default class AlbumCanvas extends Component {
       this.setState({mergedImage: b64})
     })
     .catch(err => {
-      console.log(err)
-      throw new Error(err)
+      throw new Error(`One or more layers did not load: ${err}`)
     })
   }
 
