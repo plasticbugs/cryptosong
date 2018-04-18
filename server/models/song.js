@@ -35,6 +35,7 @@ const songSchema = new Schema({
   spotify: String,
   bandcamp: String,
   mainInstrument: { type: Schema.Types.ObjectId, ref: 'Instrument' },
+  secondaryInstrument: { type: Schema.Types.ObjectId, ref: 'Instrument' },
   mood: { type: Schema.Types.ObjectId, ref: 'Mood' },
 });
 
@@ -101,6 +102,7 @@ module.exports.getSongByNumberWithAllPossibleTags = (number) => {
     .populate('location')
     .populate('mood')
     .populate('mainInstrument')
+    .populate('secondaryInstrument')
     .then(song => {
       song = cleanObj(song[0]);
       (async function getAllTags() {
@@ -155,12 +157,17 @@ module.exports.updateSong = (songData) => {
     songData = assignIDsToTags(songData);
 
     if (songData.instruments.length > 0) {
-      songData.instruments = songData.instruments.map(instrument => {
+      songData.instruments = songData.instruments.map((instrument, index) => {
         let num = instrument._id.toString();
         if (!num.match(/^[0-9a-fA-F]{24}$/)) {
           let newInstrument = new Models.Instrument({name: instrument.name})
           return newInstrument.save( (err, savedInstrument) => {
-            console.log(savedInstrument.name)
+            if (index === 0) {
+              songData.mainInstrument = savedInstrument._id;
+            }
+            if (index === 1) {
+              songData.secondaryInstrument = savedInstrument._id;
+            }
             return savedInstrument._id
             // if (doc) {
             //   console.log(doc)
@@ -170,6 +177,14 @@ module.exports.updateSong = (songData) => {
             // }
           })
         } else {
+          if (index === 0) {
+            console.log(instrument, index)
+            songData.mainInstrument = instrument._id;
+          }
+          if (index === 1) {
+            console.log(instrument, index)
+            songData.secondaryInstrument = instrument._id;
+          }
           return instrument._id;
         }
      })
@@ -216,9 +231,44 @@ module.exports.insertSong = (newSong) => {
   const task = new Fawn.Task();
   return new Promise((resolve, reject) => {
     newSong = assignIDsToTags(newSong);
-    newSong.instruments = newSong.instruments.map(instrument => {
-      return instrument._id;
-    })
+
+    if (newSong.instruments.length > 0) {
+      newSong.instruments = newSong.instruments.map((instrument, index) => {
+        let num = instrument._id.toString();
+        if (!num.match(/^[0-9a-fA-F]{24}$/)) {
+          let newInstrument = new Models.Instrument({name: instrument.name})
+          return newInstrument.save( (err, savedInstrument) => {
+            console.log(savedInstrument.name)
+            if (index === 0) {
+              newSong.mainInstrument = savedInstrument._id;
+            }
+            if (index === 1) {
+              newSong.secondaryInstrument = savedInstrument._id;
+            }
+            return savedInstrument._id
+            // if (doc) {
+            //   console.log(doc)
+            //   return null;
+            // } else {
+            //   return saved._id
+            // }
+          })
+        } else {
+          if (index === 0) {
+            newSong.mainInstrument = instrument._id;
+          }
+          if (index === 1) {
+            newSong.secondaryInstrument = instrument._id;
+          }
+          return instrument._id;
+        }
+     })
+    }
+
+
+    // newSong.instruments = newSong.instruments.map(instrument => {
+    //   return instrument._id;
+    // })
 
     newSong.length = getLength(newSong.mins, newSong.secs);
     const tagArray = Object.assign([], newSong.tags);
