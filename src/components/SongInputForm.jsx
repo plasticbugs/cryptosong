@@ -120,7 +120,6 @@ export default class SongInputForm extends Component {
   }
 
   getTagNames() {
-    console.log(this.state.song)
     let names = this.state.song.tags.map(tag => {
       return tag.name;
     })
@@ -128,12 +127,10 @@ export default class SongInputForm extends Component {
   }
 
   formatSong(songData) {
-    console.log('formatting song')
     let song = Object.assign({}, songData);
     if (song.date) {
       let date = new Date(song.date);
       date = (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear());
-      console.log(date)
       song.date = moment(date, 'M/D/YYYY');
     }
     if (song.length) {
@@ -162,10 +159,8 @@ export default class SongInputForm extends Component {
 
   componentDidMount() {
     if(this.props.match.params.id) {
-      console.log("params: ", this.props.match.params.id)
       let number = Number.parseInt(this.props.match.params.id);
       let date = moment(GENESIS, 'M-D-YYYY').add(number - 1, 'days');
-      console.log(date.toString())
       let nextState = {number, date}
       this.setState(prevState => ({
         ...prevState,
@@ -181,12 +176,10 @@ export default class SongInputForm extends Component {
           }
         })
       .then(response => {
-        console.log(response.data)
         let song = this.formatSong(response.data.song);
         if (song.date) {
           this.handleDateChange(song.date);
         }
-        console.log(song)
         this.setUpDropdowns(response.data, () => {
           this.setState(prevState => ({
             ...prevState,
@@ -198,10 +191,9 @@ export default class SongInputForm extends Component {
         });
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       })
     } else {
-      console.log('getting options')
       axios.get('/api/options')
       .then(response => {
         this.setUpDropdowns(response.data, ()=>{})
@@ -211,7 +203,6 @@ export default class SongInputForm extends Component {
   }
 
   setUpDropdowns({beard, instrument, inkey, location, topic, tag, mood}, cb) {
-    console.log(beard, instrument, inkey, location, topic, tag)
     let tagArray = [{beard}, {instrument}, {inkey}, {location}, {topic}, {tag}, {mood}]
     let options = {};
     tagArray.forEach(tag => {
@@ -332,10 +323,8 @@ export default class SongInputForm extends Component {
 
   cleanSong(obj) {
     for (let key in obj) {
-      // console.log(obj, key, obj[key], obj[key].name)
       if (typeof obj[key] === 'object') {
         if (obj[key].name === '') {
-          console.log('empty')
           delete obj[key]
         }
       }
@@ -346,7 +335,6 @@ export default class SongInputForm extends Component {
   handleSubmit() {
     let song = Object.assign({}, this.state.song);
     song = this.cleanSong(song);
-    console.log('SONG: ', song);
     if (this.props.editing) {
       // this.setState({isOpen: true})
       axios.put('/api/song', song)
@@ -354,7 +342,6 @@ export default class SongInputForm extends Component {
         this.setState({isOpen: true}, ()=> {
           setTimeout(()=>{this.setState({isOpen: false})}, 3000)
         })
-        console.log(response)
       })
       return;
     }
