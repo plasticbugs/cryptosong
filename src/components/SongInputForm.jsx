@@ -21,6 +21,8 @@ export default class SongInputForm extends Component {
       topicOptions: [{key:"",text:"",value:""}],
       locationOptions: [{key:"",text:"",value:""}],
       tagOptions: [{key:"",text:"",value:""}],
+      // mainInstrumentOptions: [{key:"",text:"",value:""}],
+      // secondaryInstrumentOptions: [{key:"",text:"",value:""}],
       instrument: [],
       inkey: [],
       topic: [],
@@ -48,6 +50,8 @@ export default class SongInputForm extends Component {
         comments: '',
         firsts: '',
         mood: {name: ''},
+        mainInstrument: {name: ''},
+        secondaryInstrument: {name: ''},
       },
     }
     this.handleChange =         this.handleChange.bind(this);
@@ -74,10 +78,44 @@ export default class SongInputForm extends Component {
   }
 
   getInstrumentNames() {
+    // get first and second primaries:
+    let first;
+    let second;
+
     let names = this.state.song.instruments.map(instrument => {
       return instrument.name;
     })
-    return names;
+
+    names.forEach((inst, index) => {
+      if (inst === this.state.song.mainInstrument.name) {
+        first = index;
+      }
+      if (inst === this.state.song.secondaryInstrument.name) {
+        second = index;
+      }
+    })
+
+    let toRemove = [];
+    let sorted = [];
+
+    if (first !== undefined) {
+      sorted.push(names[first]);
+      toRemove.push(first);
+    }
+    if (second !== undefined) {
+      sorted.push(names[second])
+      toRemove.push(second);
+    }
+
+    toRemove.sort((a, b) => {
+      return b - a;
+    })
+
+    for (let removeThis of toRemove) {
+      names.splice(removeThis, 1);
+    }
+
+    return sorted.concat(names);
   }
 
   getTagNames() {
@@ -165,14 +203,7 @@ export default class SongInputForm extends Component {
       console.log('getting options')
       axios.get('/api/options')
       .then(response => {
-        this.setUpDropdowns(response.data, ()=>{
-          console.log(response.data)
-          // axios.get('/api/songs/count')
-          // .then(response => {
-          //   let song = Object.assign({}, this.state.song, {number: response.data.number + 1});
-          //   this.setState({song});
-          // })
-        });
+        this.setUpDropdowns(response.data, ()=>{})
       })
     }
 
@@ -191,6 +222,7 @@ export default class SongInputForm extends Component {
       let theKey = key + 'Options';
       options[theKey] = optionArray;
     })
+
     this.setState({beard, instrument, inkey, location, topic, mood, tag, ...options}, () => {
       cb();
     });
@@ -273,10 +305,28 @@ export default class SongInputForm extends Component {
         this.setState({instrument: [...this.state.instrument, newInstrument]})
       }
     }
-
     let song = Object.assign({}, this.state.song);
     song.instruments = instruments;
-    this.setState({song});
+    this.setState({song}, () => {
+      if (value.indexOf(this.state.song.mainInstrument.name) === -1) {
+        this.setState(prevState => ({
+          ...prevState,
+          song: {
+            ...prevState.song,
+            mainInstrument: {name: ''}
+          }
+        }))
+      }
+      if (value.indexOf(this.state.song.secondaryInstrument.name) === -1) {
+        this.setState(prevState => ({
+          ...prevState,
+          song: {
+            ...prevState.song,
+            secondaryInstrument: {name: ''}
+          }
+        }))
+      }
+    });
   }
 
   cleanSong(obj) {
@@ -354,6 +404,8 @@ export default class SongInputForm extends Component {
       comments,
       firsts,
       mood,
+      mainInstrument,
+      secondaryInstrument,
     } = this.state.song
     return (
       <Container>
@@ -489,6 +541,24 @@ export default class SongInputForm extends Component {
                       onChange={this.handleDropdownChange}
                     />
                   </Form.Field>
+                  {/* <Form.Field
+                    control={Select}
+                    value={mainInstrument.name}
+                    name='instrument'
+                    label='Main Instrument'
+                    options={this.state.mainInstrumentOptions}
+                    placeholder='Choose a Primary Instrument'
+                    onChange={this.handleChange}
+                  />
+                  <Form.Field
+                    control={Select}
+                    value={secondaryInstrument.name}
+                    name='instrument'
+                    label='Secondary Instrument'
+                    options={this.state.secondaryInstrumentOptions}
+                    placeholder='Choose a Secondary Instrument'
+                    onChange={this.handleChange}
+                  /> */}
                   <Form.Field>
                     <label>Tags</label>
                     <Dropdown
