@@ -61,7 +61,6 @@ export default class AlbumCanvas extends Component {
         if (instruments[1]) {
           switch (instruments[1].name) {
             case "keyboard":
-            case "organ":
             case "piano":
             case "synths":
               instrumentImages = [`/artlayers/${instruments[0].image}`, `/artlayers/${instruments[1].image}`];
