@@ -57,17 +57,20 @@ export default class AlbumCanvas extends Component {
     let instrumentImages;
     if (instruments && instruments[0]) {
       if (instruments[0].name === 'vocals') {
+        console.log('first instrument is vocals!')
         if (instruments[1]) {
           switch (instruments[1].name) {
             case "keyboard":
             case "organ":
             case "piano":
             case "synths":
-              instrumentImages = [`/artlayers/${instruments[1].image}`, `/artlayers/${instruments[0].image}`];
+              instrumentImages = [`/artlayers/${instruments[0].image}`, `/artlayers/${instruments[1].image}`];
               break;
             default: 
-              instrumentImages = [`/artlayers/${instruments[0].image}`, `/artlayers/${instruments[1].image}`];
+              instrumentImages = [`/artlayers/${instruments[1].image}`, `/artlayers/${instruments[0].image}`];
           }
+        } else {
+          instrumentImages = [`/artlayers/${instruments[0].image}`]
         }
       } else {
         instrumentImages = [`/artlayers/${instruments[0].image}`]
@@ -77,6 +80,7 @@ export default class AlbumCanvas extends Component {
     // instrumentImages = instruments.map(instrument => {
     //   return `/artlayers/${instrument.image}`;
     // })
+    console.log(instrumentImages)
 
     if (instrumentImages) {
       images = images.concat(instrumentImages);
