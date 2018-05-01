@@ -3,7 +3,7 @@ const gm = require('gm').subClass({imageMagick: true});
 
 const makeImages = () => {
   for (let i = 0; i < 360; i++) {
-    gm(1024, 768, `hsl(${i}), 100%, 90%`)
+    gm(1792, 768, `hsl(${i}), 100%, 90%`)
     .write(`./build/images/${i}.png`, function (err) {
       if (err) {
         console.log(err);
