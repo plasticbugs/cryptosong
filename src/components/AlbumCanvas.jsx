@@ -24,7 +24,6 @@ export default class AlbumCanvas extends Component {
     console.log("image URLS: ", imgUrls)
     mergeImages(imgUrls)
     .then(b64 => {
-      // console.log(b64)
       this.setState({mergedImage: b64})
     })
     .catch(err => {
@@ -95,9 +94,12 @@ export default class AlbumCanvas extends Component {
     mergeImages(imgUrls)
     .then(b64 => {
       this.setState({mergedImage: b64})
+      return true;
     })
     .catch(err => {
+      console.log(err)
       throw new Error(`One or more layers did not load: ${err}`)
+      return false;
     })
   }
 
