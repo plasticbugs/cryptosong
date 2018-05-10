@@ -60,13 +60,11 @@ export default class AlbumCanvas extends Component {
         console.log('first instrument is vocals!')
         if (instruments[1]) {
           switch (instruments[1].name) {
-            case "keyboard":
             case "piano":
-            case "synths":
-              instrumentImages = [`/artlayers/${instruments[0].image}`, `/artlayers/${instruments[1].image}`];
+              instrumentImages = [`/artlayers/instrument_vocals_no_hands.png`, `/artlayers/${instruments[1].image}`];
               break;
-            default: 
-              instrumentImages = [`/artlayers/${instruments[1].image}`, `/artlayers/${instruments[0].image}`];
+            default:
+              instrumentImages = [`/artlayers/${instruments[1].image}`, `/artlayers/instrument_vocals_no_hands.png`];
           }
         } else {
           instrumentImages = [`/artlayers/${instruments[0].image}`]
