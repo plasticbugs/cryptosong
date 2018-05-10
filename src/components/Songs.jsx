@@ -60,7 +60,7 @@ export default class Songs extends Component {
         {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
         {this.state.songs.map(song => {
           return (
-            <AlbumCanvas width={106} height={106} images={[]} song={song} songnumber={song.number} />
+            <AlbumCanvas width={300} images={[]} song={song} songnumber={song.number} />
           )
           //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>
           //     <Popup.Header>{song.title}</Popup.Header>

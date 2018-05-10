@@ -110,6 +110,7 @@ export default class AlbumCanvas extends Component {
     return (
       <div style={{width, height, display: 'inline-block'}}>
         <img src={this.state.mergedImage} style={{maxWidth: '100%', maxHeight: '100%', padding: '3px'}}/>
+        <div>{this.props.song.number} {this.props.song.title.slice(0, 30)}...</div>
       </div>
       // <Stage width={this.props.width} height={this.props.height} className="album-art" style={{float: 'left', border: '5px solid black'}}>
       //   <Layer>

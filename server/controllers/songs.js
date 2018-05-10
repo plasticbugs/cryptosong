@@ -26,8 +26,13 @@ module.exports.editSong = (req, res) => {
 
 module.exports.getAllSongs = (req, res) => {
   SongModel.Song.find()
-  .populate('inkey')
+  .populate('instruments')
   .populate('beard')
+  .populate('topic')
+  .populate('inkey')
+  .populate('location')
+  .populate('mood')
+  .populate('mainInstrument')
   .then( results => {
     results.sort((a,b) => {
       return a.number - b.number;
