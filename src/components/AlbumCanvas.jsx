@@ -34,7 +34,7 @@ export default class AlbumCanvas extends Component {
   getTagImages(song) {
     // let { inkey, beard, location, instruments, topic } = song;
     let { inkey, beard, location, instruments, mood, topic } = song;
-    let tags = [location, topic, mood, beard];
+    let tags = [location, mood, topic, beard];
     // let tags = [inkey, beard, location, topic]
 
     // let currentNumber = Number.parseInt(song.number, 10);
