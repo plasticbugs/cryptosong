@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
 import axios from "axios";
 import AlbumCanvas from "./AlbumCanvas.jsx";
+import Navigation from "./Navigation.jsx";
 
 import "../styles/songs.scss";
 
@@ -56,6 +57,7 @@ export default class Songs extends Component {
                     flexWrap: "wrap"
                 }}
             >
+                <Navigation />
                 {/* <Embed
                     id="7Af6b9-yqa8"
                     placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}

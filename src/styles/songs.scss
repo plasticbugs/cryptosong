@@ -1,3 +1,9 @@
+
+.is-loading{
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .song-list-item{
     position: relative;
 }
@@ -56,7 +62,7 @@
       font-size: 10px;
   }
 
-  .song-list-item:hover{
+  .song-list-item:not(.is-loading):hover{
   // Hover styles for the list
     background: #000;
     z-index: 1;

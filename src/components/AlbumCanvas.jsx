@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Stage, Image, Layer, Rect, Text } from "react-konva";
 import SongImage from "./SongImage.jsx";
 import { getHueForDate } from "../helpers/hueConversion.js";
+import moment from "moment";
 
 import mergeImages from "../helpers/mergeImages.js";
 
@@ -115,23 +116,28 @@ export default class AlbumCanvas extends Component {
 
     render() {
         const { width, height } = this.props;
-        let backgroundImage = "/loading.gif",
+        let is_loading = this.state.mergedImage ? false : true,
+            backgroundImage = this.state.mergedImage
+                ? this.state.mergedImage
+                : "/loading.gif",
             song_date = new Date(this.props.song.date),
-            song_link = "/song/" + this.props.song.number + "/";
+            song_link = "/song/" + this.props.song.number + "/",
+            song_list_item_classes = ["song-list-item"];
 
-        if (this.state.mergedImage) {
-            backgroundImage = this.state.mergedImage;
+        if (is_loading) {
+            song_list_item_classes.push("is-loading");
         }
 
         return (
             <div
-                className="song-list-item"
+                className={song_list_item_classes.join(" ")}
                 style={{
                     width: "100px",
                     height: "100px",
                     flexShrink: "0",
                     margin: "5px"
                 }}
+                key={this.props.song.number}
             >
                 <a href={song_link}>
                     <div
@@ -145,10 +151,9 @@ export default class AlbumCanvas extends Component {
                 </a>
                 <div className="song-list-item-data">
                     <div>
-                        Day: {this.props.song.number}
+                        Day: {this.props.song.number}{" "}
                         <span className="song-list-item-data-date">
-                            {song_date.getMonth()} {song_date.getDate()},{" "}
-                            {song_date.getFullYear()}
+                            {moment(song_date).format("MMMM Do, YYYY")}
                         </span>
                     </div>
                     <h3 className="song-list-item-data-title">
