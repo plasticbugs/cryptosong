@@ -24,7 +24,6 @@ instrument_organ.png
 instrument_piano.png
 instrument_samples.png
 instrument_shaker.png
-instrument_snaps.png
 instrument_synths.png
 instrument_uke.png
 instrument_vocals.png
@@ -34,7 +33,6 @@ Location
 ********************
 location_baltimore.png
 location_berkeley.png
-location_florida.png
 location_jupiterfl.png
 location_la.png
 location_losangeles.png
@@ -84,17 +82,27 @@ topic_videogames.png
 Inkey
 ********************
 inkey_a.png
+inkey_a?.png
 inkey_am.png
 inkey_b.png
 inkey_bb.png
 inkey_bbm.png
+inkey_bbmambb?.png
 inkey_bm.png
+inkey_c-sharp.png
 inkey_c.png
 inkey_d-sharpm.png
 inkey_d.png
+inkey_dg?.png
+inkey_dm.png
+inkey_e.png
+inkey_eb.png
 inkey_em.png
 inkey_f-sharp.png
 inkey_f.png
+inkey_fm.png
+inkey_g-sharp.png
+inkey_g-sharpm?.png
 inkey_g.png
 inkey_gm.png
 

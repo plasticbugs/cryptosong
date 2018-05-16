@@ -189,6 +189,12 @@ module.exports.updateSong = (songData) => {
         }
      })
     }
+    if (!songData.instruments[0]) {
+      songData.mainInstrument = undefined
+    }
+    if (!songData.instruments[1]) {
+      songData.secondaryInstrument = undefined
+    }
     deleteTagsForSong(Number.parseInt(songData.number, 10), task)
     .then(task => {
       if (songData.tags.length) {

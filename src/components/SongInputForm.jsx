@@ -280,6 +280,7 @@ export default class SongInputForm extends Component {
   }
 
   handleDropdownChange(e, { name, value }, fullSong) {
+    console.log("HELLLLYOO")
     let instruments = [];
     for (let i = 0; i < value.length; i++) {
       let selected = this.state.instrument.find( instrument => {
@@ -297,10 +298,19 @@ export default class SongInputForm extends Component {
         this.setState({instrument: [...this.state.instrument, newInstrument]})
       }
     }
+
     let song = Object.assign({}, this.state.song);
     song.instruments = instruments;
     this.setState({song}, () => {
-      if (value.indexOf(this.state.song.mainInstrument.name) === -1) {
+      if (song.instruments[0]) {
+        this.setState(prevState => ({
+          ...prevState,
+          song: {
+            ...prevState.song,
+            mainInstrument: song.instruments[0],
+          }
+        }))
+      } else {
         this.setState(prevState => ({
           ...prevState,
           song: {
@@ -309,7 +319,15 @@ export default class SongInputForm extends Component {
           }
         }))
       }
-      if (value.indexOf(this.state.song.secondaryInstrument.name) === -1) {
+      if (song.instruments[1]) {
+        this.setState(prevState => ({
+          ...prevState,
+          song: {
+            ...prevState.song,
+            secondaryInstrument: song.instruments[1],
+          }
+        }))
+      } else {
         this.setState(prevState => ({
           ...prevState,
           song: {
@@ -332,9 +350,29 @@ export default class SongInputForm extends Component {
     return obj;
   }
 
+  // if (value.indexOf(this.state.song.mainInstrument.name) === -1) {
+  //   this.setState(prevState => ({
+  //     ...prevState,
+  //     song: {
+  //       ...prevState.song,
+  //       mainInstrument: {name: ''}
+  //     }
+  //   }))
+  // }
+  // if (value.indexOf(this.state.song.secondaryInstrument.name) === -1) {
+  //   this.setState(prevState => ({
+  //     ...prevState,
+  //     song: {
+  //       ...prevState.song,
+  //       secondaryInstrument: {name: ''}
+  //     }
+  //   }))
+  // }
+
   handleSubmit() {
     let song = Object.assign({}, this.state.song);
     song = this.cleanSong(song);
+
     if (this.props.editing) {
       // this.setState({isOpen: true})
       axios.put('/api/song', song)
@@ -521,10 +559,10 @@ export default class SongInputForm extends Component {
                       options={this.state.instrumentOptions}
                       allowAdditions
                       onAddItem={(e, d)=> {
+                        console.log('adding')
                         this.setState({
                           instrumentOptions: [{ key: d.value, text: d.value, value: d.value }, ...this.state.instrumentOptions],
                         })
-                        // this.state.instrumentOptions.push({key: d.value, text: d.value, value: d.value})
                       }}
                       onChange={this.handleDropdownChange}
                     />

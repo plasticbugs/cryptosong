@@ -16,13 +16,11 @@ organ
 piano
 samples
 shaker
-snaps
 synths
 uke
 vocals
 Baltimore
 Berkeley
-Florida
 Jupiter, FL
 LA
 Los Angeles
@@ -64,18 +62,28 @@ TV
 Thanksgiving
 Video Games
 A
+A?
 Am
 B
 Bb
 Bbm
+Bbm/Am/Bb?
 Bm
 C
+C#
 D
 D#m
+D/G?
+Dm
+E
+Eb
 Em
 F
 F#
+Fm
 G
+G#
+G#m?
 Gm
 80s
 acapella
@@ -135,7 +143,6 @@ deer
 delicate
 demi moore
 distortion
-dog
 dogs
 dreams
 dreamy
