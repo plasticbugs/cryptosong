@@ -110,19 +110,44 @@ export default class AlbumCanvas extends Component {
 
     render() {
         const { width, height } = this.props;
+        let backgroundImage = "/loading.gif";
+        if (this.state.mergedImage) {
+            backgroundImage = this.state.mergedImage;
+        }
+
         return (
-            <div style={{ width, height, display: "inline-block" }}>
-                <img
-                    src={this.state.mergedImage}
+            <div
+                className="song-list-item"
+                style={{
+                    width: "100px",
+                    height: "100px",
+                    flexShrink: "0",
+                    margin: "5px"
+                }}
+            >
+                <div
+                    className="song-list-image"
                     style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        padding: "3px"
+                        width: "100px",
+                        height: "100px",
+                        display: "inline-block",
+                        backgroundImage: "url(" + backgroundImage + ")",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center center"
                     }}
-                />
-                <div>
-                    {this.props.song.number}{" "}
-                    {this.props.song.title.slice(0, 30)}...
+                >
+                    <div className="song-list-item-play-button">
+                        <div className="song-list-item-song-number">
+                            Day {this.props.song.number}
+                        </div>
+                    </div>
+                </div>
+                <div className="song-list-item-data">
+                    <h3>
+                        <a href="/song/{this.props.song.number}">
+                            {this.props.song.title.slice(0, 30)}
+                        </a>
+                    </h3>
                 </div>
             </div>
             // <Stage width={this.props.width} height={this.props.height} className="album-art" style={{float: 'left', border: '5px solid black'}}>

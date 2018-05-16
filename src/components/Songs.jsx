@@ -46,12 +46,18 @@ export default class Songs extends Component {
             padding: "2em"
         };
         return (
-            <Container style={{ padding: "2px" }}>
-                <Embed
+            <Container
+                style={{
+                    padding: "2px",
+                    display: "flex",
+                    flexWrap: "wrap"
+                }}
+            >
+                {/* <Embed
                     id="7Af6b9-yqa8"
                     placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
                     source="youtube"
-                />
+                /> */}
 
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
                 {this.state.songs.map(song => {
