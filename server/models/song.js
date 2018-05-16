@@ -79,6 +79,7 @@ module.exports.getSongByNumber = (number) => {
     .populate('location')
     .populate('mood')
     .populate('mainInstrument')
+    .populate('secondaryInstrument')
     .then(results => {
       const song = results[0];
       resolve(song)
@@ -188,6 +189,12 @@ module.exports.updateSong = (songData) => {
           return instrument._id;
         }
      })
+    }
+    if (!songData.instruments[0]) {
+      songData.mainInstrument = undefined
+    }
+    if (!songData.instruments[1]) {
+      songData.secondaryInstrument = undefined
     }
     deleteTagsForSong(Number.parseInt(songData.number, 10), task)
     .then(task => {

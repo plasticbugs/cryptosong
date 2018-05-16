@@ -21,7 +21,6 @@ export default class AlbumCanvas extends Component {
             return image;
         });
 
-        console.log("image URLS: ", imgUrls);
         mergeImages(imgUrls)
             .then(b64 => {
                 this.setState({ mergedImage: b64 });
@@ -33,7 +32,16 @@ export default class AlbumCanvas extends Component {
 
     getTagImages(song) {
         // let { inkey, beard, location, instruments, topic } = song;
-        let { inkey, beard, location, instruments, mood, topic } = song;
+        let {
+            inkey,
+            beard,
+            location,
+            instruments,
+            mood,
+            topic,
+            mainInstrument,
+            secondaryInstrument,
+        } = song;
         let tags = [location, mood, topic, beard];
         // let tags = [inkey, beard, location, topic]
 
@@ -54,29 +62,26 @@ export default class AlbumCanvas extends Component {
         });
 
         let instrumentImages;
-        if (instruments && instruments[0]) {
-            if (instruments[0].name === "vocals") {
-                console.log("first instrument is vocals!");
-                if (instruments[1]) {
-                    switch (instruments[1].name) {
-                        case "piano":
-                            instrumentImages = [
-                                `/artlayers/instrument_vocals_no_hands.png`,
-                                `/artlayers/${instruments[1].image}`
-                            ];
-                            break;
-                        default:
-                            instrumentImages = [
-                                `/artlayers/${instruments[1].image}`,
-                                `/artlayers/instrument_vocals_no_hands.png`
-                            ];
-                    }
-                } else {
-                    instrumentImages = [`/artlayers/${instruments[0].image}`];
+        if (mainInstrument.name === "vocals") {
+            if (secondaryInstrument) {
+                switch (secondaryInstrument.name) {
+                    case "piano":
+                        instrumentImages = [
+                            `/artlayers/instrument_vocals_no_hands.png`,
+                            `/artlayers/${secondaryInstrument.image}`
+                        ];
+                        break;
+                    default:
+                        instrumentImages = [
+                            `/artlayers/${secondaryInstrument.image}`,
+                            `/artlayers/instrument_vocals_no_hands.png`
+                        ];
                 }
             } else {
-                instrumentImages = [`/artlayers/${instruments[0].image}`];
+                instrumentImages = [`/artlayers/${mainInstrument.image}`];
             }
+        } else {
+            instrumentImages = [`/artlayers/${mainInstrument.image}`];
         }
 
         // instrumentImages = instruments.map(instrument => {
