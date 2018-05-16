@@ -3,6 +3,8 @@ import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
 import axios from "axios";
 import AlbumCanvas from "./AlbumCanvas.jsx";
 
+import "../styles/songs.scss";
+
 export default class Songs extends Component {
     constructor(props) {
         super(props);
@@ -45,6 +47,7 @@ export default class Songs extends Component {
             border: "2px solid black",
             padding: "2em"
         };
+        let tempSongs = this.state.songs.slice(0, 80);
         return (
             <Container
                 style={{
@@ -60,7 +63,7 @@ export default class Songs extends Component {
                 /> */}
 
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
-                {this.state.songs.map(song => {
+                {tempSongs.map(song => {
                     return (
                         <AlbumCanvas
                             width={300}

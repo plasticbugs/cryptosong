@@ -40,7 +40,7 @@ export default class AlbumCanvas extends Component {
             mood,
             topic,
             mainInstrument,
-            secondaryInstrument,
+            secondaryInstrument
         } = song;
         let tags = [location, mood, topic, beard];
         // let tags = [inkey, beard, location, topic]
@@ -115,7 +115,10 @@ export default class AlbumCanvas extends Component {
 
     render() {
         const { width, height } = this.props;
-        let backgroundImage = "/loading.gif";
+        let backgroundImage = "/loading.gif",
+            song_date = new Date(this.props.song.date),
+            song_link = "/song/" + this.props.song.number + "/";
+
         if (this.state.mergedImage) {
             backgroundImage = this.state.mergedImage;
         }
@@ -130,27 +133,27 @@ export default class AlbumCanvas extends Component {
                     margin: "5px"
                 }}
             >
-                <div
-                    className="song-list-image"
-                    style={{
-                        width: "100px",
-                        height: "100px",
-                        display: "inline-block",
-                        backgroundImage: "url(" + backgroundImage + ")",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center center"
-                    }}
-                >
-                    <div className="song-list-item-play-button">
-                        <div className="song-list-item-song-number">
-                            Day {this.props.song.number}
-                        </div>
-                    </div>
-                </div>
+                <a href={song_link}>
+                    <div
+                        className="song-list-image"
+                        style={{
+                            backgroundImage: "url(" + backgroundImage + ")",
+                            backgroundSize: "cover",
+                            backgroundPosition: "center center"
+                        }}
+                    />
+                </a>
                 <div className="song-list-item-data">
-                    <h3>
-                        <a href="/song/{this.props.song.number}">
-                            {this.props.song.title.slice(0, 30)}
+                    <div>
+                        Day: {this.props.song.number}
+                        <span className="song-list-item-data-date">
+                            {song_date.getMonth()} {song_date.getDate()},{" "}
+                            {song_date.getFullYear()}
+                        </span>
+                    </div>
+                    <h3 className="song-list-item-data-title">
+                        <a href={song_link}>
+                            {this.props.song.title.slice(0, 100)}
                         </a>
                     </h3>
                 </div>
