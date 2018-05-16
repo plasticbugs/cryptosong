@@ -1,13 +1,17 @@
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
 
 const uglifyjs = new UglifyJSPlugin({
   test: /\.js($|\?)/i,
   sourceMap: true,
 });
 
-const extractSass = new ExtractTextPlugin('./build/css/style.min.css');
+const extractSass = new ExtractTextPlugin({
+  filename: './build/css/style.min.css',
+  disable: process.env.NODE_ENV === "development"
+});
 
 module.exports = {
   entry: [
@@ -42,17 +46,8 @@ module.exports = {
         },
       },
       {
-        test:/\.(s*)css$/,
-        include: /(node_modules)/,
-        use: extractSass.extract({
-          use: [{
-            // loader: 'css-loader?minimize', // translates CSS into CommonJS
-            loader: 'css-loader'
-          },
-          {
-            loader: 'sass-loader', // creates style nodes from JS strings
-          }],
-        }),
+        test: /\.(css|sass|scss)$/,
+        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!sass-loader' })
       },
       {
         test: [/\.eot$/, /\.png$/, /\.jpg$/, /\.gif$/, /\.ttf$/, /\.svg$/, /\.woff$/, /\.woff2$/],
