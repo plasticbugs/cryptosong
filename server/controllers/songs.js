@@ -33,6 +33,7 @@ module.exports.getAllSongs = (req, res) => {
   .populate('location')
   .populate('mood')
   .populate('mainInstrument')
+  .populate('secondaryInstrument')
   .then( results => {
     results.sort((a,b) => {
       return a.number - b.number;
