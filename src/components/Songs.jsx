@@ -1,85 +1,88 @@
-import React, { Component } from 'react';
-import { Container, Card, Icon, Image, Popup, Embed } from 'semantic-ui-react';
-import axios from 'axios';
-import AlbumCanvas from './AlbumCanvas.jsx';
+import React, { Component } from "react";
+import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
+import axios from "axios";
+import AlbumCanvas from "./AlbumCanvas.jsx";
 
 export default class Songs extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      songs: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            songs: []
+        };
     }
-  }
 
-  // _onMouseMove(e) {
-  //   let y = event.clientY - event.target.offsetTop
+    // _onMouseMove(e) {
+    //   let y = event.clientY - event.target.offsetTop
 
-  //   this.setState({ x: e.clientX, y });
-  //   console.log(this.state.x, this.state.y)
+    //   this.setState({ x: e.clientX, y });
+    //   console.log(this.state.x, this.state.y)
 
-  // }
+    // }
 
-  componentDidMount() {
-    axios.get('/api/songs')
-    .then(songs => {
-      console.log(songs.data)
-      this.setState({songs: songs.data})
-    })
-    // console.log(randomColor())
-  }
-
-  renderKey(song) {
-
-    if(song.inkey) {
-      return (
-        <a>
-          <Icon name='music' />
-          {song.inkey.name}
-        </a>
-      )
+    componentDidMount() {
+        axios.get("/api/songs").then(songs => {
+            console.log(songs.data);
+            this.setState({ songs: songs.data });
+        });
+        // console.log(randomColor())
     }
-  }
 
-  render() {
-    const { x , y } = this.state;
-    const style = {
-      borderRadius: 0,
-      border: '2px solid black',
-      padding: '2em'
+    renderKey(song) {
+        if (song.inkey) {
+            return (
+                <a>
+                    <Icon name="music" />
+                    {song.inkey.name}
+                </a>
+            );
+        }
     }
-    return (
 
-      <Container style={{padding: '2px'}}>
+    render() {
+        const { x, y } = this.state;
+        const style = {
+            borderRadius: 0,
+            border: "2px solid black",
+            padding: "2em"
+        };
+        return (
+            <Container style={{ padding: "2px" }}>
+                <Embed
+                    id="7Af6b9-yqa8"
+                    placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
+                    source="youtube"
+                />
 
-        <Embed
-        id='7Af6b9-yqa8'
-        placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
-        source='youtube'
-        />
-
-        {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
-        {this.state.songs.map(song => {
-          return (
-            <AlbumCanvas width={300} images={[]} song={song} songnumber={song.number} />
-          )
-          //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>
-          //     <Popup.Header>{song.title}</Popup.Header>
-          //     <Popup.Content>
-          //       <Embed style={{width:'340px', height: '160px'}}
-          //         id={song.videoid}
-          //         placeholder={`https://img.youtube.com/vi/${song.videoid}/mqdefault.jpg`}
-          //         source='youtube'
-          //       />
-          //       {this.renderKey(song)}
-          //     </Popup.Content>
-          //   </Popup>
-          // )
-        // })}
-      {/* </Image.Group> */}
-        })}
-      </Container>
-    )
-  }
+                {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
+                {this.state.songs.map(song => {
+                    return (
+                        <AlbumCanvas
+                            width={300}
+                            images={[]}
+                            song={song}
+                            songnumber={song.number}
+                        />
+                    );
+                    //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>
+                    //     <Popup.Header>{song.title}</Popup.Header>
+                    //     <Popup.Content>
+                    //       <Embed style={{width:'340px', height: '160px'}}
+                    //         id={song.videoid}
+                    //         placeholder={`https://img.youtube.com/vi/${song.videoid}/mqdefault.jpg`}
+                    //         source='youtube'
+                    //       />
+                    //       {this.renderKey(song)}
+                    //     </Popup.Content>
+                    //   </Popup>
+                    // )
+                    // })}
+                    {
+                        /* </Image.Group> */
+                    }
+                })}
+            </Container>
+        );
+    }
     //   <Container>
     //     <Card.Group itemsPerRow={4}>
     //   {this.state.songs.map( (song) => {
