@@ -1,0 +1,58 @@
+body {
+  font-family: 'futura-pt-condensed', sans-serif !important;
+}
+
+#main{
+  padding-top: 150px;
+}
+
+.global-navigation{
+  align-items: center;
+  background: #333;
+  color: #fff;
+  display: flex;
+  font-family: 'futura-pt-condensed', sans-serif;
+  height: 80px;
+  justify-content: space-between;
+  left: 0;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  a{
+    color: #FFF;
+  }
+}
+
+.global-navigation-links,
+.global-navigation-search{
+  width: 250px;
+}
+.site-name{
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.site-sub-name{
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.global-search-input{
+  background: #6D6D6D;
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 14px;
+  border: none;
+  outline: none;
+  color: #FFF;
+  border-radius: 5px;
+  width: 250px;
+}
+.global-search-input::placeholder{
+  color: #BABABA;
+}

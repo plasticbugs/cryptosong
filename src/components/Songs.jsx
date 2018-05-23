@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
 import axios from "axios";
 import AlbumCanvas from "./AlbumCanvas.jsx";
+import Navigation from "./Navigation.jsx";
+
+import "../styles/songs.scss";
 
 export default class Songs extends Component {
     constructor(props) {
@@ -45,22 +48,33 @@ export default class Songs extends Component {
             border: "2px solid black",
             padding: "2em"
         };
+        let tempSongs = this.state.songs.slice(0, 80);
         return (
-            <Container style={{ padding: "2px" }}>
-                <Embed
+            <Container
+                style={{
+                    padding: "2px",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "center"
+                }}
+            >
+                <Navigation />
+                {/* <Embed
                     id="7Af6b9-yqa8"
                     placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
                     source="youtube"
-                />
+                /> */}
+                <div className="song-header-container" />
 
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
-                {this.state.songs.map(song => {
+                {tempSongs.map(song => {
                     return (
                         <AlbumCanvas
                             width={300}
                             images={[]}
                             song={song}
                             songnumber={song.number}
+                            list={true}
                         />
                     );
                     //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>
