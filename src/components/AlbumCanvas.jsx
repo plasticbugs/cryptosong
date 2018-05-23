@@ -120,68 +120,78 @@ export default class AlbumCanvas extends Component {
             backgroundImage = this.state.mergedImage
                 ? this.state.mergedImage
                 : "/loading.gif",
-            song_date = new Date(this.props.song.date),
-            song_link = "/song/" + this.props.song.number + "/",
-            song_list_item_classes = ["song-list-item"];
+            song_date,
+            song_link,
+            song_list_item_classes = ["song-list-item"],
+            returned_item;
 
         if (is_loading) {
             song_list_item_classes.push("is-loading");
         }
 
-        return (
-            <div
-                className={song_list_item_classes.join(" ")}
-                style={{
-                    width: "100px",
-                    height: "100px",
-                    flexShrink: "0",
-                    margin: "5px"
-                }}
-                key={this.props.song.number}
-            >
-                <a href={song_link}>
-                    <div
-                        className="song-list-image"
-                        style={{
-                            backgroundImage: "url(" + backgroundImage + ")",
-                            backgroundSize: "cover",
-                            backgroundPosition: "center center"
-                        }}
-                    />
-                </a>
-                <div className="song-list-item-data">
-                    <div>
-                        Day: {this.props.song.number}{" "}
-                        <span className="song-list-item-data-date">
-                            {moment(song_date).format("MMMM Do, YYYY")}
-                        </span>
+        if (this.props.list) {
+            if (!is_loading) {
+                song_date = new Date(this.props.song.date);
+                song_date = moment(song_date).format("MMMM Do, YYYY");
+                song_link = "/song/" + this.props.song.number + "/";
+            }
+            return (
+                <div
+                    className={song_list_item_classes.join(" ")}
+                    style={{
+                        width: "100px",
+                        height: "100px",
+                        flexShrink: "0",
+                        margin: "5px"
+                    }}
+                >
+                    <a href={song_link}>
+                        <div
+                            className="song-list-image"
+                            style={{
+                                backgroundImage: "url(" + backgroundImage + ")",
+                                backgroundSize: "cover",
+                                backgroundPosition: "center center"
+                            }}
+                        />
+                    </a>
+                    <div className="song-list-item-data">
+                        <div>
+                            Day: {this.props.song.number}{" "}
+                            <span className="song-list-item-data-date">
+                                {song_date}
+                            </span>
+                        </div>
+                        <h3 className="song-list-item-data-title">
+                            <a href={song_link}>
+                                {this.props.song.title.slice(0, 100)}
+                            </a>
+                        </h3>
                     </div>
-                    <h3 className="song-list-item-data-title">
-                        <a href={song_link}>
-                            {this.props.song.title.slice(0, 100)}
-                        </a>
-                    </h3>
                 </div>
-            </div>
-            // <Stage width={this.props.width} height={this.props.height} className="album-art" style={{float: 'left', border: '5px solid black'}}>
-            //   <Layer>
-            //     <Rect
-            //       x={0}
-            //       y={0}
-            //       width={500}
-            //       height={500}
-            //       fill={`hsl(${hue},100%,90%)`}
-            //       shadowBlur={2}
-            //     />
-            //     {this.props.images.map(image => {
-            //       // return <SongImage key={image} imageSrc={`/images/${image}`} />
-            //       return <SongImage key={image} imageSrc={`/images/${image}`} />
-            //     })}
-            //   </Layer>
-            //   <Layer>
-            //     <Text text={currentNumber} fontSize={30} fontFamily='Helvetica' fill='black'/>
-            //   </Layer>
-            // </Stage>
-        );
+            );
+        } else {
+            return <img src={backgroundImage} className="song-image" />;
+        }
+
+        // <Stage width={this.props.width} height={this.props.height} className="album-art" style={{float: 'left', border: '5px solid black'}}>
+        //   <Layer>
+        //     <Rect
+        //       x={0}
+        //       y={0}
+        //       width={500}
+        //       height={500}
+        //       fill={`hsl(${hue},100%,90%)`}
+        //       shadowBlur={2}
+        //     />
+        //     {this.props.images.map(image => {
+        //       // return <SongImage key={image} imageSrc={`/images/${image}`} />
+        //       return <SongImage key={image} imageSrc={`/images/${image}`} />
+        //     })}
+        //   </Layer>
+        //   <Layer>
+        //     <Text text={currentNumber} fontSize={30} fontFamily='Helvetica' fill='black'/>
+        //   </Layer>
+        // </Stage>
     }
 }

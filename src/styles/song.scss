@@ -1,0 +1,22 @@
+#main{
+    padding-top: 80px;
+}
+.song-header-container{
+    width: 100%;
+    // Dynamically figure out height based off of width in JSX
+}
+
+.song-image{
+    width: 100%;
+}
+
+.song-content-container{
+    max-width: 1200px;
+    margin: auto;
+    background:#FFF;
+    margin-top: -40px;
+    padding: 20px;
+    z-index: 1;
+    position: relative;
+}
+

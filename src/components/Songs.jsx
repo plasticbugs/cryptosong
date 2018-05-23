@@ -54,7 +54,8 @@ export default class Songs extends Component {
                 style={{
                     padding: "2px",
                     display: "flex",
-                    flexWrap: "wrap"
+                    flexWrap: "wrap",
+                    justifyContent: "center"
                 }}
             >
                 <Navigation />
@@ -63,6 +64,7 @@ export default class Songs extends Component {
                     placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
                     source="youtube"
                 /> */}
+                <div className="song-header-container" />
 
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
                 {tempSongs.map(song => {
@@ -72,6 +74,7 @@ export default class Songs extends Component {
                             images={[]}
                             song={song}
                             songnumber={song.number}
+                            list={true}
                         />
                     );
                     //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>

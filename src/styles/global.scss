@@ -1,5 +1,5 @@
 body {
-  font-family: 'Futura', 'Helvetica', sans-serif;
+  font-family: 'futura-pt-condensed', sans-serif !important;
 }
 
 #main{
@@ -11,6 +11,7 @@ body {
   background: #333;
   color: #fff;
   display: flex;
+  font-family: 'futura-pt-condensed', sans-serif;
   height: 80px;
   justify-content: space-between;
   left: 0;
@@ -23,6 +24,7 @@ body {
     color: #FFF;
   }
 }
+
 .global-navigation-links,
 .global-navigation-search{
   width: 250px;
