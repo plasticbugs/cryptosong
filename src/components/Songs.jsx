@@ -48,7 +48,8 @@ export default class Songs extends Component {
             border: "2px solid black",
             padding: "2em"
         };
-        let tempSongs = this.state.songs.slice(0, 80);
+        // Used for testing
+        // let tempSongs = this.state.songs.slice(0, 80);
         return (
             <Container
                 style={{
@@ -67,7 +68,7 @@ export default class Songs extends Component {
                 <div className="song-header-container" />
 
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
-                {tempSongs.map(song => {
+                {this.state.songs.map(song => {
                     return (
                         <AlbumCanvas
                             width={300}
