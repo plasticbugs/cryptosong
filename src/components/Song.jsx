@@ -62,58 +62,64 @@ class Song extends Component {
                     />
                 </div>
                 <div className="song-content-container">
-                    <Header
-                        as="h1"
-                        content={song.title}
-                        subheader={moment(song.date).format("MMMM Do, YYYY")}
-                    />
-                    <Header
-                        as="h5"
-                        content={`SongADay number ${song.number}`}
-                    />
-                    <p>
-                        {song.description}
-                        <a href={``} />
-                    </p>
-                    <Embed
-                        style={{ width: "640px", height: "360px" }}
-                        id={song.videoid}
-                        placeholder={`https://img.youtube.com/vi/${
-                            song.videoid
-                        }/mqdefault.jpg`}
-                        source="youtube"
-                    />
-
-                    <table>
-                        <tr>
-                            <td>Instruments:</td>
-                            <td>{instruments.join(", ")}</td>
-                        </tr>
-                        <tr>
-                            <td>Tags:</td>
-                            <td>{tags.join(", ")}</td>
-                        </tr>
-                        <tr>
-                            <td>Firsts:</td>
-                            <td>{song.firsts}</td>
-                        </tr>
-                        <tr>
-                            <td>Location it was written:</td>
-                            <td>{song.location.name}</td>
-                        </tr>
-                        <tr>
-                            <td>mood:</td>
-                            <td>{song.mood.name}</td>
-                        </tr>
-                        <tr>
-                            <td>Topic:</td>
-                            <td>{song.topic.name}</td>
-                        </tr>
-                        <tr>
-                            <td>Key:</td>
-                            <td>{song.inkey.name}</td>
-                        </tr>
-                    </table>
+                    <div className="song-meta">
+                        <table>
+                            <tr>
+                                <td>Instruments:</td>
+                                <td>{instruments.join(", ")}</td>
+                            </tr>
+                            <tr>
+                                <td>Tags:</td>
+                                <td>{tags.join(", ")}</td>
+                            </tr>
+                            <tr>
+                                <td>Firsts:</td>
+                                <td>{song.firsts}</td>
+                            </tr>
+                            <tr>
+                                <td>Location it was written:</td>
+                                <td>{song.location.name}</td>
+                            </tr>
+                            <tr>
+                                <td>mood:</td>
+                                <td>{song.mood.name}</td>
+                            </tr>
+                            <tr>
+                                <td>Topic:</td>
+                                <td>{song.topic.name}</td>
+                            </tr>
+                            <tr>
+                                <td>Key:</td>
+                                <td>{song.inkey.name}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div className="rarity">27%</div>
+                    <div className="song-content">
+                        <Header
+                            as="h1"
+                            content={song.title}
+                            subheader={moment(song.date).format(
+                                "MMMM Do, YYYY"
+                            )}
+                        />
+                        <Header
+                            as="h5"
+                            content={`SongADay number ${song.number}`}
+                        />
+                        <p>
+                            {song.description}
+                            <a href={``} />
+                        </p>
+                        <Embed
+                            style={{ width: "640px", height: "360px" }}
+                            id={song.videoid}
+                            placeholder={`https://img.youtube.com/vi/${
+                                song.videoid
+                            }/mqdefault.jpg`}
+                            source="youtube"
+                        />
+                    </div>
                 </div>
             </div>
         );

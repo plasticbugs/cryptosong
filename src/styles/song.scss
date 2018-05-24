@@ -14,9 +14,40 @@
     max-width: 1200px;
     margin: auto;
     background:#FFF;
-    margin-top: -40px;
+    
     padding: 20px;
     z-index: 1;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.song-meta{
+    padding: 50px;
+    font-size: 18px;
+}
+
+.song-content{
+    padding: 50px;
+    color: #fff;
+    background: #333;
+    margin-top: -40px;
     position: relative;
 }
 
+.rarity{
+    position: sticky;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    font-size: 80px;
+    margin-top: -100px;
+    margin-right: -50px;
+    background: #FFBF43;
+    border-radius: 100%;
+    display: block;
+    top: 50%;
+    z-index: 0;
+    flex-shrink: 0;
+    padding: 50px;
+}
