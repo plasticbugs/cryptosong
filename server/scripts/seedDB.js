@@ -6,7 +6,7 @@ const Schema = require('mongoose').Schema;
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/cryptosong', {
-  promiseLibrary: global.Promise
+    promiseLibrary: global.Promise
 });
 const db = mongoose.connection;
 db.dropDatabase();
@@ -103,7 +103,7 @@ const songList = [
         "tempo": 59,
         "topic": "Airport",
         "location": "Los Angeles",
-        "instruments": "Vocals, Synths, Drum Machine",
+        "instruments": "Vocals, Baritone Uke",
         "beard": "Stubble",
         "videoid": "https://www.youtube.com/watch?v=kLzFYvZkX7c",
         "description": "Song #5 for Song A Day! I made it at LAX. In 20 min. While trying to not make too big a scene. Also got some time lapse of the gate I was waiting at. Yay!",
@@ -211,7 +211,7 @@ const songList = [
         "tempo": 100,
         "topic": "Internet",
         "location": "New York",
-        "instruments": "Vocals, Synths, Drum Machine",
+        "instruments": "Vocals, Baritone Uke",
         "beard": "Clean",
         "videoid": "https://www.youtube.com/watch?v=GWSP2c9J8CQ",
         "description": "This goes out to all you haters!!",
@@ -401,7 +401,7 @@ const songList = [
         "tempo": 140,
         "topic": "Life",
         "location": "Baltimore",
-        "instruments": "Vocals, Baritone Uke",
+        "instruments": "Vocals, Baritone Uke, Organ, Drums",
         "beard": "Clean",
         "videoid": "https://www.youtube.com/watch?v=rsZx9KBeVow",
         "description": "Written with Thomas, age 11, and Michael, age 8. They did most of the lyrics, I helped with the music. That’s Thomas singing with me.",
@@ -423,7 +423,7 @@ const songList = [
         "tempo": 131,
         "topic": "Politics",
         "location": "Baltimore",
-        "instruments": "Vocals, Baritone Uke, Organ, Drums",
+        "instruments": "Vocals, Organ",
         "beard": "Clean",
         "videoid": "https://www.youtube.com/watch?v=K_qfUkUFc4E",
         "description": "I went to the inauguration today. I’m too tired to write something coherent. Here’s this instead!",
@@ -443,7 +443,7 @@ const songList = [
         "tempo": 88,
         "topic": "Sick",
         "location": "New York",
-        "instruments": "Vocals, Organ",
+        "instruments": "Vocals, Baritone Uke",
         "beard": "Clean",
         "videoid": "https://www.youtube.com/watch?v=Nf3bMujYhOU",
         "description": "“Stay Out of My Body! A warning to colds and flus.",
@@ -484,7 +484,7 @@ const songList = [
         "tempo": 104,
         "topic": "Politics",
         "location": "New York",
-        "instruments": "Vocals, Baritone Uke",
+        "instruments": "Vocals, Electric Guitar",
         "beard": "Shadow",
         "videoid": "https://www.youtube.com/watch?v=35rk9q3Z0N0",
         "description": "Wow! 24! That’s a lot. 6 more to go? 7? “Barack Obama!” That’s what this one is called!",
@@ -504,7 +504,7 @@ const songList = [
         "tempo": 120,
         "topic": "Poetic",
         "location": "Southington,CT",
-        "instruments": "Vocals, Electric Guitar",
+        "instruments": "Vocals, Synths, Samples, Drum Machine",
         "beard": "Shadow",
         "videoid": "https://www.youtube.com/watch?v=7zekFoBg12I",
         "description": "I think yesterday was actually 23, and it was after midnight when I did the song. So this is 24, and that was 23.I got confused. Sorry!",
@@ -526,7 +526,7 @@ const songList = [
         "tempo": 70,
         "topic": "Love",
         "location": "Jupiter, FL",
-        "instruments": "Vocals, Synths, Samples, Drum Machine",
+        "instruments": "Vocals, Baritone Uke, Synths, \nDrum Machine",
         "beard": "Shadow",
         "videoid": "https://www.youtube.com/watch?v=Mn1In11VTRs",
         "description": "Yay! “Love Me A Little Bit More!” True story. Sort of.",
@@ -588,7 +588,7 @@ const songList = [
         "tempo": 114,
         "topic": "Animals",
         "location": "Jupiter, FL",
-        "instruments": "Vocals, Baritone Uke, Synths, \nDrum Machine",
+        "instruments": "Vocals, Synths, \nDrum Machine",
         "beard": "Clean",
         "videoid": "https://www.youtube.com/watch?v=0Sfg1VGZggw",
         "description": "A silly song about farm animals feelings sleepy. Have you ever read Animal Farm?",
@@ -686,7 +686,7 @@ const songList = [
         "tempo": 87,
         "topic": "Nerd",
         "location": "Jupiter, FL",
-        "instruments": "Vocals, Samples, Drum Machine",
+        "instruments": "Vocals, Synths, Samples, Drum Machine",
         "videoid": "https://www.youtube.com/watch?v=xaStl18xyBc",
         "description": "This goes out to all the Battlestar fans! “I Love Battlestar Galactica!” The show has gotten really, really good again. Thank god.",
         "acousticproduced": "Produced",
@@ -762,7 +762,7 @@ const songList = [
         "tempo": 110,
         "topic": "Nerd",
         "location": "Los Angeles",
-        "instruments": "Vocals, Piano,Synths, Samples, Drum Machine",
+        "instruments": "Vocals, Piano, Synths, Samples, Drum Machine",
         "videoid": "https://www.youtube.com/watch?v=txF8ZlqJ6SI",
         "description": "A song about Water, and how you don't drink enough...drink more water, please!! Drink it a lot. Everyday.",
         "acousticproduced": "Produced",
@@ -1563,7 +1563,7 @@ const songList = [
         "title": "Come On, Nouriel",
         "length": "1899-12-30T06:26:00.000Z",
         "inkey": "C#",
-        "topic": "Poltiics ",
+        "topic": "Politics ",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Drum Machine",
         "videoid": "https://www.youtube.com/watch?v=vMapa6591M4",
@@ -1959,7 +1959,7 @@ const songList = [
         "title": "Oreo Love",
         "length": "1899-12-30T06:34:00.000Z",
         "inkey": "Am",
-        "topic": "Object",
+        "topic": "Food",
         "location": "Berkeley",
         "instruments": "Vocals, Harpsichord",
         "videoid": "https://www.youtube.com/watch?v=BiI1lus4NGk",
@@ -2120,6 +2120,7 @@ const songList = [
         "date": "2009-04-22T04:00:00.000Z",
         "title": "Fire Engine Red",
         "length": "1899-12-30T07:23:00.000Z",
+        "inkey": "F",
         "topic": "Commission",
         "location": "Berkeley",
         "instruments": "Vocals, Acoustic Guitar, Organ, Piano, Samples, Drum Machine",
@@ -2137,10 +2138,11 @@ const songList = [
         "date": "2009-04-23T04:00:00.000Z",
         "title": "Spintown",
         "length": "1899-12-30T06:40:00.000Z",
+        "inkey": "G",
         "topic": "Commission",
         "location": "Berkeley",
         "instruments": "Vocals, Acoustic Guitar, Organ, Piano, Samples, Drum Machine",
-        "videoid": "https://www.youtube.com/my_videos?o=U&pi=78",
+        "videoid": "https://www.youtube.com/watch?v=rFc3ew0BRnQ",
         "description": "This is a song request from Travis Langworthy of www.spintown79.blogspot.com. He wanted a theme song! I got the archival square-dance footage from www.archive.org!! Awesome!",
         "acousticproduced": "Produced",
         "mood": "Silly",
@@ -2154,6 +2156,7 @@ const songList = [
         "date": "2009-04-24T04:00:00.000Z",
         "title": "Lindsay McCove",
         "length": "1899-12-30T05:35:00.000Z",
+        "inkey": "C",
         "topic": "Internet",
         "location": "Berkeley",
         "instruments": "Vocals, Electric Guitar, Samples",
@@ -2171,6 +2174,7 @@ const songList = [
         "date": "2009-04-25T04:00:00.000Z",
         "title": "Steve, the Hippo With Multiple Personalities",
         "length": "1899-12-30T07:34:00.000Z",
+        "inkey": "C",
         "topic": "Animals",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Electric Guitar, Samples, Drum Machine",
@@ -2188,6 +2192,7 @@ const songList = [
         "date": "2009-04-26T04:00:00.000Z",
         "title": "Ringtone for Liam and Keane's Dad!",
         "length": "1899-12-30T05:33:00.000Z",
+        "inkey": "E",
         "topic": "Ringtone",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Samples, Drum Machine",
@@ -2205,6 +2210,7 @@ const songList = [
         "date": "2009-04-27T04:00:00.000Z",
         "title": "Don't Let Your Ovaries Get You Down",
         "length": "1899-12-30T06:03:00.000Z",
+        "inkey": "Bb",
         "topic": "Life",
         "location": "Berkeley",
         "instruments": "Vocals, Acoustic Guitar, Electric Guitar, Samples, Drum Machine",
@@ -2222,7 +2228,8 @@ const songList = [
         "date": "2009-04-28T04:00:00.000Z",
         "title": "Swine Flu: the Musical",
         "length": "1899-12-30T06:58:00.000Z",
-        "topic": "Poltiics ",
+        "inkey": "A",
+        "topic": "Politics ",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Electric Guitar, Samples, Drum Machine",
         "videoid": "https://www.youtube.com/watch?v=sgBm8jvg-bs",
@@ -2239,6 +2246,7 @@ const songList = [
         "date": "2009-04-29T04:00:00.000Z",
         "title": "Lost in the Tubes! a PSA in Song",
         "length": "1899-12-30T06:44:00.000Z",
+        "inkey": "C",
         "topic": "Internet",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Electric Guitar, Samples, Drum Machine",
@@ -2255,7 +2263,8 @@ const songList = [
         "number": 120,
         "date": "2009-04-30T04:00:00.000Z",
         "title": "The Continuing Adventures of Bulldog and the Dude",
-        "length": "1899-12-30T06:41:00.000Z",
+        "length": "1899-12-30T06:41:00.000Z"
+        "inkey": "Am",
         "topic": "Commission",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Electric Guitar, Samples, Drum Machine",
@@ -2273,6 +2282,7 @@ const songList = [
         "date": "2009-05-01T04:00:00.000Z",
         "title": "To: Sarah and Mike From: Meredith \nand Adam re: Sorry About your bikes",
         "length": "1899-12-30T06:11:00.000Z",
+        "inkey": "C",
         "topic": "Commission",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Synths, Samples, Drum Machine",
@@ -2290,6 +2300,7 @@ const songList = [
         "date": "2009-05-02T04:00:00.000Z",
         "title": "Happy Birthday Shaista",
         "length": "1899-12-30T07:23:00.000Z",
+        "inkey": "B",
         "topic": "Friend",
         "location": "Berkeley",
         "instruments": "Vocals, Baritone Uke",
@@ -2307,6 +2318,7 @@ const songList = [
         "date": "2009-05-03T04:00:00.000Z",
         "title": "We Are Pattern Machines",
         "length": "1899-12-30T07:18:00.000Z",
+        "inkey": "C",
         "topic": "Poetic ",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Synths, Samples, Drum Machine",
@@ -2324,6 +2336,7 @@ const songList = [
         "date": "2009-05-04T04:00:00.000Z",
         "title": "Hey, Miss California",
         "length": "1899-12-30T07:34:00.000Z",
+        "inkey": "E",
         "topic": "Politics",
         "location": "Berkeley",
         "instruments": "Vocals, Electric Guitar, Claps  ",
@@ -2341,6 +2354,7 @@ const songList = [
         "date": "2009-05-05T04:00:00.000Z",
         "title": "You Deserve a Bank Like This",
         "length": "1899-12-30T06:12:00.000Z",
+        "inkey": "F",
         "topic": "Commission",
         "location": "Berkeley",
         "instruments": "Vocals, Acoustic Guitar, Piano, Samples, Drum Machine",
@@ -2358,6 +2372,7 @@ const songList = [
         "date": "2009-05-06T04:00:00.000Z",
         "title": "BIrthday Song for Mimi Hughes",
         "length": "1899-12-30T06:46:00.000Z",
+        "inkey": "F",
         "topic": "Commission",
         "location": "Berkeley",
         "instruments": "Vocals, Piano, Samples, Drum Machine",
@@ -2375,6 +2390,7 @@ const songList = [
         "date": "2009-05-07T04:00:00.000Z",
         "title": "Don't Give in to Madness",
         "length": "1899-12-30T07:39:00.000Z",
+        "inkey": "G",
         "topic": "Poetic ",
         "location": "Berkeley",
         "instruments": "Vocals, Acoustic Guitar",
@@ -2392,6 +2408,7 @@ const songList = [
         "date": "2009-05-08T04:00:00.000Z",
         "title": "The Pitch",
         "length": "1899-12-30T07:12:00.000Z",
+        "inkey": "F",
         "topic": "Life",
         "location": "Berkeley",
         "instruments": "Vocals, Acoustic Guitar, Electric Guitar",
@@ -2494,7 +2511,7 @@ const songList = [
         "date": "2009-05-14T04:00:00.000Z",
         "title": "Why Do Potatoes Argue?",
         "length": "1899-12-30T06:05:00.000Z",
-        "topic": "Object",
+        "topic": "Food",
         "location": "Vienna",
         "instruments": "Vocals, Synths, Drum Machine",
         "videoid": "https://www.youtube.com/watch?v=aZoUK8jtgbo",
@@ -2630,7 +2647,7 @@ const songList = [
         "date": "2009-05-22T04:00:00.000Z",
         "title": "What Are They Gonna Do?",
         "length": "1899-12-30T08:54:00.000Z",
-        "topic": "Poltiics",
+        "topic": "Politics",
         "location": "Vienna",
         "instruments": "Vocals, Baritone Uke",
         "videoid": "https://www.youtube.com/watch?v=jVQovH2QTAQ",
@@ -5770,7 +5787,7 @@ const songList = [
         "title": "Cold Feet",
         "length": "1899-12-30T07:02:00.000Z",
         "topic": "Poetic",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=aVIBfAvQ0bw",
         "description": "It's cold",
@@ -5786,7 +5803,7 @@ const songList = [
         "title": "Get Your Hand Out of the Hunny Pot",
         "length": "1899-12-30T07:52:00.000Z",
         "topic": "Poetic",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=SfHLCjzM4aQ",
         "description": "when you're wandering the woods holding candles in the night and the bears pick up your scent",
@@ -5802,7 +5819,7 @@ const songList = [
         "title": "Zombie Turkey",
         "length": "1899-12-30T07:32:00.000Z",
         "topic": "Thanksgiving",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=fD_xNc_Wzlw",
         "description": "you went to the supermarket got your turkey wrapped in plastic cooked it in the oven just right should come out fantastic the whole family's coming over you put on your evening gown but creeping up behind you all moist and golden brown it's the zombie turkey coming to pay you back you run up the stairs into the bathroom lock the door you can hear her boney legs banging on the floor she's coming ever closer now, you look out the window to see an entire neighborhood overrun by zombie turkeys they are zombie turkeys and they're coming to pay you back she's banging down the door now it looks like there's no escape you can't outrun her because you're fat and out of shape if only you exercised more, ate less, you'd be thinner what a terrible way to die to be eaten by your dinner by a zombie turkey who has come to pay you back",
@@ -5818,7 +5835,7 @@ const songList = [
         "title": "Dancing Fin",
         "length": "1899-12-30T06:23:00.000Z",
         "topic": "Friend",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=xWEAzAu-zdE",
         "description": "My good friend from way, way back in high school came out for a visit with his song Fin! We had a great time, going out for sushi and then some frozen yogurt! I started singing this song and I figured it could just be my song of the day.",
@@ -5834,7 +5851,7 @@ const songList = [
         "title": "The Best Day of My Life pt 1",
         "length": "1899-12-30T07:40:00.000Z",
         "topic": "Poetic",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=Ph4HApxbWvU",
         "description": "there's a fire in the sky it's a tower made of clouds and it's power rings out over creation meanwhile on the ground waves of frozen sound break upon the backs of stale frustration and citizens wake up at the sensation rub their eyes no melody or words could have cut quite like the sword swung by the hand of evolution to live and grow and die without ever knowing why knowing how to ask but finding no solution calling it divine retribution cut the cords we're not abandoned we are abandoning before we learned to talk we had to learn to sing without a plan we can't demand a thing we can't demand a thing i was on my way to school i saw her cross the street and her power sent out waves upon the pavement i pulled over then and there i had to catch my breath and stare in this delicate amazement i felt utterly exposed, stripped naked to the bone when she came up to the car and asked, \"do you know where we are?\" i couldn't tell if she was serious or joking i tried to say yes and planet earth, i guess but the sounds out of my mouth were more like choking in the distance some peeper frogs were croaking to the moon we were married it was the first of may and i carried her and she carried me the entire way it was scary but it was the best day of my life",
@@ -5850,7 +5867,7 @@ const songList = [
         "title": "The Best Day of My Life pt 2",
         "length": "1899-12-30T07:42:00.000Z",
         "topic": "Poetic",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=5tlkSQ1Xjis",
         "description": "in my house there is a room and in that room there is a drawer and in that drawer is a list of all my worries",
@@ -6170,7 +6187,7 @@ const songList = [
         "title": "Daylight Savings",
         "length": "1899-12-30T06:58:00.000Z",
         "topic": "Poetic",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=Wb4P45uOPRg",
         "description": "it gets dark so early i don't have time to do all the day time things that i need to if i were a vampire i'd love this time of year i'd take an evening stroll when the sky was clear daylight savings makes no sense give me back those hours i demand recompense i'm a morning person i never stay up late and when occasionally i do i don't feel so great so the darkness makes me sleepy and i feel like a party pooper i wish i was like mario could eat a mushroom and be super",
@@ -6186,7 +6203,7 @@ const songList = [
         "title": "Puking My Guts",
         "length": "1899-12-30T05:48:00.000Z",
         "topic": "Sick",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals",
         "videoid": "https://www.youtube.com/watch?v=ox_XSHIIwg4",
         "description": "N/A",
@@ -6202,7 +6219,7 @@ const songList = [
         "title": "I'm Weak",
         "length": "1899-12-30T06:39:00.000Z",
         "topic": "Sick",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=N2vWxFiiaWs",
         "description": "i'm weak i can barely walk i'm weak",
@@ -6218,7 +6235,7 @@ const songList = [
         "title": "Food Poisoning",
         "length": "1899-12-30T05:56:00.000Z",
         "topic": "Sick",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=dwnny8P7oXM",
         "description": "food poisoning makes you want to die food poisoning feels like stabbing yourself in the eye puking then dry heaving then fever and then chills then your body's aching because and you can't take pain relieving pills cause you have food poisoning and you don't know from whence it came food poisoning is god's sick little game",
@@ -6234,7 +6251,7 @@ const songList = [
         "title": "I Must Be Going Crazy",
         "length": "1899-12-30T07:10:00.000Z",
         "topic": "Poetic",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=zejii6xywE0",
         "description": "Right?!",
@@ -6250,7 +6267,7 @@ const songList = [
         "title": "Happy Christmas Adam From Melissa",
         "length": "1899-12-30T07:15:00.000Z",
         "topic": "Christmas",
-        "location": "LA",
+        "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=WwxaShQoIUU",
         "description": "She loves the freckle above your lip She loves your love to Edward James She loves your knowledge of movie quotes and this love I now proclaim adam, melissa loves you happy christmas adam adam, melissa loves you happy christmas adam she loves your calculator watch she loves your kindness and your talent how you imitate the beatles how you throw your head back when you laugh she loves your love of bears roar! she loves your knowledge of computers being the big nerd that you are and so i present this song may the two of you travel far",
@@ -6374,415 +6391,415 @@ const songList = [
     }
 ]
 
-const Instrument = mongoose.model('Instrument', {name: String, image: String});
-const Inkey = mongoose.model('Inkey', {name: String, image: String});
-const Topic = mongoose.model('Topic', {name: String, image: String});
-const Beard = mongoose.model('Beard', {name: String, image: String});
-const City = mongoose.model('Location', {name: String, image: String});
-const Mood = mongoose.model('Mood', {name: String, image: String});
+const Instrument = mongoose.model('Instrument', { name: String, image: String });
+const Inkey = mongoose.model('Inkey', { name: String, image: String });
+const Topic = mongoose.model('Topic', { name: String, image: String });
+const Beard = mongoose.model('Beard', { name: String, image: String });
+const City = mongoose.model('Location', { name: String, image: String });
+const Mood = mongoose.model('Mood', { name: String, image: String });
 
 const songTagSchema = new Schema({
-  image: String,
-  name: String,
+    image: String,
+    name: String,
 })
 
 const tagSongSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  number: Number,
-  title: String,
-  date: Date,
-  length: Number,
-  inkey: { type: Schema.Types.ObjectId, ref: 'Inkey' },
-  tempo: Number,
-  videoid: String,
-  description: String,
-  acousticproduced: String,
-  mood: { type: Schema.Types.ObjectId, ref: 'Mood'}
-  // tags: [Models.Tag.tagSchema],
+    _id: Schema.Types.ObjectId,
+    number: Number,
+    title: String,
+    date: Date,
+    length: Number,
+    inkey: { type: Schema.Types.ObjectId, ref: 'Inkey' },
+    tempo: Number,
+    videoid: String,
+    description: String,
+    acousticproduced: String,
+    mood: { type: Schema.Types.ObjectId, ref: 'Mood' }
+    // tags: [Models.Tag.tagSchema],
 });
 
 const Song = mongoose.model('Song', {
-  number: Number,
-  title: String,
-  date: Date,
-  length: Number,
-  inkey: String,
-  tempo: Number,
-  topic: String,
-  location: String,
-  instruments: [String],
-  beard: String,
-  videoid: String,
-  description: String,
-  acousticproduced: String,
-  firsts: String,
-  comments: String,
-  press: String,
-  tagNames: [String],
-  tags: [songTagSchema],
-  itunes: String,
-  spotify: String,
-  bandcamp: String,
-  mood: String,
-  mainInstrument: String,
-  secondaryInstrument: String,
+    number: Number,
+    title: String,
+    date: Date,
+    length: Number,
+    inkey: String,
+    tempo: Number,
+    topic: String,
+    location: String,
+    instruments: [String],
+    beard: String,
+    videoid: String,
+    description: String,
+    acousticproduced: String,
+    firsts: String,
+    comments: String,
+    press: String,
+    tagNames: [String],
+    tags: [songTagSchema],
+    itunes: String,
+    spotify: String,
+    bandcamp: String,
+    mood: String,
+    mainInstrument: String,
+    secondaryInstrument: String,
 });
 
 const Tag = mongoose.model('Tag', {
-  image: String,
-  name: String,
-  songs: [tagSongSchema],
+    image: String,
+    name: String,
+    songs: [tagSongSchema],
 })
 
 const gatherFields = (array) => {
-  return new Promise((resolve, reject) => {
-    let uniques = {
-      beards: {
-        name: 'Beard',
-        collection: []
-      },
-      instruments: {
-        name: 'Instrument',
-        collection: []
-      },
-      locations: {
-        name: 'Location',
-        collection: []
-      },
-      topics: {
-        name: 'Topic',
-        collection: []
-      },
-      keys: {
-        name: 'Inkey',
-        collection: []
-      },
-      tags: {
-        name: 'Tag',
-        collection: []
-      },
-      moods: {
-        name: 'Mood',
-        collection: []
-      },
-    };
-  
-    songList.forEach(song => {
-      if (song.instruments) {
-        let instruments = song.instruments.toLowerCase().replace('\n', '').split(',').map(inst => {
-          return inst.trim();
-        });
-        uniques.instruments.collection = uniques.instruments.collection.concat(instruments);
-      }
+    return new Promise((resolve, reject) => {
+        let uniques = {
+            beards: {
+                name: 'Beard',
+                collection: []
+            },
+            instruments: {
+                name: 'Instrument',
+                collection: []
+            },
+            locations: {
+                name: 'Location',
+                collection: []
+            },
+            topics: {
+                name: 'Topic',
+                collection: []
+            },
+            keys: {
+                name: 'Inkey',
+                collection: []
+            },
+            tags: {
+                name: 'Tag',
+                collection: []
+            },
+            moods: {
+                name: 'Mood',
+                collection: []
+            },
+        };
 
-      if (song.mood) {
-        uniques.moods.collection.push(song.mood);
-      }
-  
-      if (song.beard) {
-        uniques.beards.collection.push(song.beard);
-      }
-  
-      if (song.location) {
-        uniques.locations.collection.push(song.location);
-      }
-  
-      if (song.topic) {
-        uniques.topics.collection.push(song.topic);
-      }
-      if (song.inkey) {
-        let upcase = song.inkey.charAt(0).toUpperCase().concat(song.inkey.slice(1));
-        uniques.keys.collection.push(upcase);
-      }
-      if (song.tags) {
-        let tags = song.tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim())
-        uniques.tags.collection = uniques.tags.collection.concat(tags)
-      }
+        songList.forEach(song => {
+            if (song.instruments) {
+                let instruments = song.instruments.toLowerCase().replace('\n', '').split(',').map(inst => {
+                    return inst.trim();
+                });
+                uniques.instruments.collection = uniques.instruments.collection.concat(instruments);
+            }
+
+            if (song.mood) {
+                uniques.moods.collection.push(song.mood);
+            }
+
+            if (song.beard) {
+                uniques.beards.collection.push(song.beard);
+            }
+
+            if (song.location) {
+                uniques.locations.collection.push(song.location);
+            }
+
+            if (song.topic) {
+                uniques.topics.collection.push(song.topic);
+            }
+            if (song.inkey) {
+                let upcase = song.inkey.charAt(0).toUpperCase().concat(song.inkey.slice(1));
+                uniques.keys.collection.push(upcase);
+            }
+            if (song.tags) {
+                let tags = song.tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim())
+                uniques.tags.collection = uniques.tags.collection.concat(tags)
+            }
+        })
+        resolve(uniques);
     })
-    resolve(uniques);
-  })
 }
 
 const insertUniques = (obj) => {
-  return new Promise((resolve, reject) => {
-    let keyArray = Object.keys(obj).slice();
-    var uniqueBar = new ProgressBar('  inserting uniques & writing out to filenames.txt [:bar] :percent', {
-      complete: '=',
-      incomplete: ' ',
-      width: 40,
-      total: keyArray.length
-    });
-
-
-    const recurse = (array) => {
-      if (array.length === 0) {
-        resolve();
-        return;
-      }
-      uniqueBar.tick(1)
-      let key = array.shift();
-      if (key.length) {
-        const dict = {};
-        // let counter = 0;
-
-        let arr = obj[key].collection
-        let identifier = obj[key].name
-        let filenamesToSort = [];
-
-        if (identifier.toLowerCase() !== 'tag') {
-          fs.appendFileSync('filenames.txt', '\n\n' + identifier + '\n********************\n', 'utf8');
-        }
-
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i].trim().length) {
-            let thekey;
-            if (identifier === 'Mood') {
-              thekey = arr[i].replace(/^\n|\n$/g, '').trim().toLowerCase();
-            } else {
-              thekey = arr[i].replace(/^\n|\n$/g, '').trim()
-            }
-  
-            if (!dict[thekey]) {
-              let filename = `${identifier.toLowerCase()}_${arr[i].replace(/[_/!., ]/g,'').replace('#', '-sharp').replace(/^\n|\n$/g, '').trim().toLowerCase()}.png`
-              dict[thekey] = filename;
-              filenamesToSort.push(filename)
-            }
-          }
-        }
-        if (identifier.toLowerCase() !== 'tag') {
-          filenamesToSort.sort();
-          for (let filename of filenamesToSort) {
-            fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
-          }
-        }
-        
-        let objArray = [];
-        for (let key in dict) {
-          objArray.push({
-            name: key,
-            image: dict[key]
-          })
-        }
-
-        /// write out uniques to help with spellchecking...
-        let sortedArray = objArray.slice();
-        sortedArray = sortedArray.map(item => {
-          return item.name;
-        })
-        sortedArray.sort()
-        for (name of sortedArray) {
-          fs.appendFileSync('unique-tags.txt', name + '\n', 'utf8');
-        }
-
-        const theModel = mongoose.model(identifier);
-        theModel.insertMany(objArray, (err, docs) => {
-          if(err) {
-            reject(err);
-          }
-          recurse(array)
+    return new Promise((resolve, reject) => {
+        let keyArray = Object.keys(obj).slice();
+        var uniqueBar = new ProgressBar('  inserting uniques & writing out to filenames.txt [:bar] :percent', {
+            complete: '=',
+            incomplete: ' ',
+            width: 40,
+            total: keyArray.length
         });
-      } else {
-        recurse(array)
-      }
-    }
-    recurse(keyArray);
-  })
+
+
+        const recurse = (array) => {
+            if (array.length === 0) {
+                resolve();
+                return;
+            }
+            uniqueBar.tick(1)
+            let key = array.shift();
+            if (key.length) {
+                const dict = {};
+                // let counter = 0;
+
+                let arr = obj[key].collection
+                let identifier = obj[key].name
+                let filenamesToSort = [];
+
+                if (identifier.toLowerCase() !== 'tag') {
+                    fs.appendFileSync('filenames.txt', '\n\n' + identifier + '\n********************\n', 'utf8');
+                }
+
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].trim().length) {
+                        let thekey;
+                        if (identifier === 'Mood') {
+                            thekey = arr[i].replace(/^\n|\n$/g, '').trim().toLowerCase();
+                        } else {
+                            thekey = arr[i].replace(/^\n|\n$/g, '').trim()
+                        }
+
+                        if (!dict[thekey]) {
+                            let filename = `${identifier.toLowerCase()}_${arr[i].replace(/[_/!., ]/g, '').replace('#', '-sharp').replace(/^\n|\n$/g, '').trim().toLowerCase()}.png`
+                            dict[thekey] = filename;
+                            filenamesToSort.push(filename)
+                        }
+                    }
+                }
+                if (identifier.toLowerCase() !== 'tag') {
+                    filenamesToSort.sort();
+                    for (let filename of filenamesToSort) {
+                        fs.appendFileSync('filenames.txt', filename + '\n', 'utf8');
+                    }
+                }
+
+                let objArray = [];
+                for (let key in dict) {
+                    objArray.push({
+                        name: key,
+                        image: dict[key]
+                    })
+                }
+
+                /// write out uniques to help with spellchecking...
+                let sortedArray = objArray.slice();
+                sortedArray = sortedArray.map(item => {
+                    return item.name;
+                })
+                sortedArray.sort()
+                for (name of sortedArray) {
+                    fs.appendFileSync('unique-tags.txt', name + '\n', 'utf8');
+                }
+
+                const theModel = mongoose.model(identifier);
+                theModel.insertMany(objArray, (err, docs) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    recurse(array)
+                });
+            } else {
+                recurse(array)
+            }
+        }
+        recurse(keyArray);
+    })
 }
 
 const calcLength = (string) => {
-  let arr = string.split(':');
-  let secs = parseInt(arr[arr.length - 1]);
-  let mins = parseInt(arr[0]);
-  secs = secs + mins * 60;
-  return secs;
+    let arr = string.split(':');
+    let secs = parseInt(arr[arr.length - 1]);
+    let mins = parseInt(arr[0]);
+    secs = secs + mins * 60;
+    return secs;
 }
 
 const insertTagsonSongsOnTags = () => {
 
-  return new Promise((resolve, reject) => {
-    Song.find({})
-    .then(songs => {
-      const len = songs.length;
-      
-      var bar = new ProgressBar('  doing tag insertion [:bar] :percent', {
-        complete: '=',
-        incomplete: ' ',
-        width: 40,
-        total: len
-      });
+    return new Promise((resolve, reject) => {
+        Song.find({})
+            .then(songs => {
+                const len = songs.length;
 
-      const recurse = (array) => {
-        if (!array.length) {
-          resolve()
-        } else {
-          bar.tick(1);
-          let song = array.shift();
-          const recurseOnTags = (tagArray) => {
-            if (!tagArray.length) {
-              recurse(array)
-            } else {
-              let currentTag = tagArray.shift();
-              Tag.find({name: currentTag})
-              .then(tags => {
-                const tag = tags[0];
-                tag.songs.push(song);
-                tag.save(err => {
-                  if (err) {
-                    throw new Error(err);
-                    reject()
-                  } else {
-                    song.tags.push(tag);
-                    song.save(err => {
-                      if (err) {
-                        throw new Error(err)
-                      } else {
-                        recurseOnTags(tagArray)
-                      }
-                    })
-                  }
-                })
-              })
-            }
-          }
-          recurseOnTags(song.tagNames.slice());
-        }
-      }
-      recurse(songs)
+                var bar = new ProgressBar('  doing tag insertion [:bar] :percent', {
+                    complete: '=',
+                    incomplete: ' ',
+                    width: 40,
+                    total: len
+                });
+
+                const recurse = (array) => {
+                    if (!array.length) {
+                        resolve()
+                    } else {
+                        bar.tick(1);
+                        let song = array.shift();
+                        const recurseOnTags = (tagArray) => {
+                            if (!tagArray.length) {
+                                recurse(array)
+                            } else {
+                                let currentTag = tagArray.shift();
+                                Tag.find({ name: currentTag })
+                                    .then(tags => {
+                                        const tag = tags[0];
+                                        tag.songs.push(song);
+                                        tag.save(err => {
+                                            if (err) {
+                                                throw new Error(err);
+                                                reject()
+                                            } else {
+                                                song.tags.push(tag);
+                                                song.save(err => {
+                                                    if (err) {
+                                                        throw new Error(err)
+                                                    } else {
+                                                        recurseOnTags(tagArray)
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    })
+                            }
+                        }
+                        recurseOnTags(song.tagNames.slice());
+                    }
+                }
+                recurse(songs)
+            })
     })
-  })
 }
 
 async function insertSongs(array) {
-  var insertSongBar = new ProgressBar('  inserting songs [:bar] :percent', {
-    complete: '=',
-    incomplete: ' ',
-    width: 40,
-    total: array.length
-  });
-  let records = [];
-  let mainInstrument;
-  let secondaryInstrument;
-  for (let i = 0; i < array.length; i++) {
-    insertSongBar.tick(1);
-    let instruments = [];
-    if (array[i].instruments) {
-      let instrumentArray = array[i].instruments.toLowerCase().replace('\n', '').split(',').map(inst => {
-        return inst.trim();
-      });
+    var insertSongBar = new ProgressBar('  inserting songs [:bar] :percent', {
+        complete: '=',
+        incomplete: ' ',
+        width: 40,
+        total: array.length
+    });
+    let records = [];
+    let mainInstrument;
+    let secondaryInstrument;
+    for (let i = 0; i < array.length; i++) {
+        insertSongBar.tick(1);
+        let instruments = [];
+        if (array[i].instruments) {
+            let instrumentArray = array[i].instruments.toLowerCase().replace('\n', '').split(',').map(inst => {
+                return inst.trim();
+            });
 
-      // ignore Vocals if it's the first instrument listed among multiple
-      // instrumentIndex = 0;
-      // if (instrumentArray[0] === 'vocals' && instrumentArray.length > 1) {
-      //   instrumentIndex = 1;
-      // }
+            // ignore Vocals if it's the first instrument listed among multiple
+            // instrumentIndex = 0;
+            // if (instrumentArray[0] === 'vocals' && instrumentArray.length > 1) {
+            //   instrumentIndex = 1;
+            // }
 
-      const firstInstQuery = await Instrument.findOne({name: instrumentArray[0]}).exec();
-      if (instrumentArray[1]) {
-        const secondInstQuery = await Instrument.findOne({name: instrumentArray[1]});
-        secondaryInstrument = secondInstQuery._id
-      }
-      mainInstrument = firstInstQuery._id;
+            const firstInstQuery = await Instrument.findOne({ name: instrumentArray[0] }).exec();
+            if (instrumentArray[1]) {
+                const secondInstQuery = await Instrument.findOne({ name: instrumentArray[1] });
+                secondaryInstrument = secondInstQuery._id
+            }
+            mainInstrument = firstInstQuery._id;
 
-      const query = await Instrument.find({name: { $in: instrumentArray}}).exec();
+            const query = await Instrument.find({ name: { $in: instrumentArray } }).exec();
 
-      query.forEach(item => {
-        instruments.push(item._id);
-      })
-    }
-    
-    let tempo = 0;
-    if (typeof array[i].tempo === 'number') {
-      tempo = array[i].tempo;
-    }
-    let upcasedKey = undefined;
-    if (array[i].inkey) {
-      upcasedKey = array[i].inkey.charAt(0).toUpperCase().concat(array[i].inkey.slice(1));
-      const query = await Inkey.find({name: upcasedKey}).exec()
-      upcasedKey = query[0].id
-    }
+            query.forEach(item => {
+                instruments.push(item._id);
+            })
+        }
 
-    let beard;
-    if (array[i].beard) {
-      const query = await Beard.find({name: array[i].beard.replace(/^\n|\n$/g, '').trim()}).exec()
-      beard = query[0].id;
-    }
+        let tempo = 0;
+        if (typeof array[i].tempo === 'number') {
+            tempo = array[i].tempo;
+        }
+        let upcasedKey = undefined;
+        if (array[i].inkey) {
+            upcasedKey = array[i].inkey.charAt(0).toUpperCase().concat(array[i].inkey.slice(1));
+            const query = await Inkey.find({ name: upcasedKey }).exec()
+            upcasedKey = query[0].id
+        }
 
-    let location;
-    if (array[i].location) {
-      const query = await City.find({name: array[i].location.replace(/^\n|\n$/g, '').trim()}).exec()
-      location = query[0].id
-    }
+        let beard;
+        if (array[i].beard) {
+            const query = await Beard.find({ name: array[i].beard.replace(/^\n|\n$/g, '').trim() }).exec()
+            beard = query[0].id;
+        }
 
-    let topic;
-    if (array[i].topic) {
-      const query = await Topic.find({name: array[i].topic.replace(/^\n|\n$/g, '').trim()}).exec()
-      topic = query[0].id
-    }
+        let location;
+        if (array[i].location) {
+            const query = await City.find({ name: array[i].location.replace(/^\n|\n$/g, '').trim() }).exec()
+            location = query[0].id
+        }
 
-    let date = new Date(array[i].date);
-    date.setDate(date.getDate() + 1);
-    
-    let tagNames = [];
-    if (array[i].tags) {
-      tagNames =  array[i].tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim()).filter(tag => tag.length)
-    }
+        let topic;
+        if (array[i].topic) {
+            const query = await Topic.find({ name: array[i].topic.replace(/^\n|\n$/g, '').trim() }).exec()
+            topic = query[0].id
+        }
 
-    let mood;
-    if (array[i].mood) {
-      const query = await Mood.find({name: array[i].mood.replace(/^\n|\n$/g, '').trim().toLowerCase()}).exec()
-      mood = query[0].id
-    }
+        let date = new Date(array[i].date);
+        date.setDate(date.getDate() + 1);
 
-    let song = {
-      number: array[i].number,
-      title: array[i].title,
-      date,
-      length: calcLength(array[i].length),
-      videoid: array[i].videoid.slice(-11),
-      tempo,
-      description: array[i].description,
-      acousticproduced: array[i].acousticproduced,
-      firsts: array[i].firsts,
-      comments: array[i].comments,
-      press: array[i].press,
-      inkey: upcasedKey,
-      beard,
-      instruments,
-      location,
-      topic,
-      tagNames,
-      itunes: array[i].itunes,
-      spotify: array[i].spotify,
-      bandcamp: array[i].bandcamp,
-      mood,
-      mainInstrument,
-      secondaryInstrument,
+        let tagNames = [];
+        if (array[i].tags) {
+            tagNames = array[i].tags.toLowerCase().replace('\n', '').split(',').map(tag => tag.trim()).filter(tag => tag.length)
+        }
+
+        let mood;
+        if (array[i].mood) {
+            const query = await Mood.find({ name: array[i].mood.replace(/^\n|\n$/g, '').trim().toLowerCase() }).exec()
+            mood = query[0].id
+        }
+
+        let song = {
+            number: array[i].number,
+            title: array[i].title,
+            date,
+            length: calcLength(array[i].length),
+            videoid: array[i].videoid.slice(-11),
+            tempo,
+            description: array[i].description,
+            acousticproduced: array[i].acousticproduced,
+            firsts: array[i].firsts,
+            comments: array[i].comments,
+            press: array[i].press,
+            inkey: upcasedKey,
+            beard,
+            instruments,
+            location,
+            topic,
+            tagNames,
+            itunes: array[i].itunes,
+            spotify: array[i].spotify,
+            bandcamp: array[i].bandcamp,
+            mood,
+            mainInstrument,
+            secondaryInstrument,
+        }
+        records.push(song);
     }
-    records.push(song);
-  }
-  console.log(`Inserted ${records.length} songs`)
-  Song.insertMany(records, (err, docs) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log('inserting songs on tags and tags on songs...');
-    insertTagsonSongsOnTags()
-    .then(success => {
-      process.exit()
+    console.log(`Inserted ${records.length} songs`)
+    Song.insertMany(records, (err, docs) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log('inserting songs on tags and tags on songs...');
+        insertTagsonSongsOnTags()
+            .then(success => {
+                process.exit()
+            })
+            .catch(error => {
+                throw new Error(error);
+                process.exit();
+            })
+
     })
-    .catch(error => {
-      throw new Error(error);
-      process.exit();
-    })
-
-  })
 }
 
-gatherFields(songList).then( results => {
-  fs.writeFileSync('filenames.txt', '', 'utf8')
-  fs.writeFileSync('unique-tags.txt', '', 'utf8')
-  insertUniques(results).then( success => {
-    console.log('inserted all uniques!')
-    insertSongs(songList)
-  })
+gatherFields(songList).then(results => {
+    fs.writeFileSync('filenames.txt', '', 'utf8')
+    fs.writeFileSync('unique-tags.txt', '', 'utf8')
+    insertUniques(results).then(success => {
+        console.log('inserted all uniques!')
+        insertSongs(songList)
+    })
 })
