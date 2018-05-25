@@ -40,7 +40,8 @@ class Song extends Component {
     renderSong() {
         const { song } = this.state;
         let instruments = [],
-            tags = [];
+            tags = [],
+            rarity = Math.floor(Math.random() * 100) + "%";
 
         song.instruments.map(instrument => {
             instruments.push(instrument.name);
@@ -52,6 +53,13 @@ class Song extends Component {
 
         return (
             <div>
+                <a href="" className="page-nav previous-song">
+                    <span className="text">The Day Before</span>
+                </a>
+                <a href="" className="page-nav next-song">
+                    <span className="text">The Next Day</span>
+                </a>
+
                 <div className="song-header-container">
                     <AlbumCanvas
                         width={300}
@@ -63,62 +71,52 @@ class Song extends Component {
                 </div>
                 <div className="song-content-container">
                     <div className="song-meta">
-                        <table>
-                            <tr>
-                                <td>Instruments:</td>
-                                <td>{instruments.join(", ")}</td>
-                            </tr>
-                            <tr>
-                                <td>Tags:</td>
-                                <td>{tags.join(", ")}</td>
-                            </tr>
-                            <tr>
-                                <td>Firsts:</td>
-                                <td>{song.firsts}</td>
-                            </tr>
-                            <tr>
-                                <td>Location it was written:</td>
-                                <td>{song.location.name}</td>
-                            </tr>
-                            <tr>
-                                <td>mood:</td>
-                                <td>{song.mood.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Topic:</td>
-                                <td>{song.topic.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Key:</td>
-                                <td>{song.inkey.name}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div className="rarity">27%</div>
-                    <div className="song-content">
-                        <Header
-                            as="h1"
-                            content={song.title}
-                            subheader={moment(song.date).format(
-                                "MMMM Do, YYYY"
-                            )}
-                        />
-                        <Header
-                            as="h5"
-                            content={`SongADay number ${song.number}`}
-                        />
-                        <p>
-                            {song.description}
-                            <a href={``} />
+                        <h2 className="song-meta-title">Instruments</h2>
+                        <p className="song-meta-content">
+                            {instruments.join(", ")}
                         </p>
+
+                        <h2 className="song-meta-title">Tags</h2>
+                        <p className="song-meta-content">{tags.join(", ")}</p>
+
+                        <h2 className="song-meta-title">Location Written</h2>
+                        <p className="song-meta-content">
+                            {song.location.name}
+                        </p>
+
+                        <h2 className="song-meta-title">Mood</h2>
+                        <p className="song-meta-content">{song.mood.name}</p>
+
+                        <h2 className="song-meta-title">Topic</h2>
+                        <p className="song-meta-content">{song.topic.name}</p>
+
+                        <h2 className="song-meta-title">Key</h2>
+                        <p className="song-meta-content">{song.inkey.name}</p>
+                    </div>
+                    <div className="rarity">
+                        <div style={{ width: "200px", height: "200px" }}>
+                            <div className="rarity-score">{rarity}</div>
+                            <div className="rarity-title">Rarity Score</div>
+                        </div>
+                    </div>
+                    <div className="song-content">
+                        <h1 className="song-title">{song.title}</h1>
+                        <h2 className="song-date">
+                            {`Song ${song.number} | ${moment(song.date).format(
+                                "MMMM Do, YYYY"
+                            )}`}
+                        </h2>
+
+                        <p className="song-firsts">{song.firsts}</p>
+
                         <Embed
-                            style={{ width: "640px", height: "360px" }}
                             id={song.videoid}
                             placeholder={`https://img.youtube.com/vi/${
                                 song.videoid
                             }/mqdefault.jpg`}
                             source="youtube"
                         />
+                        <p className="song-description">{song.description}</p>
                     </div>
                 </div>
             </div>
