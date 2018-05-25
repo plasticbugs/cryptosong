@@ -54,10 +54,10 @@ class Song extends Component {
         return (
             <div>
                 <a href="" className="page-nav previous-song">
-                    <span>The Day Before</span>
+                    <span className="text">The Day Before</span>
                 </a>
                 <a href="" className="page-nav next-song">
-                    <span>The Next Before</span>
+                    <span className="text">The Next Day</span>
                 </a>
 
                 <div className="song-header-container">

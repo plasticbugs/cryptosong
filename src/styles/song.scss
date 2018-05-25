@@ -101,15 +101,39 @@
 
 .page-nav{
     position: fixed;
-    width: 50px;
+    width: 40px;
     height: 100%;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #cacaca;
     z-index: 8;
+    transition: all 0.3s 0s ease-out;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 800;
+    .text{
+        white-space: nowrap;
+        text-align: center;
+    }
+}
+.page-nav:hover{
+    width: 20%;
+    transition: all 0.3s 0.5s ease-out;
+    font-size: 100px;
 }
 .previous-song{
     left: 0;
+    cursor: w-resize;
+    .text{
+        transform: rotate(-90deg);
+    }
 }
 .next-song{
     right: 0;
+    cursor: e-resize;
+    .text{
+        transform: rotate(90deg);
+    }
 }
