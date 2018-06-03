@@ -5,6 +5,7 @@ import SongInputForm from "./SongInputForm.jsx";
 import Songs from "./Songs.jsx";
 import Song from "./Song.jsx";
 import Collection from "./Collection.jsx";
+import ImportSongData from './ImportSongData.jsx';
 
 const App = () => {
     return (
@@ -79,6 +80,14 @@ const App = () => {
                             {...props}
                             apiCollectionPath="/api/tags"
                             collectionName="Tag"
+                        />
+                    )}
+                />
+                <Route
+                    path="/import-song-data"
+                    render={props => (
+                        <ImportSongData
+                            {...props}
                         />
                     )}
                 />
