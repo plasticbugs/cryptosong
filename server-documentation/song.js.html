@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: song.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: song.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Song Model module.
  * @module models/song
  */
@@ -30,20 +58,18 @@ const songSchema = new Schema({
   firsts: String,
   comments: String,
   press: String,
-  tagNames: [String],
   tags: [tagSchema],
   itunes: String,
   spotify: String,
   bandcamp: String,
   mainInstrument: { type: Schema.Types.ObjectId, ref: 'Instrument' },
-  secondaryInstrument: { type: Schema.Types.ObjectId, ref: 'Instrument' },
   mood: { type: Schema.Types.ObjectId, ref: 'Mood' },
 });
 
 const Song = mongoose.model('Song', songSchema);
 
 const getLength = (mins, secs) => {
-  if (mins && secs) {
+  if (mins &amp;&amp; secs) {
     return Number.parseInt(mins) * 60 + Number.parseInt(secs);
   } else if (mins) {
     return Number.parseInt(mins) * 60;
@@ -80,7 +106,6 @@ module.exports.getSongByNumber = (number) => {
     .populate('location')
     .populate('mood')
     .populate('mainInstrument')
-    .populate('secondaryInstrument')
     .then(results => {
       const song = results[0];
       resolve(song)
@@ -104,7 +129,6 @@ module.exports.getSongByNumberWithAllPossibleTags = (number) => {
     .populate('location')
     .populate('mood')
     .populate('mainInstrument')
-    .populate('secondaryInstrument')
     .then(song => {
       song = cleanObj(song[0]);
       (async function getAllTags() {
@@ -132,7 +156,7 @@ const assignIDsToTags = (data) => {
   let songData = Object.assign({}, data);
   const TAGS = ['beard', 'location', 'topic', 'inkey', 'mood'];
   TAGS.forEach(tag => {
-    if (typeof songData[tag] === 'object' && songData[tag]._id) {
+    if (typeof songData[tag] === 'object' &amp;&amp; songData[tag]._id) {
       songData[tag] = songData[tag]._id;
     }
   })
@@ -159,17 +183,12 @@ module.exports.updateSong = (songData) => {
     songData = assignIDsToTags(songData);
 
     if (songData.instruments.length > 0) {
-      songData.instruments = songData.instruments.map((instrument, index) => {
+      songData.instruments = songData.instruments.map(instrument => {
         let num = instrument._id.toString();
         if (!num.match(/^[0-9a-fA-F]{24}$/)) {
           let newInstrument = new Models.Instrument({name: instrument.name})
           return newInstrument.save( (err, savedInstrument) => {
-            if (index === 0) {
-              songData.mainInstrument = savedInstrument._id;
-            }
-            if (index === 1) {
-              songData.secondaryInstrument = savedInstrument._id;
-            }
+            console.log(savedInstrument.name)
             return savedInstrument._id
             // if (doc) {
             //   console.log(doc)
@@ -179,23 +198,9 @@ module.exports.updateSong = (songData) => {
             // }
           })
         } else {
-          if (index === 0) {
-            console.log(instrument, index)
-            songData.mainInstrument = instrument._id;
-          }
-          if (index === 1) {
-            console.log(instrument, index)
-            songData.secondaryInstrument = instrument._id;
-          }
           return instrument._id;
         }
      })
-    }
-    if (!songData.instruments[0]) {
-      songData.mainInstrument = undefined
-    }
-    if (!songData.instruments[1]) {
-      songData.secondaryInstrument = undefined
     }
     deleteTagsForSong(Number.parseInt(songData.number, 10), task)
     .then(task => {
@@ -239,44 +244,9 @@ module.exports.insertSong = (newSong) => {
   const task = new Fawn.Task();
   return new Promise((resolve, reject) => {
     newSong = assignIDsToTags(newSong);
-
-    if (newSong.instruments.length > 0) {
-      newSong.instruments = newSong.instruments.map((instrument, index) => {
-        let num = instrument._id.toString();
-        if (!num.match(/^[0-9a-fA-F]{24}$/)) {
-          let newInstrument = new Models.Instrument({name: instrument.name})
-          return newInstrument.save( (err, savedInstrument) => {
-            console.log(savedInstrument.name)
-            if (index === 0) {
-              newSong.mainInstrument = savedInstrument._id;
-            }
-            if (index === 1) {
-              newSong.secondaryInstrument = savedInstrument._id;
-            }
-            return savedInstrument._id
-            // if (doc) {
-            //   console.log(doc)
-            //   return null;
-            // } else {
-            //   return saved._id
-            // }
-          })
-        } else {
-          if (index === 0) {
-            newSong.mainInstrument = instrument._id;
-          }
-          if (index === 1) {
-            newSong.secondaryInstrument = instrument._id;
-          }
-          return instrument._id;
-        }
-     })
-    }
-
-
-    // newSong.instruments = newSong.instruments.map(instrument => {
-    //   return instrument._id;
-    // })
+    newSong.instruments = newSong.instruments.map(instrument => {
+      return instrument._id;
+    })
 
     newSong.length = getLength(newSong.mins, newSong.secs);
     const tagArray = Object.assign([], newSong.tags);
@@ -380,4 +350,26 @@ module.exports.totalSongs = () => {
 }
 
 module.exports.Song = Song;
-module.exports.songSchema = songSchema;
+module.exports.songSchema = songSchema;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-models_song.html">models/song</a></li><li><a href="module-models_tag.html">models/tag</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 16 2018 19:10:03 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
