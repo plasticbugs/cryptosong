@@ -79,6 +79,7 @@ module.exports.getSongByNumber = (number) => {
     .populate('location')
     .populate('mood')
     .populate('mainInstrument')
+    .populate('secondaryInstrument')
     .then(results => {
       const song = results[0];
       resolve(song)
