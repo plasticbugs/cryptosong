@@ -30,6 +30,7 @@ const songSchema = new Schema({
   firsts: String,
   comments: String,
   press: String,
+  tagNames: [String],
   tags: [tagSchema],
   itunes: String,
   spotify: String,
