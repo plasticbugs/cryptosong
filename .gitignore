@@ -37,3 +37,5 @@ db/
 
 out/
 .vscode
+filenames.txt
+unique-tags.txt
