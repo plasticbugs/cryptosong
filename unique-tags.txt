@@ -1,7 +1,7 @@
+Beard
 Clean
 N/A
 Shadow
-Stubble
 acoustic guitar
 banjo
 baritone uke
@@ -22,7 +22,6 @@ vocals
 Baltimore
 Berkeley
 Jupiter, FL
-LA
 Los Angeles
 New York
 Oakland
@@ -38,6 +37,7 @@ Childhood
 Christmas
 Commission
 Contest
+Food
 Friend
 Grandma
 Instrumental
@@ -50,7 +50,6 @@ Object
 PSA
 Poetic
 Politics
-Poltiics
 Pop Culture
 Ringtone
 Science
@@ -59,7 +58,6 @@ Sick
 Social Justice
 Song A Day
 TV
-Thanksgiving
 Video Games
 A
 A?
@@ -136,6 +134,7 @@ contest
 cooking
 country
 courseopedia.com
+dancing
 dark
 dating
 david shuster
@@ -341,7 +340,6 @@ drunk
 excited
 happy
 intense
-object
 pensive
 sad
 silly
