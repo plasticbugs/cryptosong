@@ -64,7 +64,7 @@ export default class AlbumCanvas extends Component {
 
         let instrumentImages;
         if (mainInstrument.name === "vocals") {
-            if (secondaryInstrument) {
+            if (secondaryInstrument.name) {
                 switch (secondaryInstrument.name) {
                     case "piano":
                         instrumentImages = [

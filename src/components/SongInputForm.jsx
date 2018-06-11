@@ -280,7 +280,6 @@ export default class SongInputForm extends Component {
   }
 
   handleDropdownChange(e, { name, value }, fullSong) {
-    console.log("HELLLLYOO")
     let instruments = [];
     for (let i = 0; i < value.length; i++) {
       let selected = this.state.instrument.find( instrument => {

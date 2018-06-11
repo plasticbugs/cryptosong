@@ -2,10 +2,10 @@
 
 Beard
 ********************
+beard_beard.png
 beard_clean.png
 beard_na.png
 beard_shadow.png
-beard_stubble.png
 
 
 Instrument
@@ -34,7 +34,6 @@ Location
 location_baltimore.png
 location_berkeley.png
 location_jupiterfl.png
-location_la.png
 location_losangeles.png
 location_newyork.png
 location_oakland.png
@@ -54,6 +53,7 @@ topic_childhood.png
 topic_christmas.png
 topic_commission.png
 topic_contest.png
+topic_food.png
 topic_friend.png
 topic_grandma.png
 topic_instrumental.png
@@ -65,7 +65,6 @@ topic_nerd.png
 topic_object.png
 topic_poetic.png
 topic_politics.png
-topic_poltiics.png
 topic_popculture.png
 topic_psa.png
 topic_ringtone.png
@@ -74,7 +73,6 @@ topic_sex.png
 topic_sick.png
 topic_socialjustice.png
 topic_songaday.png
-topic_thanksgiving.png
 topic_tv.png
 topic_videogames.png
 
@@ -117,7 +115,6 @@ mood_drunk.png
 mood_excited.png
 mood_happy.png
 mood_intense.png
-mood_object.png
 mood_pensive.png
 mood_sad.png
 mood_silly.png
