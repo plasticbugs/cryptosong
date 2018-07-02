@@ -1,7 +1,7 @@
-Beard
 Clean
 N/A
 Shadow
+Stubble
 acoustic guitar
 banjo
 baritone uke
@@ -58,6 +58,7 @@ Sick
 Social Justice
 Song A Day
 TV
+Thanksgiving
 Video Games
 A
 A?
@@ -134,7 +135,6 @@ contest
 cooking
 country
 courseopedia.com
-dancing
 dark
 dating
 david shuster
@@ -340,6 +340,7 @@ drunk
 excited
 happy
 intense
+object
 pensive
 sad
 silly

@@ -2263,7 +2263,7 @@ const songList = [
         "number": 120,
         "date": "2009-04-30T04:00:00.000Z",
         "title": "The Continuing Adventures of Bulldog and the Dude",
-        "length": "1899-12-30T06:41:00.000Z"
+        "length": "1899-12-30T06:41:00.000Z",
         "inkey": "Am",
         "topic": "Commission",
         "location": "Berkeley",
