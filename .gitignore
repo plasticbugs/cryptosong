@@ -26,7 +26,6 @@ coverage
 
 build/js/
 build/css/
-build/artlayers
 build/2009
 
 # Dependency directorys
