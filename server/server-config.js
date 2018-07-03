@@ -13,8 +13,11 @@ const app = express();
 const basicAuth = require('express-basic-auth')
 
 app.use(basicAuth({
-    users: { 'admin': 'supersecret' }
+    users: { 'someuser': 'somepassword' },
+    challenge: true,
+    realm: 'Imb4T3st4pp',
 }))
+
 app.use(bodyParser.json({limit: '20mb'}));
 app.use(express.static('build'));
 
