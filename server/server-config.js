@@ -10,6 +10,11 @@ const router = require('./routes/index');
 const importer = require('./importJSON');
 
 const app = express();
+const basicAuth = require('express-basic-auth')
+
+app.use(basicAuth({
+    users: { 'admin': 'supersecret' }
+}))
 app.use(bodyParser.json({limit: '20mb'}));
 app.use(express.static('build'));
 

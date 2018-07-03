@@ -36,6 +36,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "express-basic-auth": "^1.1.5",
     "fawn": "^2.1.5",
     "file-loader": "^1.1.11",
     "gm": "^1.23.1",
