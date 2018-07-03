@@ -4,6 +4,9 @@ const daysIntoYear = (date) => {
     return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
 }
 
+const rootDir = __dirname + "/../../";
+const layers = rootDir + "build/artlayers"; 
+
 const whichYear = (date) => {
   // Determine which year it is. Simple math because it started in 2009
   const theYear = date.getFullYear();
@@ -16,6 +19,7 @@ const leapYear = (date) => {
   const result = new Date(year, 1, 29).getMonth() == 1;
   return result
  }
+
 
  
  module.exports.getHueForDate = (date) => {
@@ -37,27 +41,27 @@ const leapYear = (date) => {
     // if so, which one?
     switch (parseInt(dayOfYear)) {
         case 60:
-          holiday = 'Leap Day'
+          return `hsl(${359 - ( dayOfYearAdjusted + 119 ) % 360}), 100%, 90%`;
         case 99 + isLeapYear:
-            holiday = "Birthday";
+            return holiday = layers + "/special_birthday.png";
             break;
         case 185 + isLeapYear:
-            holiday = "Independence Day";
+            return holiday = layers + "/special_thanksgiving";
             break;
         case 304 + isLeapYear:
-            holiday = "Halloween";
+            return holiday = layers + "/special_halloween.png";
             break;
         case 359 + isLeapYear:
-            holiday = "Christmas";
+            return holiday = layers + "/special_christmas.png";
             break;
         case 365 + isLeapYear:
-            holiday = "New Year's Eve";
+            return holiday = layers + "/special_newyearseve.png";
             break;
         default:
           throw new Error('Expected a holiday, but was not in list')
           return;
     }
-    return null;
+    return holiday;
   } else {
     let dayOfYearAdjusted = dayOfYear;
     if ( dayOfYear > 60 && isLeapYear ) {
@@ -80,7 +84,7 @@ const leapYear = (date) => {
       // This shouldn't happen
       dayOfYearAdjusted = dayOfYearAdjusted - 1
     }
-    return 359 - ( dayOfYearAdjusted + 119 ) % 360;
+    return `hsl(${359 - ( dayOfYearAdjusted + 119 ) % 360}), 100%, 90%`;
   }
   // $('#hsl-val').val(holiday);
   // $('#square').css({ 

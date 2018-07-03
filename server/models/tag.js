@@ -2,10 +2,9 @@
  * Tag Model module.
  * @module models/tag
  */
-import mongoose, { Model } from 'mongoose';
-import Fawn from 'fawn';
-
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Fawn = require('fawn');
 const SongModel = require('./song')
 
 const songSchema = new Schema({

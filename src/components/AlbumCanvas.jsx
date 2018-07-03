@@ -17,18 +17,6 @@ export default class AlbumCanvas extends Component {
 
     componentDidMount() {
         const { song } = this.props;
-
-        let imgUrls = this.getTagImages(song).map(image => {
-            return image;
-        });
-
-        mergeImages(imgUrls)
-            .then(b64 => {
-                this.setState({ mergedImage: b64 });
-            })
-            .catch(err => {
-                throw new Error(`One or more layers did not load: ${err}`);
-            });
     }
 
     getTagImages(song) {
@@ -98,43 +86,21 @@ export default class AlbumCanvas extends Component {
 
     componentWillReceiveProps(nextProps) {
         const { song } = nextProps;
-
-        let imgUrls = this.getTagImages(song);
-
-        console.log("image URLS: ", imgUrls);
-        mergeImages(imgUrls)
-            .then(b64 => {
-                this.setState({ mergedImage: b64 });
-                return true;
-            })
-            .catch(err => {
-                console.log(err);
-                throw new Error(`One or more layers did not load: ${err}`);
-                return false;
-            });
     }
 
     render() {
-        const { width, height } = this.props;
-        let is_loading = this.state.mergedImage ? false : true,
-            backgroundImage = this.state.mergedImage
-                ? this.state.mergedImage
-                : "/loading.gif",
-            song_date,
+        const { backgroundImage, width, height } = this.props;
+        let song_date,
             song_link,
             song_list_item_classes = ["song-list-item"],
             returned_item;
 
-        if (is_loading) {
-            song_list_item_classes.push("is-loading");
-        }
+      
 
         if (this.props.list) {
-            if (!is_loading) {
-                song_date = new Date(this.props.song.date);
-                song_date = moment(song_date).format("MMMM Do, YYYY");
-                song_link = "/song/" + this.props.song.number + "/";
-            }
+            song_date = new Date(this.props.song.date);
+            song_date = moment(song_date).format("MMMM Do, YYYY");
+            song_link = "/song/" + this.props.song.number + "/";
             return (
                 <div
                     className={song_list_item_classes.join(" ")}

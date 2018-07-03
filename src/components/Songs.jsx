@@ -70,9 +70,10 @@ export default class Songs extends Component {
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
                 {this.state.songs.map(song => {
                     return (
+                        //<img src={"2009/" + song.title.replace(/\s/g,'_') + "_small.png"}
                         <AlbumCanvas
                             width={300}
-                            images={[]}
+                            backgroundImage={song.slug + "_small.png"}
                             song={song}
                             songnumber={song.number}
                             list={true}
