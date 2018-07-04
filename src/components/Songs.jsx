@@ -73,7 +73,7 @@ export default class Songs extends Component {
                         //<img src={"2009/" + song.title.replace(/\s/g,'_') + "_small.png"}
                         <AlbumCanvas
                             width={300}
-                            backgroundImage={song.imagePathSmall}
+                            backgroundImage={"/" + song.imagePathSmall}
                             song={song}
                             songnumber={song.number}
                             list={true}
