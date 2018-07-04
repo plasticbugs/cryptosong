@@ -8,6 +8,7 @@ const out =  rootDir + "build/2009/";
 const db = require('../../db-config')
 const SongModel = require('../models/song');
 const limit = pLimit(1);
+const path = require('path');
 
 const compositeImage = (buffer, image) => {
    return new Promise((resolve, reject) => { 
@@ -44,25 +45,24 @@ as = SongModel.Song.find()
   .populate('secondaryInstrument')
   .then( results => {
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-    results.reduce(function(promise, song) {
-      return promise.then(function(result) {
-        const slug = `${out}${slugify(song.title)}.png`;
-        return Promise.all([delay(100), createImage(song.date, creatImagePathArray(song), slug)]);
-      })
-    }, Promise.resolve())
-    // song = results[363];
-    // const slug = `${out}${slugify(song.title)}.png`;
-    // createImage(song.date, creatImagePathArray(song), slug);
+  results.reduce(function(promise, song) {
+    return promise.then(function(result) {
+      const slug = `${out}${slugify(song.title)}.png`;
+      return Promise.all([delay(1000), createImage(song, creatImagePathArray(song))]);
+    })
+  }, Promise.resolve())
+    
+    // createImage(song, creatImagePathArray(song));
   })
 
 const creatImagePathArray = (r) => {
   let array = [];
     array.push(layers + "/" + r.location.image)
-    addTopic(r, array)
-    addInstrumentLayers(r, array);
     array.push(layers + "/mood_" +  r.mood.name.toLowerCase() + ".png");
     beardPath = r.beard ? imagePath(`/beard_${r.beard.name.toLowerCase().replace(/\//g,'')}.png`) : imagePath("/beard_na.png");
     array.push(beardPath);
+    addTopic(r, array)
+    addInstrumentLayers(r, array);
     console.log(array)
     return array;
 }
@@ -84,22 +84,22 @@ const addTopic = (song, array) => {
 }
 
 const addInstrumentLayers = (song, array) => {
-  if(song.secondaryInstrument.name.toLowerCase() == 'synths') {
-    array.push(layers + "/instrument_" +  song.secondaryInstrument.name.toLowerCase().replace(/\s/g,'') + ".png");
+  if(['congas', 'drum machine', 'harpsichord', 'keyboard', 'organ', 'piano', 'synths'].includes(song.secondaryInstrument.name.toLowerCase())) {
     array.push(layers + "/instrument_vocals_no_hands.png");
+    array.push(layers + "/instrument_" +  song.secondaryInstrument.name.toLowerCase().replace(/\s/g,'') + ".png");
     return
   }
   if(song.secondaryInstrument && song.mainInstrument.name.toLowerCase() == 'vocals') {
-    array.push(layers + "/instrument_vocals_no_hands.png");
     array.push(layers + "/instrument_" +  song.secondaryInstrument.name.toLowerCase().replace(/\s/g,'') + ".png");
+    array.push(layers + "/instrument_vocals_no_hands.png");
     return
   }
   array.push(layers + "/instrument_" +  song.mainInstrument.name.toLowerCase().replace(/\s/g,'') + ".png");
 }
 
-const createImage = (date, array, pngPath) => {
-  pngPath = pngPath.replace(/\s/g,'_');
-  bg =  getHueForDate(date);
+const createImage = (song, array) => {
+  console.log(song.imagePath)
+  bg =  getHueForDate(song.date);
   if(bg.match('hsl')){
     graphic = gm(1792, 768, bg);
   }
@@ -115,19 +115,22 @@ const createImage = (date, array, pngPath) => {
         return array.reduce(reducer, Promise.resolve(buffer));
       })
       .then((buffer) => {
+        largeImage = path.join('build', song.imagePath);
         gm(buffer)
-            .write(pngPath, function (err) {
+            .write(largeImage, function (err) {
                 if (err) return console.dir(arguments)
                 console.log(this.outname + " created  ::  " + arguments[3])
-                gm(pngPath)
+                gm(largeImage)
                 .resize(null, 400)
                 .crop(400, 400, 280, 0)
                 .autoOrient()
-                .write(pngPath.replace('.png', '_small.png'), function (err) {
-                  if (!err) console.log(' hooray! ');
+                .write(path.join('build', song.imagePathSmall), function (err) {
+                  if (!err) console.log('hooray! ');
                 });
               });
-      }).catch((err) => {console.log(pngPath); console.log(err)})
+      })
+      .catch((err) => {console.log(song.title); console.log(err)})
+      .then(console.log(song.title))
   });
 }
 

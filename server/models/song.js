@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 const Models = require('./index.js')
 const TagModel = require('./tag')
 const Fawn = require('fawn');
+const path = require('path');
 
 const tagSchema = new Schema({
   image: String,
@@ -56,8 +57,20 @@ const songSchema = new Schema({
   }
 });
 
+songSchema.virtual('year').get(function () {
+  return this.date.getFullYear();
+});
+
 songSchema.virtual('slug').get(function () {
-  return "2009/" + slugify(this.title);
+  return  `${this.date.getTime()/ 1000}-${slugify(this.title)}`;
+});
+
+songSchema.virtual('imagePathSmall').get(function () {
+  return path.join(this.year.toString(), this.slug + "-small.png", );
+});
+
+songSchema.virtual('imagePath').get(function () {
+  return path.join(this.year.toString(), this.slug + ".png", );
 });
 
 const Song = mongoose.model('Song', songSchema);

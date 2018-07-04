@@ -27,6 +27,7 @@ coverage
 build/js/
 build/css/
 build/2009
+build/2010
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:

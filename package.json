@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "babel-node": "babel-node --presets env",
-    "start": "nodemon --exec yarn run babel-node -- ./index.js",
+    "start": "NODE_ENV=development nodemon --exec yarn run babel-node -- ./index.js",
     "build": "webpack --progress --colors",
     "build-and-start": "webpack --progress --colors && yarn start",
     "lint": "eslint ./ --ext .jsx --ext .js .",
