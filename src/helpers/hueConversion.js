@@ -1,4 +1,6 @@
 
+const momentHoliday = require('moment-holiday');
+
 const daysIntoYear = (date) => {
   // Jan 1 is day 1. And if there's a leap day... it figures it out
     return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
@@ -29,33 +31,32 @@ const leapYear = (date) => {
   let isLeapYear;
   let holiday;
   if (leapYear(date)) {
-    holidays = [60, 100, 186, 305, 360, 366];
+    holidays = [100];
     isLeapYear = 1;
   } else {
     // standard holiday days
-    holidays = [99, 185, 304, 359, 365];
+    holidays = [99];
     isLeapYear = 0;
   }
+  if (momentHoliday(date).isHoliday('Thanksgiving')){
+    return layers + "/special_thanksgiving.png";
+  }
+  if (momentHoliday(date).isHoliday('Halloween')){
+    return layers + "/special_birthday.png";
+  }
+  if (momentHoliday(date).isHoliday('Christmas')){
+    return layers + "/special_christmas.png";
+  }
+  if (momentHoliday(date).isHoliday('New Years Eve')){
+    return layers + "/special_newyearseve.png";
+  }
 
+  //leftover for birthday
   if (holidays.indexOf(dayOfYear) >= 0) {
     // if so, which one?
     switch (parseInt(dayOfYear)) {
-        case 60:
-          return `hsl(${359 - ( dayOfYearAdjusted + 119 ) % 360}), 100%, 90%`;
         case 99 + isLeapYear:
             return holiday = layers + "/special_birthday.png";
-            break;
-        case 185 + isLeapYear:
-            return holiday = layers + "/special_thanksgiving";
-            break;
-        case 304 + isLeapYear:
-            return holiday = layers + "/special_halloween.png";
-            break;
-        case 359 + isLeapYear:
-            return holiday = layers + "/special_christmas.png";
-            break;
-        case 365 + isLeapYear:
-            return holiday = layers + "/special_newyearseve.png";
             break;
         default:
           throw new Error('Expected a holiday, but was not in list')

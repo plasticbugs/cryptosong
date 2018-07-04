@@ -72,7 +72,6 @@ topic_sex.png
 topic_sick.png
 topic_socialjustice.png
 topic_songaday.png
-topic_thanksgiving.png
 topic_tv.png
 topic_videogames.png
 
@@ -115,7 +114,6 @@ mood_drunk.png
 mood_excited.png
 mood_happy.png
 mood_intense.png
-mood_object.png
 mood_pensive.png
 mood_sad.png
 mood_silly.png

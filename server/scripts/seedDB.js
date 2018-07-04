@@ -2001,7 +2001,7 @@ const songList = [
         "videoid": "https://www.youtube.com/watch?v=7CiTRHrA3vM",
         "description": "This is a request from my really good friend Mikal. He's getting married soon! He also introduced me to my girlfriend, Ivory. Anyway, he requested this song. He has a really awesome blog where he posts his own music and musings.",
         "acousticproduced": "Produced",
-        "mood": "Object",
+        "mood": "Pensive",
         "spotify": "https://open.spotify.com/track/0gOHtoepNQUm2zBdmxBvj9",
         "itunes": "https://itunes.apple.com/ph/album/its-like-trying-to-fill-styrofoam-cup-hole-in-bottom/1133048770?i=1133048958",
         "bandcamp": "https://jonathanmann.bandcamp.com/track/its-like-trying-to-fill-a-styrofoam-cup-with-a-hole-in-the-bottom",
@@ -5818,7 +5818,7 @@ const songList = [
         "date": "2009-11-26T05:00:00.000Z",
         "title": "Zombie Turkey",
         "length": "1899-12-30T07:32:00.000Z",
-        "topic": "Thanksgiving",
+        "topic": "Nerd",
         "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=fD_xNc_Wzlw",
@@ -6737,7 +6737,6 @@ async function insertSongs(array) {
         }
 
         let date = new Date(array[i].date);
-        date.setDate(date.getDate() + 1);
 
         let tagNames = [];
         if (array[i].tags) {

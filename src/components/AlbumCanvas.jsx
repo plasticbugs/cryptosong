@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Stage, Image, Layer, Rect, Text } from "react-konva";
 import SongImage from "./SongImage.jsx";
-import { getHueForDate } from "../helpers/hueConversion.js";
 import moment from "moment";
 
 import mergeImages from "../helpers/mergeImages.js";
@@ -17,71 +16,6 @@ export default class AlbumCanvas extends Component {
 
     componentDidMount() {
         const { song } = this.props;
-    }
-
-    getTagImages(song) {
-        // let { inkey, beard, location, instruments, topic } = song;
-        let {
-            inkey,
-            beard,
-            location,
-            instruments,
-            mood,
-            topic,
-            mainInstrument,
-            secondaryInstrument
-        } = song;
-        let tags = [location, mood, topic, beard];
-        // let tags = [inkey, beard, location, topic]
-
-        // let currentNumber = Number.parseInt(song.number, 10);
-        // let hue = 359 - ((currentNumber + 118) % 360)
-        let hue = getHueForDate(new Date(song.date));
-
-        if (!hue) {
-            hue = "black";
-        }
-
-        let images = [`/images/${hue}.png`];
-
-        tags.forEach(tag => {
-            if (tag && tag.image) {
-                images.push(`/artlayers/${tag.image}`);
-            }
-        });
-
-        let instrumentImages;
-        if (mainInstrument.name === "vocals") {
-            if (secondaryInstrument.name) {
-                switch (secondaryInstrument.name) {
-                    case "piano":
-                        instrumentImages = [
-                            `/artlayers/instrument_vocals_no_hands.png`,
-                            `/artlayers/${secondaryInstrument.image}`
-                        ];
-                        break;
-                    default:
-                        instrumentImages = [
-                            `/artlayers/${secondaryInstrument.image}`,
-                            `/artlayers/instrument_vocals_no_hands.png`
-                        ];
-                }
-            } else {
-                instrumentImages = [`/artlayers/${mainInstrument.image}`];
-            }
-        } else {
-            instrumentImages = [`/artlayers/${mainInstrument.image}`];
-        }
-
-        // instrumentImages = instruments.map(instrument => {
-        //   return `/artlayers/${instrument.image}`;
-        // })
-        console.log(instrumentImages);
-
-        if (instrumentImages) {
-            images = images.concat(instrumentImages);
-        }
-        return images;
     }
 
     componentWillReceiveProps(nextProps) {
