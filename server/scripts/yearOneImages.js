@@ -51,8 +51,12 @@ as = SongModel.Song.find()
       return Promise.all([delay(1000), createImage(song, creatImagePathArray(song))]);
     })
   }, Promise.resolve())
-    
-    // createImage(song, creatImagePathArray(song));
+    .catch((err) => {console.log(song.title); console.log(err)})
+    .then(() =>
+    {
+      console.log("finished"); 
+      process.exit(0)
+    });
   })
 
 const creatImagePathArray = (r) => {
@@ -84,7 +88,10 @@ const addTopic = (song, array) => {
 }
 
 const addInstrumentLayers = (song, array) => {
-  if(['congas', 'drum machine', 'harpsichord', 'keyboard', 'organ', 'piano', 'synths'].includes(song.secondaryInstrument.name.toLowerCase())) {
+  if(song.topic.name.toLowerCase() == 'instrumental') {
+    array.push(layers + "/instrument_" +  song.mainInstrument.name.toLowerCase().replace(/\s/g,'') + ".png");
+  }
+  if(['congas', 'drum machine', 'harpsichord', 'keyboard', 'organ', 'piano'].includes(song.secondaryInstrument.name.toLowerCase())) {
     array.push(layers + "/instrument_vocals_no_hands.png");
     array.push(layers + "/instrument_" +  song.secondaryInstrument.name.toLowerCase().replace(/\s/g,'') + ".png");
     return
