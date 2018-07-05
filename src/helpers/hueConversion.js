@@ -22,6 +22,12 @@ const leapYear = (date) => {
   return result
  }
 
+momentHoliday.modifyHolidays.add({
+  "Birthday": {
+    date: '4/9',
+    keywords: ['my', 'birthday']
+  }
+});
 
  
  module.exports.getHueForDate = (date) => {
@@ -38,11 +44,15 @@ const leapYear = (date) => {
     holidays = [99];
     isLeapYear = 0;
   }
+  //check for holidays
+  if (momentHoliday(date).isHoliday('Birthday')){
+    return layers + "/special_birthday.png";
+  }
   if (momentHoliday(date).isHoliday('Thanksgiving')){
     return layers + "/special_thanksgiving.png";
   }
   if (momentHoliday(date).isHoliday('Halloween')){
-    return layers + "/special_birthday.png";
+    return layers + "/special_halloween.png";
   }
   if (momentHoliday(date).isHoliday('Christmas')){
     return layers + "/special_christmas.png";
@@ -51,47 +61,27 @@ const leapYear = (date) => {
     return layers + "/special_newyearseve.png";
   }
 
-  //leftover for birthday
-  if (holidays.indexOf(dayOfYear) >= 0) {
-    // if so, which one?
-    switch (parseInt(dayOfYear)) {
-        case 99 + isLeapYear:
-            return holiday = layers + "/special_birthday.png";
-            break;
-        default:
-          throw new Error('Expected a holiday, but was not in list')
-          return;
-    }
-    return holiday;
-  } else {
-    let dayOfYearAdjusted = dayOfYear;
-    if ( dayOfYear > 60 && isLeapYear ) {
-      // If it's a leap year, after Feb 29th, add a day?
-      dayOfYearAdjusted = dayOfYearAdjusted - isLeapYear
-    }
-    if ( dayOfYear > 99 + isLeapYear ) {
-      dayOfYearAdjusted = dayOfYearAdjusted - 1
-    }
-    if ( dayOfYear > 185 + isLeapYear ) {
-      dayOfYearAdjusted = dayOfYearAdjusted - 1
-    }
-    if ( dayOfYear > 304 + isLeapYear ) {
-      dayOfYearAdjusted = dayOfYearAdjusted - 1
-    }
-    if ( dayOfYear > 359 + isLeapYear ) {
-      dayOfYearAdjusted = dayOfYearAdjusted - 1
-    }
-    if ( dayOfYear > 365 + isLeapYear ) {
-      // This shouldn't happen
-      dayOfYearAdjusted = dayOfYearAdjusted - 1
-    }
-    return `hsl(${359 - ( dayOfYearAdjusted + 119 ) % 360}), 100%, 90%`;
+  let dayOfYearAdjusted = dayOfYear;
+  if ( dayOfYear > 60 && isLeapYear ) {
+    // If it's a leap year, after Feb 29th, add a day?
+    dayOfYearAdjusted = dayOfYearAdjusted - isLeapYear
   }
-  // $('#hsl-val').val(holiday);
-  // $('#square').css({ 
-  //   background: "black",
-  //   color: "white"
-  // });else {
-  // calc for lost days because of holidays.
+  if ( dayOfYear > 99 + isLeapYear ) {
+    dayOfYearAdjusted = dayOfYearAdjusted - 1
+  }
+  if ( dayOfYear > 185 + isLeapYear ) {
+    dayOfYearAdjusted = dayOfYearAdjusted - 1
+  }
+  if ( dayOfYear > 304 + isLeapYear ) {
+    dayOfYearAdjusted = dayOfYearAdjusted - 1
+  }
+  if ( dayOfYear > 359 + isLeapYear ) {
+    dayOfYearAdjusted = dayOfYearAdjusted - 1
+  }
+  if ( dayOfYear > 365 + isLeapYear ) {
+    // This shouldn't happen
+    dayOfYearAdjusted = dayOfYearAdjusted - 1
+  }
+  return `hsl(${359 - ( dayOfYearAdjusted + 119 ) % 360}), 100%, 90%`;
 
 }

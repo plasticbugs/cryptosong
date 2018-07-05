@@ -5818,7 +5818,7 @@ const songList = [
         "date": "2009-11-26T05:00:00.000Z",
         "title": "Zombie Turkey",
         "length": "1899-12-30T07:32:00.000Z",
-        "topic": "Nerd",
+        "topic": "Food",
         "location": "Los Angeles",
         "instruments": "Vocals, Acoustic Guitar",
         "videoid": "https://www.youtube.com/watch?v=fD_xNc_Wzlw",
