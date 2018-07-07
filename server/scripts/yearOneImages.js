@@ -44,7 +44,7 @@ as = SongModel.Song.find()
   .populate('mainInstrument')
   .populate('secondaryInstrument')
   .then( results => {
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const delay = () => new Promise(resolve => setTimeout(resolve, 2500));
   results.reduce(function(promise, song) {
     return promise.then(function(result) {
       const slug = `${out}${slugify(song.title)}.png`;

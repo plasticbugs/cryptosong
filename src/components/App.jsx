@@ -23,6 +23,7 @@ const App = () => {
                 />
                 <Route path="/song/:id" render={props => <Song {...props} />} />
                 <Route path="/songs" render={props => <Songs {...props} />} />
+                <Route path="/" render={props => <Songs {...props} />} />
                 <Route
                     path="/instruments"
                     render={props => (
