@@ -54,6 +54,9 @@ router.route('/song/:id')
 router.route('/songs')
   .get(songController.getAllSongs);
 
+router.route('/songs/:tagname')
+  .get(songController.getSongsByTag);
+
 router.route('/songs/count')
   .get(songController.getSongCount);
 

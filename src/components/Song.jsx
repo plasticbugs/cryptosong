@@ -77,7 +77,14 @@ class Song extends Component {
                         </p>
 
                         <h2 className="song-meta-title">Tags</h2>
-                        <p className="song-meta-content">{tags.join(", ")}</p>
+                        <p className="song-meta-content">
+                            { 
+                                tags.map((tag, key) => {
+                                    let url = `/songs/${tag}`
+                                    return  <a key={key} href={url}>{tag}{tags.length == (key + 1)?" ":", "}</a>
+                                })
+                            }
+                        </p>
 
                         <h2 className="song-meta-title">Location Written</h2>
                         <p className="song-meta-content">

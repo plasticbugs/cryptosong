@@ -3,15 +3,19 @@ import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
 import axios from "axios";
 import AlbumCanvas from "./AlbumCanvas.jsx";
 import Navigation from "./Navigation.jsx";
+import TagSelector from "./TagSelector.jsx";
 
 import "../styles/songs.scss";
 
-export default class Songs extends Component {
+class Songs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            songs: []
+            songs: [],
+            tagSelector: false,
         };
+        this.tagGrab = this.tagGrab.bind(this);
+        this.revealTagSelector = this.revealTagSelector.bind(this);
     }
 
     // _onMouseMove(e) {
@@ -23,11 +27,53 @@ export default class Songs extends Component {
     // }
 
     componentDidMount() {
-        axios.get("/api/songs").then(songs => {
-            console.log(songs.data);
-            this.setState({ songs: songs.data });
-        });
+        const { match } = this.props;
+        if(match.path === '/songs/:tagname'){
+            axios.get(`/api/songs/${match.params.tagname}`).then(response => {
+                this.setState({ songs: response.data })
+            });
+        } else {
+            axios.get("/api/songs").then(songs => {
+                console.log(songs.data);
+                this.setState({ songs: songs.data });
+            });
+        }
         // console.log(randomColor())
+    }
+
+    componentDidUpdate() {
+        console.log(this.state.songs)
+    }
+
+    revealTagSelector(bool) {
+        this.setState({tagSelector:bool})
+    }
+
+    tagGrab(tags) {
+        let songArr = [];
+        let promises = [];
+        tags.forEach(tag => {
+            promises.push(
+                axios.get(`/api/songs/${tag}`).then(songs => {
+                    let songsList = [];
+                    songs.data.forEach(song => {
+                        let already = false;
+                        for(let i = 0; i < songArr.length; i ++){
+                            if(songArr[i].number === song.number){
+                                already = true;
+                            }
+                        }
+                        if(!already){
+                            songsList.push(song);
+                        }
+                    })
+                    songArr = songArr.concat(songsList);
+                })
+            );
+        });
+        Promise.all(promises).then(()=>{
+            this.setState({ songs: songArr });
+        })
     }
 
     renderKey(song) {
@@ -59,7 +105,12 @@ export default class Songs extends Component {
                     justifyContent: "center"
                 }}
             >
-                <Navigation />
+                <Navigation revealTagSelector={this.revealTagSelector}/>
+                {
+                    this.state.tagSelector ? 
+                        <TagSelector tagGrab={this.tagGrab} /> :
+                    <div>&nbsp;</div>     
+                }
                 {/* <Embed
                     id="7Af6b9-yqa8"
                     placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
@@ -68,10 +119,11 @@ export default class Songs extends Component {
                 <div className="song-header-container" />
 
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
-                {this.state.songs.map(song => {
+                {this.state.songs.map((song, key) => {
                     return (
                         //<img src={"2009/" + song.title.replace(/\s/g,'_') + "_small.png"}
                         <AlbumCanvas
+                            key={key}
                             width={300}
                             backgroundImage={"/" + song.imagePathSmall}
                             song={song}
@@ -132,3 +184,5 @@ export default class Songs extends Component {
     //   </Card.Group>
     // </Container>)
 }
+
+module.exports = Songs;

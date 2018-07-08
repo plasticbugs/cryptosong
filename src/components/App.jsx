@@ -14,16 +14,26 @@ const App = () => {
                 <Route
                     path="/song/new"
                     render={props => <SongInputForm {...props} />}
-                />
+                />   
+                {/* songs by tag route */}
+                <Route path="/songs/:tagname" render={props => <Songs {...props} />} />
+
+
+                {/* song detail page route */}
+                <Route path="/song/:id" render={props => <Song {...props} />} />
+
                 <Route
                     path="/song/:id/edit"
                     render={props => (
                         <SongInputForm editing={true} {...props} />
                     )}
                 />
-                <Route path="/song/:id" render={props => <Song {...props} />} />
-                <Route path="/songs" render={props => <Songs {...props} />} />
+
+                {/* routes that display all songs */}
                 <Route path="/" render={props => <Songs {...props} />} />
+                <Route path="/songs" render={props => <Songs {...props} />} />
+                
+                {/* edit routes */}
                 <Route
                     path="/instruments"
                     render={props => (

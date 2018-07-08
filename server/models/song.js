@@ -396,6 +396,15 @@ module.exports.removeTagsFromSongs = (tagArray) => {
   })
 }
 
+module.exports.getSongsByTagName = (tag) => {
+  return new Promise((resolve, reject) => {
+    Song.find({ tagNames: { "$in" : [tag]} })
+    .then(results => {
+      resolve(results)
+    })
+  })
+} 
+
 /**
 * This method returns the total number of songs in the database.
 * @return {promise} A promise that resolves with the total number of songs in the database.
