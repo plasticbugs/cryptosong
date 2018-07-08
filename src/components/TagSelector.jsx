@@ -11,21 +11,31 @@ export default class TagSelector extends Component {
             selected: [],
         }
         this.handleChange = this.handleChange.bind(this);
-        this.filterByTags = this.filterByTags.bind(this);
+        this.filterSongs = this.filterSongs.bind(this);
+        this.tagGrab = this.tagGrab.bind(this);
     }
+
     componentDidMount() {
         axios.get('/api/tags').then(tags => {
             this.setState({tags:tags.data});
-            // tags.data.map(tag => {
-            //     return <option value={tag._id}>{tag.name}</option>;
-            // })
         })
     }
-    filterByTags() {
-        console.log('filterbytags');
-        console.log(this.state.selected);
-        this.props.tagGrab(this.state.selected);
+
+    filterSongs() {
+        this.tagGrab(this.state.selected).then(res => {
+            this.props.narrowSelection(res);
+        })
     }
+
+    tagGrab(tags) {
+        return new Promise ((res, rej) => {
+            axios.post("/api/find_tags", {tags:tags}).then(songs => {
+                console.log(songs.data);
+                res({ songs: songs.data });
+            }).catch(err => rej(err));
+        })
+    }
+
     handleChange(e) {
         let pile = e.target.selectedOptions;
         let selected = [];
@@ -34,11 +44,12 @@ export default class TagSelector extends Component {
         }
         this.setState({selected});
     }
+
     render() {
         return (
             <div>
                 <div>
-                    <select onChange={this.handleChange} id="tags" multiple size="5">
+                    <select onChange={this.handleChange} id="tags" multiple size="7">
                     {
                         this.state.tags.map((tag, key) => {
                             return <option key={key} value={tag.name}>{tag.name}</option>;
@@ -46,7 +57,7 @@ export default class TagSelector extends Component {
                     }   
                     </select>
                 </div>
-                <button onClick={this.filterByTags.bind(this)}>filter them!</button>
+                <button onClick={this.filterSongs.bind(this)}>filter them!</button>
             </div>
         );
     }

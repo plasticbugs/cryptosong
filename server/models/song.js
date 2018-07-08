@@ -396,9 +396,14 @@ module.exports.removeTagsFromSongs = (tagArray) => {
   })
 }
 
-module.exports.getSongsByTagName = (tag) => {
+/**
+* This method returns all songs matching an array of tags.
+* @param {array} tagArray - an array of tag names (strings).
+* @return {promise} A promise that resolves when all songs are returned in a renderable song array.
+*/
+module.exports.getSongsByTagNames = (tags) => {
   return new Promise((resolve, reject) => {
-    Song.find({ tagNames: { "$in" : [tag]} })
+    Song.find({ tagNames: { "$in" : tags} })
     .then(results => {
       resolve(results)
     })

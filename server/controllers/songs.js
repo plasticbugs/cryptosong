@@ -61,9 +61,9 @@ module.exports.getSongWithTags = (req, res) => {
   })
 }
 
-module.exports.getSongsByTag = (req, res) => {
-  const tag = req.params.tagname;
-  SongModel.getSongsByTagName(tag).then(response => {
+module.exports.getSongsByTags = (req, res) => {
+  const tags = req.body.tags;
+  SongModel.getSongsByTagNames(tags).then(response => {
     res.send(response);
   })
 }

@@ -12,10 +12,7 @@ class Songs extends Component {
         super(props);
         this.state = {
             songs: [],
-            tagSelector: false,
         };
-        this.tagGrab = this.tagGrab.bind(this);
-        this.revealTagSelector = this.revealTagSelector.bind(this);
     }
 
     // _onMouseMove(e) {
@@ -27,53 +24,11 @@ class Songs extends Component {
     // }
 
     componentDidMount() {
-        const { match } = this.props;
-        if(match.path === '/songs/:tagname'){
-            axios.get(`/api/songs/${match.params.tagname}`).then(response => {
-                this.setState({ songs: response.data })
-            });
-        } else {
-            axios.get("/api/songs").then(songs => {
-                console.log(songs.data);
-                this.setState({ songs: songs.data });
-            });
-        }
-        // console.log(randomColor())
-    }
-
-    componentDidUpdate() {
-        console.log(this.state.songs)
-    }
-
-    revealTagSelector(bool) {
-        this.setState({tagSelector:bool})
-    }
-
-    tagGrab(tags) {
-        let songArr = [];
-        let promises = [];
-        tags.forEach(tag => {
-            promises.push(
-                axios.get(`/api/songs/${tag}`).then(songs => {
-                    let songsList = [];
-                    songs.data.forEach(song => {
-                        let already = false;
-                        for(let i = 0; i < songArr.length; i ++){
-                            if(songArr[i].number === song.number){
-                                already = true;
-                            }
-                        }
-                        if(!already){
-                            songsList.push(song);
-                        }
-                    })
-                    songArr = songArr.concat(songsList);
-                })
-            );
+        axios.get("/api/songs").then(songs => {
+            console.log(songs.data);
+            this.setState({ songs: songs.data });
         });
-        Promise.all(promises).then(()=>{
-            this.setState({ songs: songArr });
-        })
+        // console.log(randomColor())
     }
 
     renderKey(song) {
@@ -105,12 +60,7 @@ class Songs extends Component {
                     justifyContent: "center"
                 }}
             >
-                <Navigation revealTagSelector={this.revealTagSelector}/>
-                {
-                    this.state.tagSelector ? 
-                        <TagSelector tagGrab={this.tagGrab} /> :
-                    <div>&nbsp;</div>     
-                }
+                <Navigation />
                 {/* <Embed
                     id="7Af6b9-yqa8"
                     placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
