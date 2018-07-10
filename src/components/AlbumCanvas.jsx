@@ -29,8 +29,6 @@ export default class AlbumCanvas extends Component {
             song_list_item_classes = ["song-list-item"],
             returned_item;
 
-      
-
         if (this.props.list) {
             song_date = new Date(this.props.song.date);
             song_date = moment(song_date).format("MMMM Do, YYYY");
@@ -39,8 +37,8 @@ export default class AlbumCanvas extends Component {
                 <div
                     className={song_list_item_classes.join(" ")}
                     style={{
-                        width: "100px",
-                        height: "100px",
+                        width: width,
+                        height: height,
                         flexShrink: "0",
                         margin: "5px"
                     }}
@@ -51,7 +49,9 @@ export default class AlbumCanvas extends Component {
                             style={{
                                 backgroundImage: "url(" + backgroundImage + ")",
                                 backgroundSize: "cover",
-                                backgroundPosition: "center center"
+                                backgroundPosition: "center center",
+                                width: width,
+                                height: height
                             }}
                         />
                     </a>

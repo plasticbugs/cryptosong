@@ -10,7 +10,9 @@ export default class Songs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            songs: []
+            songs: [],
+            size: "md",
+            imageSize: 100
         };
     }
 
@@ -41,6 +43,41 @@ export default class Songs extends Component {
         }
     }
 
+    renderSizes() {
+        let sizes = ["sm", "md", "lg"];
+
+        let sizesDom = sizes.map(size => {
+            let classes = [];
+
+            if (size === this.state.size) {
+                classes.push("active");
+            }
+            return (
+                <li key={size} className={classes.join(" ")}>
+                    <a onClick={this.changeZoom.bind(this, size)}>{size}</a>
+                </li>
+            );
+        });
+
+        return sizesDom;
+    }
+
+    changeZoom(size) {
+        switch (size) {
+            case "sm":
+                this.setState({ size: "sm", imageSize: 50 });
+                return;
+            case "md":
+                this.setState({ size: "md", imageSize: 100 });
+                return;
+            case "lg":
+                this.setState({ size: "lg", imageSize: 190 });
+                return;
+            default:
+                return;
+        }
+    }
+
     render() {
         const { x, y } = this.state;
         const style = {
@@ -48,54 +85,51 @@ export default class Songs extends Component {
             border: "2px solid black",
             padding: "2em"
         };
+        let sizeClass = "size-" + this.state.size;
         // Used for testing
         // let tempSongs = this.state.songs.slice(0, 80);
         return (
-            <Container
-                style={{
-                    padding: "2px",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "center"
-                }}
-            >
+            <Container>
                 <Navigation />
-                {/* <Embed
-                    id="7Af6b9-yqa8"
-                    placeholder={`https://img.youtube.com/vi/7Af6b9-yqa8/mqdefault.jpg`}
-                    source="youtube"
-                /> */}
-                <div className="song-header-container" />
-
-                {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
-                {this.state.songs.map(song => {
-                    return (
-                        //<img src={"2009/" + song.title.replace(/\s/g,'_') + "_small.png"}
-                        <AlbumCanvas
-                            width={300}
-                            backgroundImage={"/" + song.imagePathSmall}
-                            song={song}
-                            songnumber={song.number}
-                            list={true}
-                        />
-                    );
-                    //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>
-                    //     <Popup.Header>{song.title}</Popup.Header>
-                    //     <Popup.Content>
-                    //       <Embed style={{width:'340px', height: '160px'}}
-                    //         id={song.videoid}
-                    //         placeholder={`https://img.youtube.com/vi/${song.videoid}/mqdefault.jpg`}
-                    //         source='youtube'
-                    //       />
-                    //       {this.renderKey(song)}
-                    //     </Popup.Content>
-                    //   </Popup>
-                    // )
-                    // })}
-                    {
-                        /* </Image.Group> */
-                    }
-                })}
+                <div className="filter-navigation">
+                    <div className="filter-navigation-inner">
+                        <ul className="filter-size">
+                            <li>Size</li>
+                            {this.renderSizes()}
+                        </ul>
+                    </div>
+                </div>
+                <div className={"song-list-container " + sizeClass}>
+                    {this.state.songs.map(song => {
+                        return (
+                            //<img src={"2009/" + song.title.replace(/\s/g,'_') + "_small.png"}
+                            <AlbumCanvas
+                                width={this.state.imageSize}
+                                height={this.state.imageSize}
+                                backgroundImage={"/" + song.imagePathSmall}
+                                song={song}
+                                songnumber={song.number}
+                                list={true}
+                            />
+                        );
+                        //   <Popup size='tiny' key={song._id} style={style} hoverable inverted trigger={<AlbumCanvas width={100} height={100} images={[]} song={song} songnumber={song.number} />}>
+                        //     <Popup.Header>{song.title}</Popup.Header>
+                        //     <Popup.Content>
+                        //       <Embed style={{width:'340px', height: '160px'}}
+                        //         id={song.videoid}
+                        //         placeholder={`https://img.youtube.com/vi/${song.videoid}/mqdefault.jpg`}
+                        //         source='youtube'
+                        //       />
+                        //       {this.renderKey(song)}
+                        //     </Popup.Content>
+                        //   </Popup>
+                        // )
+                        // })}
+                        {
+                            /* </Image.Group> */
+                        }
+                    })}
+                </div>
             </Container>
         );
     }
