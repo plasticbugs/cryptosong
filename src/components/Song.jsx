@@ -81,7 +81,7 @@ class Song extends Component {
                             { 
                                 tags.map((tag, key) => {
                                     let url = `/songs/${tag}`
-                                    return  <a key={key} href={url}>{tag}{tags.length == (key + 1)?" ":", "}</a>
+                                    return  <span><a key={key} href={url}>{tag}</a>{tags.length == (key + 1)?" ":", "}</span>
                                 })
                             }
                         </p>
