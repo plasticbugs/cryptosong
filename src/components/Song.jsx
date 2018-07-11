@@ -80,7 +80,7 @@ class Song extends Component {
                         <p className="song-meta-content">
                             { 
                                 tags.map((tag, key) => {
-                                    let url = `/songs/${tag}`
+                                    let url = `/songs/tag/${tag}`
                                     return  <span><a key={key} href={url}>{tag}</a>{tags.length == (key + 1)?" ":", "}</span>
                                 })
                             }
