@@ -19,20 +19,27 @@ class SearchBy extends Component {
     }
 
     componentDidMount() {
-        if(this.props.allSongs){
-            axios.get("/api/songs").then(songs => {
-                console.log(songs.data);
-                this.setState({ songs: songs.data });
-            });
-        } else {
-            const tags = [];
-            tags.push(this.props.match.params.tagname);
-            axios.post("/api/find_tags", {tags:tags}).then(songs => {
-                console.log(songs.data);
-                this.setState({ songs: songs.data });
-            });
-        }
-        // console.log(randomColor())
+        switch (this.props.filterBy) {
+            case "tags":
+                this.getByTags();
+                break;
+            default:
+                this.getAllSongs();
+        };
+    }
+    getAllSongs() {
+        axios.get("/api/songs").then(songs => {
+            console.log(songs.data);
+            this.setState({ songs: songs.data });
+        });
+    }
+    getByTags() {
+        const tags = [];
+        tags.push(this.props.match.params.tagname);
+        axios.post("/api/find_tags", {tags:tags}).then(songs => {
+            console.log(songs.data);
+            this.setState({ songs: songs.data });
+        });
     }
 
     revealTagSelector(bool) {
@@ -70,7 +77,7 @@ class SearchBy extends Component {
                     justifyContent: "center"
                 }}
             >
-                <Navigation tagNav={true} revealTagSelector={this.revealTagSelector}/>
+                <Navigation revealTagSelector={this.revealTagSelector}/>
                 {
                     this.state.tagSelector ? 
                         <TagSelector narrowSelection={this.narrowSelection} /> :

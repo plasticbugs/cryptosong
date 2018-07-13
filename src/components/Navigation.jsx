@@ -11,16 +11,10 @@ class Navigation extends Component {
             <nav className="global-navigation">
                 <div className="global-navigation-links">
                     <a href="/">All</a>
-                    {
-                        this.props.tagNav ?
-                        <div style={{cursor:"pointer"}}>
-                            <span><a onClick={() => this.props.revealTagSelector(true)}>Show Tags</a> |</span>
-                            <span> <a onClick={() => this.props.revealTagSelector(false)}>Hide Tags</a></span>
-                        </div> :
-                        <div>
-                            <a href="/songs/tag">Tags</a>
-                        </div>
-                    } 
+                    <div style={{cursor:"pointer"}}>
+                        <span><a onClick={() => this.props.revealTagSelector(true)}>Show Tags</a> |</span>
+                        <span> <a onClick={() => this.props.revealTagSelector(false)}>Hide Tags</a></span>
+                    </div> 
                 </div>
                 <div>
                     <h1 className="site-name">Song A Day World</h1>

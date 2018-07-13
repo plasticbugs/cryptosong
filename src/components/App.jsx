@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import SongInputForm from "./SongInputForm.jsx";
-import Songs from "./Songs.jsx";
 import SearchBy from "./SearchBy.jsx";
 import Song from "./Song.jsx";
 import Collection from "./Collection.jsx";
@@ -17,15 +16,35 @@ const App = () => {
                     render={props => <SongInputForm {...props} />}
                 />   
                 {/* songs by tag route */}
-                <Route path="/songs/tag/:tagname" render={props => <SearchBy {...props}  />} />   
+                <Route 
+                    path="/songs/tag/:tagname" 
+                    render={props => (
+                        <SearchBy 
+                            filterBy={"tags"} 
+                            {...props} 
+                        />
+                    )
+                } 
+                />   
+                {/* routes that display all songs */}
+                <Route 
+                    path="/" 
+                    render={props => (
+                        <SearchBy
+                            filterBy={false}
+                            {...props}
+                        />
+                    )
+                } 
+                />
 
                 {/* songs by all tags route */}
                 <Route 
-                    path="/songs/tag/" 
+                    path="/songs" 
                     render={props => (
-                        <SearchBy 
+                        <SearchBy
+                            filterBy={false}
                             {...props}
-                            allSongs={true}
                         />
                     )
                 } 
@@ -40,10 +59,6 @@ const App = () => {
                         <SongInputForm editing={true} {...props} />
                     )}
                 />
-
-                {/* routes that display all songs */}
-                <Route path="/" render={props => <Songs {...props} />} />
-                <Route path="/songs" render={props => <Songs {...props} />} />
                 
                 {/* edit routes */}
                 <Route
