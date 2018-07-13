@@ -29,6 +29,7 @@ class SearchBy extends Component {
                 this.getAllSongs();
         };
     }
+
     getAllSongs() {
         axios.get("/api/songs").then(songs => {
             this.setState({ songs: songs.data });
@@ -39,16 +40,24 @@ class SearchBy extends Component {
         const tags = [];
         tags.push(this.props.match.params.tagname);
         this.tagGrab(tags).then((res) => {
-            this.narrowSelection(res)
+            this.narrowSelection(res);
         });
     }
 
     tagGrab(tags) {
         return new Promise ((res, rej) => {
-            axios.post("/api/find_tags", {tags:tags}).then(songs => {
+            axios.get("/api/find_tags", {
+                params: {
+                   tags: tags, 
+                },
+            }).then(songs => {
                 res({ songs: songs.data });
             }).catch(err => rej(err));
         })
+    }
+
+    narrowSelection(songs) {
+        this.setState(songs);
     }
 
     revealTagSelector(bool) {
@@ -64,10 +73,6 @@ class SearchBy extends Component {
                 </a>
             );
         }
-    }
-
-    narrowSelection(songs) {
-        this.setState(songs);
     }
 
     render() {

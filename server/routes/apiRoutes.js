@@ -55,7 +55,7 @@ router.route('/songs')
   .get(songController.getAllSongs);
   
 router.route('/find_tags')
-  .post(songController.getSongsByTags);
+  .get(songController.getSongsByTags);
 
 router.route('/songs/count')
   .get(songController.getSongCount);

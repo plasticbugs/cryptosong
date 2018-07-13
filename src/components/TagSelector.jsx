@@ -23,7 +23,7 @@ export default class TagSelector extends Component {
     filterSongs() {
         this.props.tagGrab(this.state.selected).then(res => {
             this.props.narrowSelection(res);
-        })
+        });
     }
 
     handleChange(e) {
