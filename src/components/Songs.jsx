@@ -3,14 +3,15 @@ import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
 import axios from "axios";
 import AlbumCanvas from "./AlbumCanvas.jsx";
 import Navigation from "./Navigation.jsx";
+import TagSelector from "./TagSelector.jsx";
 
 import "../styles/songs.scss";
 
-export default class Songs extends Component {
+class Songs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            songs: []
+            songs: [],
         };
     }
 
@@ -68,10 +69,11 @@ export default class Songs extends Component {
                 <div className="song-header-container" />
 
                 {/* <Image.Group size='small' style={{marginTop: '5px', backgroundColor: 'black'}}> */}
-                {this.state.songs.map(song => {
+                {this.state.songs.map((song, key) => {
                     return (
                         //<img src={"2009/" + song.title.replace(/\s/g,'_') + "_small.png"}
                         <AlbumCanvas
+                            key={key}
                             width={300}
                             backgroundImage={"/" + song.imagePathSmall}
                             song={song}
@@ -132,3 +134,5 @@ export default class Songs extends Component {
     //   </Card.Group>
     // </Container>)
 }
+
+module.exports = Songs;
