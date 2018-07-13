@@ -36,7 +36,7 @@ class SearchBy extends Component {
     getByTags() {
         const tags = [];
         tags.push(this.props.match.params.tagname);
-        axios.post("/api/find_tags", {tags:tags}).then(songs => {
+        axios.get("/api/find_tags", {tags:tags}).then(songs => {
             console.log(songs.data);
             this.setState({ songs: songs.data });
         });
