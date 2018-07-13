@@ -16,6 +16,8 @@ class SearchBy extends Component {
         };
         this.revealTagSelector = this.revealTagSelector.bind(this);
         this.narrowSelection = this.narrowSelection.bind(this);
+        this.getByTags = this.getByTags.bind(this);
+        this.tagGrab = this.tagGrab.bind(this);
     }
 
     componentDidMount() {
@@ -29,17 +31,24 @@ class SearchBy extends Component {
     }
     getAllSongs() {
         axios.get("/api/songs").then(songs => {
-            console.log(songs.data);
             this.setState({ songs: songs.data });
         });
     }
+
     getByTags() {
         const tags = [];
         tags.push(this.props.match.params.tagname);
-        axios.get("/api/find_tags", {tags:tags}).then(songs => {
-            console.log(songs.data);
-            this.setState({ songs: songs.data });
+        this.tagGrab(tags).then((res) => {
+            this.narrowSelection(res)
         });
+    }
+
+    tagGrab(tags) {
+        return new Promise ((res, rej) => {
+            axios.post("/api/find_tags", {tags:tags}).then(songs => {
+                res({ songs: songs.data });
+            }).catch(err => rej(err));
+        })
     }
 
     revealTagSelector(bool) {
@@ -80,8 +89,11 @@ class SearchBy extends Component {
                 <Navigation revealTagSelector={this.revealTagSelector}/>
                 {
                     this.state.tagSelector ? 
-                        <TagSelector narrowSelection={this.narrowSelection} /> :
-                        null   
+                    <TagSelector 
+                        narrowSelection={this.narrowSelection}
+                        tagGrab={(tags)=>this.tagGrab(tags)}
+                    /> :
+                    null   
                 }
                 <div className="song-header-container" />
 

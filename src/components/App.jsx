@@ -20,8 +20,8 @@ const App = () => {
                     path="/songs/tag/:tagname" 
                     render={props => (
                         <SearchBy 
-                            filterBy={"tags"} 
                             {...props} 
+                            filterBy={"tags"} 
                         />
                     )
                 } 

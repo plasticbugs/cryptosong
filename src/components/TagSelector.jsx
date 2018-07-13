@@ -12,7 +12,6 @@ export default class TagSelector extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.filterSongs = this.filterSongs.bind(this);
-        this.tagGrab = this.tagGrab.bind(this);
     }
 
     componentDidMount() {
@@ -22,17 +21,8 @@ export default class TagSelector extends Component {
     }
 
     filterSongs() {
-        this.tagGrab(this.state.selected).then(res => {
+        this.props.tagGrab(this.state.selected).then(res => {
             this.props.narrowSelection(res);
-        })
-    }
-
-    tagGrab(tags) {
-        return new Promise ((res, rej) => {
-            axios.post("/api/find_tags", {tags:tags}).then(songs => {
-                console.log(songs.data);
-                res({ songs: songs.data });
-            }).catch(err => rej(err));
         })
     }
 
