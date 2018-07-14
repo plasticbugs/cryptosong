@@ -1,9 +1,13 @@
 body {
   font-family: 'futura-pt-condensed', sans-serif !important;
 }
+.ui.container{
+  width: 100% !important;
+}
 
 #main{
   padding-top: 150px;
+  background-color: #0f0f0f;
 }
 
 .global-navigation{
@@ -55,4 +59,34 @@ body {
 }
 .global-search-input::placeholder{
   color: #BABABA;
+}
+
+.filter-navigation{
+  width: 100%;
+  background: #6D6D6D;
+  position: sticky;
+  font-size: 18px;
+  top: 80px;
+  z-index: 9;
+}
+.filter-navigation-inner{
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-size{
+  display: flex;
+  list-style: none;
+}
+.filter-size li{
+  padding: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+  &.active{
+    pointer-events: none;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+  }
 }
