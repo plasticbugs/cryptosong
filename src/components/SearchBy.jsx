@@ -16,23 +16,48 @@ class SearchBy extends Component {
         };
         this.revealTagSelector = this.revealTagSelector.bind(this);
         this.narrowSelection = this.narrowSelection.bind(this);
+        this.getByTags = this.getByTags.bind(this);
+        this.tagGrab = this.tagGrab.bind(this);
     }
 
     componentDidMount() {
-        if(this.props.allSongs){
-            axios.get("/api/songs").then(songs => {
-                console.log(songs.data);
-                this.setState({ songs: songs.data });
-            });
-        } else {
-            const tags = [];
-            tags.push(this.props.match.params.tagname);
-            axios.post("/api/find_tags", {tags:tags}).then(songs => {
-                console.log(songs.data);
-                this.setState({ songs: songs.data });
-            });
-        }
-        // console.log(randomColor())
+        switch (this.props.filterBy) {
+            case "tags":
+                this.getByTags();
+                break;
+            default:
+                this.getAllSongs();
+        };
+    }
+
+    getAllSongs() {
+        axios.get("/api/songs").then(songs => {
+            this.setState({ songs: songs.data });
+        });
+    }
+
+    getByTags() {
+        const tags = [];
+        tags.push(this.props.match.params.tagname);
+        this.tagGrab(tags).then((res) => {
+            this.narrowSelection(res);
+        });
+    }
+
+    tagGrab(tags) {
+        return new Promise ((res, rej) => {
+            axios.get("/api/find_tags", {
+                params: {
+                   tags: tags, 
+                },
+            }).then(songs => {
+                res({ songs: songs.data });
+            }).catch(err => rej(err));
+        })
+    }
+
+    narrowSelection(songs) {
+        this.setState(songs);
     }
 
     revealTagSelector(bool) {
@@ -48,10 +73,6 @@ class SearchBy extends Component {
                 </a>
             );
         }
-    }
-
-    narrowSelection(songs) {
-        this.setState(songs);
     }
 
     render() {
@@ -70,11 +91,14 @@ class SearchBy extends Component {
                     justifyContent: "center"
                 }}
             >
-                <Navigation tagNav={true} revealTagSelector={this.revealTagSelector}/>
+                <Navigation revealTagSelector={this.revealTagSelector}/>
                 {
                     this.state.tagSelector ? 
-                        <TagSelector narrowSelection={this.narrowSelection} /> :
-                        null   
+                    <TagSelector 
+                        narrowSelection={this.narrowSelection}
+                        tagGrab={(tags)=>this.tagGrab(tags)}
+                    /> :
+                    null   
                 }
                 <div className="song-header-container" />
 
