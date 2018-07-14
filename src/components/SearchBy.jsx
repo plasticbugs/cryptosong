@@ -150,6 +150,7 @@ class SearchBy extends Component {
                 {this.state.songs.map((song, key) => {
                     return (
                         <AlbumCanvas
+                            key={key}
                             width={this.state.imageSize}
                             height={this.state.imageSize}
                             backgroundImage={"/" + song.imagePathSmall}

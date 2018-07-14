@@ -11,33 +11,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route
-                    path="/song/new"
-                    render={props => <SongInputForm {...props} />}
-                />   
-                {/* songs by tag route */}
-                <Route 
-                    path="/songs/tag/:tagname" 
-                    render={props => (
-                        <SearchBy 
-                            {...props} 
-                            filterBy={"tags"} 
-                        />
-                    )
-                } 
-                />   
-                {/* routes that display all songs */}
-                <Route 
-                    path="/" 
-                    render={props => (
-                        <SearchBy
-                            filterBy={false}
-                            {...props}
-                        />
-                    )
-                } 
-                />
-
+               
                 {/* songs by all tags route */}
                 <Route 
                     path="/songs" 
@@ -49,10 +23,24 @@ const App = () => {
                     )
                 } 
                 />
-
+                <Route
+                    path="/song/new"
+                    render={props => <SongInputForm {...props} />}
+                />
                 {/* song detail page route */}
-                <Route path="/song/:id" render={props => <Song {...props} />} />
-
+                <Route path="/song/:id" render={props => <Song {...props} />} />  
+                {/* songs by tag route */}
+                <Route 
+                    path="/songs/tag/:tagname" 
+                    render={props => (
+                        <SearchBy 
+                            {...props} 
+                            filterBy={"tags"} 
+                        />
+                    )
+                } 
+                />   
+                
                 <Route
                     path="/song/:id/edit"
                     render={props => (
@@ -128,6 +116,17 @@ const App = () => {
                             {...props}
                         />
                     )}
+                />
+                 {/* routes that display all songs */}
+                <Route 
+                    path="/" 
+                    render={props => (
+                        <SearchBy
+                            filterBy={false}
+                            {...props}
+                        />
+                    )
+                } 
                 />
             </Switch>
         </BrowserRouter>
