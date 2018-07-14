@@ -3,10 +3,11 @@ import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
 import axios from "axios";
 import AlbumCanvas from "./AlbumCanvas.jsx";
 import Navigation from "./Navigation.jsx";
+import TagSelector from "./TagSelector.jsx";
 
 import "../styles/songs.scss";
 
-export default class Songs extends Component {
+class Songs extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -166,3 +167,5 @@ export default class Songs extends Component {
     //   </Card.Group>
     // </Container>)
 }
+
+module.exports = Songs;

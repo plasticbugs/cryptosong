@@ -5,7 +5,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Fawn = require('fawn');
-const SongModel = require('./song')
+const SongModel = require('./song');
 
 const songSchema = new Schema({
   _id: Schema.Types.ObjectId,
@@ -173,7 +173,7 @@ module.exports.getAll = () => {
   return new Promise((resolve, reject) => {
     Tag.find({})
     .select('_id name image')
-    .sort([['_id', -1]])
+    .sort([['name', -1]])
     .then(results => {
       resolve(results);
     })

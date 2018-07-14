@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import SongInputForm from "./SongInputForm.jsx";
 import Songs from "./Songs.jsx";
+import SearchBy from "./SearchBy.jsx";
 import Song from "./Song.jsx";
 import Collection from "./Collection.jsx";
 import ImportSongData from './ImportSongData.jsx';
@@ -14,15 +15,37 @@ const App = () => {
                 <Route
                     path="/song/new"
                     render={props => <SongInputForm {...props} />}
+                />   
+                {/* songs by tag route */}
+                <Route path="/songs/tag/:tagname" render={props => <SearchBy {...props}  />} />   
+
+                {/* songs by all tags route */}
+                <Route 
+                    path="/songs/tag/" 
+                    render={props => (
+                        <SearchBy 
+                            {...props}
+                            allSongs={true}
+                        />
+                    )
+                } 
                 />
+
+                {/* song detail page route */}
+                <Route path="/song/:id" render={props => <Song {...props} />} />
+
                 <Route
                     path="/song/:id/edit"
                     render={props => (
                         <SongInputForm editing={true} {...props} />
                     )}
                 />
-                <Route path="/song/:id" render={props => <Song {...props} />} />
+
+                {/* routes that display all songs */}
+                <Route path="/" render={props => <Songs {...props} />} />
                 <Route path="/songs" render={props => <Songs {...props} />} />
+                
+                {/* edit routes */}
                 <Route
                     path="/instruments"
                     render={props => (
