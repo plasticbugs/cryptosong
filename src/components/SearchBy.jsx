@@ -12,6 +12,8 @@ class SearchBy extends Component {
         super(props);
         this.state = {
             songs: [],
+            size: "md",
+            imageSize: 100,
             tagSelector: false,
         };
         this.revealTagSelector = this.revealTagSelector.bind(this);
@@ -106,7 +108,8 @@ class SearchBy extends Component {
                     return (
                         <AlbumCanvas
                             key={key}
-                            width={300}
+                            width={this.state.imageSize}
+                            height={this.state.imageSize}
                             backgroundImage={"/" + song.imagePathSmall}
                             song={song}
                             songnumber={song.number}
