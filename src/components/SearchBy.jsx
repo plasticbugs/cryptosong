@@ -12,6 +12,8 @@ class SearchBy extends Component {
         super(props);
         this.state = {
             songs: [],
+            size: "md",
+            imageSize: 100,
             tagSelector: false,
         };
         this.revealTagSelector = this.revealTagSelector.bind(this);
@@ -73,6 +75,41 @@ class SearchBy extends Component {
                 </a>
             );
         }
+    }    
+    
+    renderSizes() {
+        let sizes = ["sm", "md", "lg"];
+
+        let sizesDom = sizes.map(size => {
+            let classes = [];
+
+            if (size === this.state.size) {
+                classes.push("active");
+            }
+            return (
+                <li key={size} className={classes.join(" ")}>
+                    <a onClick={this.changeZoom.bind(this, size)}>{size}</a>
+                </li>
+            );
+        });
+
+        return sizesDom;
+    }
+
+    changeZoom(size) {
+        switch (size) {
+            case "sm":
+                this.setState({ size: "sm", imageSize: 50 });
+                return;
+            case "md":
+                this.setState({ size: "md", imageSize: 100 });
+                return;
+            case "lg":
+                this.setState({ size: "lg", imageSize: 190 });
+                return;
+            default:
+                return;
+        }
     }
 
     render() {
@@ -82,13 +119,14 @@ class SearchBy extends Component {
             border: "2px solid black",
             padding: "2em"
         };
+        let sizeClass = "size-" + this.state.size;
         return (
             <Container
                 style={{
                     padding: "2px",
                     display: "flex",
                     flexWrap: "wrap",
-                    justifyContent: "center"
+                    justifyContent: "center",
                 }}
             >
                 <Navigation revealTagSelector={this.revealTagSelector}/>
@@ -100,13 +138,20 @@ class SearchBy extends Component {
                     /> :
                     null   
                 }
-                <div className="song-header-container" />
-
+                <div className="filter-navigation">
+                    <div className="filter-navigation-inner">
+                        <ul className="filter-size">
+                            <li>Size</li>
+                            {this.renderSizes()}
+                        </ul>
+                    </div>
+                </div>
+                <div className={"song-list-container " + sizeClass}>
                 {this.state.songs.map((song, key) => {
                     return (
                         <AlbumCanvas
-                            key={key}
-                            width={300}
+                            width={this.state.imageSize}
+                            height={this.state.imageSize}
                             backgroundImage={"/" + song.imagePathSmall}
                             song={song}
                             songnumber={song.number}
@@ -114,6 +159,7 @@ class SearchBy extends Component {
                         />
                     );
                 })}
+                </div>
             </Container>
         );
     }
