@@ -5,7 +5,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Models = require('./index.js')
-const TagModel = require('./tag')
+const TagModel = require('./tag.js')
 const Fawn = require('fawn');
 const path = require('path');
 

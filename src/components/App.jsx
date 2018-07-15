@@ -1,34 +1,22 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+// import SongInputForm from "./Forms/SongInputForm.jsx";
+import SearchBy from "./Navigate/SearchBy.jsx";
+import Song from "./Navigate/Song.jsx";
+// import Collection from "./Forms/Utils/Collection.jsx";
+// import ImportSongData from './Forms/Utils/ImportSongData.jsx';
+import IsAdmin from './Forms/Utils/IsAdmin.jsx';
+import Login from './Forms/Login.jsx';
 
-import SongInputForm from "./SongInputForm.jsx";
-import SearchBy from "./SearchBy.jsx";
-import Song from "./Song.jsx";
-import Collection from "./Collection.jsx";
-import ImportSongData from './ImportSongData.jsx';
 
 const App = () => {
     return (
         <BrowserRouter>
             <Switch>
-               
-                {/* songs by all tags route */}
-                <Route 
-                    path="/songs" 
-                    render={props => (
-                        <SearchBy
-                            filterBy={false}
-                            {...props}
-                        />
-                    )
-                } 
-                />
-                <Route
-                    path="/song/new"
-                    render={props => <SongInputForm {...props} />}
-                />
+
                 {/* song detail page route */}
                 <Route path="/song/:id" render={props => <Song {...props} />} />  
+
                 {/* songs by tag route */}
                 <Route 
                     path="/songs/tag/:tagname" 
@@ -39,7 +27,76 @@ const App = () => {
                         />
                     )
                 } 
-                />   
+                /> 
+                
+                {/* login route for admin */}
+                <Route
+                    path="/admin/login"
+                    render={props => (
+                        <Login
+                            path='/admin'
+                            {...props}
+                        />
+                    )}
+                />
+
+                {/* route for admin edit options */}
+                <Route
+                    path="/admin/edit"
+                    render={props => (
+                        <IsAdmin 
+                            {...props}
+                            path='/admin/edit'    
+                        />
+                    )}
+                />
+
+                {/* add new route for admin */}
+                <Route
+                    path="/admin/add_admin"
+                    render={props => (
+                        <IsAdmin 
+                            {...props}
+                            path='/admin/add_admin'    
+                        />
+                    )}
+                />
+
+                {/* route for admin edit options */}
+                <Route
+                    path="/admin/logout"
+                    render={props => (
+                        <IsAdmin 
+                            {...props}
+                            path='/admin/logout'    
+                        />
+                    )}
+                />  
+
+                {/* route for admin main options */}
+                <Route
+                    path="/admin"
+                    render={props => (
+                        <IsAdmin 
+                            {...props}
+                            path='/admin'    
+                        />
+                    )}
+                />
+
+                {/* or else display all songs */}
+                <Route 
+                    path="/" 
+                    render={props => (
+                        <SearchBy
+                            filterBy={false}
+                            {...props}
+                        />
+                    )
+                }
+                /> 
+
+                {/* edit routes (exported to EditPanel)
                 
                 <Route
                     path="/song/:id/edit"
@@ -48,7 +105,6 @@ const App = () => {
                     )}
                 />
                 
-                {/* edit routes */}
                 <Route
                     path="/instruments"
                     render={props => (
@@ -116,18 +172,14 @@ const App = () => {
                             {...props}
                         />
                     )}
+                /> 
+            
+                <Route
+                    path="/song/new"
+                    render={props => <SongInputForm {...props} />}
                 />
-                 {/* routes that display all songs */}
-                <Route 
-                    path="/" 
-                    render={props => (
-                        <SearchBy
-                            filterBy={false}
-                            {...props}
-                        />
-                    )
-                } 
-                />
+*/}
+
             </Switch>
         </BrowserRouter>
     );

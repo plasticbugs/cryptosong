@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import axios from "axios";
-import "../styles/global.scss";
+import React, { Component } from 'react';
+import axios from 'axios';
+import '../../styles/global.scss';
 
 
 export default class TagSelector extends Component {

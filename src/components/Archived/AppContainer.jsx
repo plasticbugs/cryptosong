@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import NavComponent from './NavComponent.jsx';
+// import React, { Component } from 'react';
+// import NavComponent from './NavComponent.jsx';
 
 class AppContainer extends Component {
   

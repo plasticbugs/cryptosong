@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Image } from "react-konva";
+import React, { Component } from 'react';
+import { Image } from 'react-konva';
 
 export default class SongImage extends Component {
     constructor(props) {

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Container, Card, Icon, Image, Popup, Embed } from "semantic-ui-react";
-import axios from "axios";
-import AlbumCanvas from "./AlbumCanvas.jsx";
-import Navigation from "./Navigation.jsx";
-import TagSelector from "./TagSelector.jsx";
+import React, { Component } from 'react';
+import { Container, Card, Icon, Image, Popup, Embed } from 'semantic-ui-react/dist/commonjs';
+import axios from 'axios';
+import AlbumCanvas from '../Render/AlbumCanvas.jsx';
+import TagSelector from '../Forms/TagSelector.jsx';
+import Navigation from './Navigation.jsx';
 
-import "../styles/songs.scss";
+import '../../styles/songs.scss';
 
 class SearchBy extends Component {
     constructor(props) {

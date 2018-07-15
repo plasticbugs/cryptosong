@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Stage, Image, Layer, Rect, Text } from "react-konva";
-import SongImage from "./SongImage.jsx";
-import moment from "moment";
+import React, { Component } from 'react';
+import { Stage, Image, Layer, Rect, Text } from 'react-konva';
+import SongImage from './SongImage.jsx';
+import moment from 'moment';
 
-import mergeImages from "../helpers/mergeImages.js";
+import mergeImages from '../../helpers/mergeImages';
 
 export default class AlbumCanvas extends Component {
     constructor(props) {

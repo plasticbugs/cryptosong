@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "../styles/global.scss";
+import React, { Component } from 'react';
+import '../../styles/global.scss';
 
 class Navigation extends Component {
     constructor(props) {

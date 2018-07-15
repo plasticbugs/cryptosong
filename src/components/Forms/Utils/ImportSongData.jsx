@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, TextArea, Button } from 'semantic-ui-react';
+import { Container, TextArea, Button } from 'semantic-ui-react/dist/commonjs';
 import axios from 'axios';
 import moment from 'moment';
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { Input, Icon, List, Divider, Segment, Form, Grid, Container, Header, Button, Transition, Message } from 'semantic-ui-react'
+import { Input, Icon, List, Divider, Segment, Form, Grid, Container, Header, Button, Transition, Message } from 'semantic-ui-react/dist/commonjs'
 
 export default class Collection extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class Collection extends Component {
     this.removeItemsFromDB = this.removeItemsFromDB.bind(this);
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     axios.get(this.props.apiCollectionPath)
     .then(results => {
       this.setState({collection: results.data})

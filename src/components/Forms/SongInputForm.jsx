@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Transition, Message, Container, Grid, Segment, Radio, Input, Header, Form, Select, Button, Dropdown, Popup } from 'semantic-ui-react';
+import { Transition, Message, Container, Grid, Segment, Radio, Input, Header, Form, Select, Button, Dropdown, Popup } from 'semantic-ui-react/dist/commonjs';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import moment from 'moment';
 
-import AlbumCanvas from './AlbumCanvas.jsx';
+import AlbumCanvas from '../Render/AlbumCanvas.jsx';
 
 const GENESIS = '1/1/2009';
 
@@ -158,8 +158,8 @@ export default class SongInputForm extends Component {
   }
 
   componentDidMount() {
-    if(this.props.match.params.id) {
-      let number = Number.parseInt(this.props.match.params.id);
+    if(this.props.songId) {
+      let number = Number.parseInt(this.props.songId);
       let date = moment(GENESIS, 'M-D-YYYY').add(number - 1, 'days');
       let nextState = {number, date}
       this.setState(prevState => ({
@@ -172,7 +172,7 @@ export default class SongInputForm extends Component {
       axios.get('/api/song', {
         params:
           {
-            id: this.props.match.params.id
+            id: this.props.songId
           }
         })
       .then(response => {

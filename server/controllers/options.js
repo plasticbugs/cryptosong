@@ -1,4 +1,4 @@
-const Models = require('../models/index');
+const Models = require('../models');
 
 module.exports.getAllOptions = async (req,res) => {
   let instrument = await Models.Instrument.find();
