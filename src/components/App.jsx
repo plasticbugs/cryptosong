@@ -8,7 +8,6 @@ import Song from "./Navigate/Song.jsx";
 import IsAdmin from './Forms/Utils/IsAdmin.jsx';
 import Login from './Forms/Login.jsx';
 
-
 const App = () => {
     return (
         <BrowserRouter>
