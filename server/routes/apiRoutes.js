@@ -76,8 +76,7 @@ router.route('/admin/logout')
 router.route('/add_admin')
   .post(adminController.isAuthenticated, adminController.create);
 
-router.route('/admin/:id')
-  .get(adminController.hello)
-  .post(adminController.changePassword);
+router.route('/admin/set_password')
+  .post(adminController.isAuthenticated, adminController.changePassword);
 
 module.exports = router;

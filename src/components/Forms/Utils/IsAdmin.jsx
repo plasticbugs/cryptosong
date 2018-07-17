@@ -4,6 +4,7 @@ import Login from '../Login.jsx';
 import Logout from './Logout.jsx';
 import AddAdmin from '../AddAdmin.jsx';
 import AdminPanel from '../Admin/AdminPanel.jsx';
+import ChgPassword from '../Admin/ChgPassword.jsx';
 import EditPanel from '../Admin/EditPanel.jsx';
 import axios from 'axios';
 
@@ -41,6 +42,9 @@ export default class IsAdmin extends Component {
     adminRoutes(path) {
         let rtnVar;
         switch (path) {
+            case '/admin/change_password':
+                rtnVar = <ChgPassword {...this.props} /> 
+                break;
             case '/admin/add_admin':
                 rtnVar = <AddAdmin {...this.props} /> 
                 break;

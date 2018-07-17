@@ -50,6 +50,17 @@ const App = () => {
                     )}
                 />
 
+                {/* change password route for admin */}
+                <Route
+                    path="/admin/change_password"
+                    render={props => (
+                        <IsAdmin 
+                            {...props}
+                            path='/admin/change_password'    
+                        />
+                    )}
+                />
+
                 {/* add new route for admin */}
                 <Route
                     path="/admin/add_admin"

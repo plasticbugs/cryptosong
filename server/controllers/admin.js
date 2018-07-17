@@ -100,20 +100,44 @@ module.exports = {
       status: `You are Admin`
     });
   },
-  changePassword: (req, res, next) => {
-    db.Admin
-      .findOne({ username })
+  // changePassword: (req, res) => {
+  //   console.log(req.body.newPassword);
+  //   // Admin
+  //   //   .findOne({ username })
+  //   //   .then((user) => {
+  //   //     // make salt
+  //   //     const salt = bcrypt.genSaltSync(10);
+  //   //     // get the data we need to encrypt the password
+  //   //     const newPassword = req.body.newPassword;
+  //   //     const hashWord = bcrypt.hashSync(newPassword, salt);
+  //   //     user.password = hashWord;
+  //   //   }).save();
+  // },
+  changePassword: (req, res) => {
+    console.log('hello ' + req.body.username);
+    Admin
+      .findOne({username:req.body.username})
       .then((user) => {
-        // make salt
-        const salt = bcrypt.genSaltSync(10);
-        // get the data we need to encrypt the password
-        const newPassword = req.body.newPassword;
-        const hashWord = bcrypt.hashSync(newPassword, salt);
-        user.password = hashWord;
-      }).save();
-  },
-  hello: (req, res) => {
-    console.log("hello " + req.body.username);
+        const hashWord = bcrypt.compareSync(req.body.password, user.password);
+        if(hashWord){
+          // make salt
+          const salt = bcrypt.genSaltSync(10);
+          // get the data we need to encrypt the password
+          const newPassword = req.body.newPassword;
+          const hashWord = bcrypt.hashSync(newPassword, salt);
+          user.password = hashWord;
+          user.save((err) => {
+            if(err){
+              console.dir(err);
+            } else {
+              res.json({success:true})
+            }
+          });
+        } else {
+          res.json({success:false});
+        }
+      })
+      .catch(err => console.dir(err));
   },
 };
 
