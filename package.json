@@ -25,7 +25,6 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "node-sass": "^4.7.2",
     "p-limit": "^2.0.0",
-    "prop-types": "^15.6.0",
     "sass-loader": "^6.0.6",
     "uglifyjs-webpack-plugin": "^1.1.5",
     "webpack": "^3.10.0"
@@ -54,6 +53,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "progress": "^2.0.0",
+    "prop-types": "^15.6.2",
     "react": "^16.2.0",
     "react-datepicker": "^1.2.2",
     "react-dom": "^16.2.0",

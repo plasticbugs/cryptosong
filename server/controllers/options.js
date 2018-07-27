@@ -1,11 +1,13 @@
 const Models = require('../models');
 
-module.exports.getAllOptions = async (req,res) => {
-  let instrument = await Models.Instrument.find();
-  let beard = await Models.Beard.find();
-  let location = await Models.Location.find();
-  let topic = await Models.Topic.find();
-  let inkey = await Models.Inkey.find();
-  let tag = await Models.Tag.find();
-  res.send({instrument, beard, location, topic, inkey, tag})
-}
+module.exports.getAllOptions = async (req, res) => {
+  const instrument = await Models.Instrument.find();
+  const beard = await Models.Beard.find();
+  const location = await Models.Location.find();
+  const topic = await Models.Topic.find();
+  const inkey = await Models.Inkey.find();
+  const tag = await Models.Tag.find();
+  res.send({
+    instrument, beard, location, topic, inkey, tag,
+  });
+};

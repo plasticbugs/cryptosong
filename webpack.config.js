@@ -10,7 +10,7 @@ const uglifyjs = new UglifyJSPlugin({
 
 const extractSass = new ExtractTextPlugin({
   filename: './build/css/style.min.css',
-  disable: process.env.NODE_ENV === "development"
+  disable: process.env.NODE_ENV === 'development',
 });
 
 module.exports = {
@@ -47,11 +47,11 @@ module.exports = {
       },
       {
         test: /\.(css|sass|scss)$/,
-        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!sass-loader' })
+        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!sass-loader' }),
       },
       {
         test: [/\.eot$/, /\.png$/, /\.jpg$/, /\.gif$/, /\.ttf$/, /\.svg$/, /\.woff$/, /\.woff2$/],
-        loader: 'url-loader'
+        loader: 'url-loader',
         // output: './dist/public/css'
       },
     ],

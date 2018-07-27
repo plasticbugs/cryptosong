@@ -1,6 +1,7 @@
 const express = require('express');
+
 const router = express.Router();
-const songController = require('../controllers/songs')
+const songController = require('../controllers/songs');
 const optionsController = require('../controllers/options');
 const instrumentController = require('../controllers/instruments');
 const beardController = require('../controllers/beards');
@@ -54,7 +55,7 @@ router.route('/song/:id')
 
 router.route('/songs')
   .get(songController.getAllSongs);
-  
+
 router.route('/find_tags')
   .get(songController.getSongsByTags);
 
@@ -67,11 +68,11 @@ router.route('/options')
 router.route('/admin')
   .get(adminController.isAuthenticated, adminController.checkAuthed);
 
-router.route('/admin/login')  
-  .post(adminController.login)
+router.route('/admin/login')
+  .post(adminController.login);
 
 router.route('/admin/logout')
-  .get(adminController.logout)
+  .get(adminController.logout);
 
 router.route('/add_admin')
   .post(adminController.isAuthenticated, adminController.create);

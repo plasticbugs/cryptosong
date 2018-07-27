@@ -32,8 +32,8 @@ passport.serializeUser((user, done) => {
   done(null, user._id);
 });
 
-passport.deserializeUser(function(id, done) {
-  Admin.findById(id, function(err, user) {
+passport.deserializeUser((id, done) => {
+  Admin.findById(id, (err, user) => {
     done(err, user);
   });
 });

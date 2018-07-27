@@ -60,7 +60,6 @@ body {
 .global-search-input::placeholder{
   color: #BABABA;
 }
-
 .filter-navigation{
   width: 100%;
   background: #6D6D6D;
@@ -89,4 +88,13 @@ body {
     color: #333;
     border-radius: 4px;
   }
+}
+.has-error{
+  border: 1px solid red;
+  outline: none;
+}
+.error-msgs{
+  position: absolute;
+  top: 3vh;
+  right: 3vw;
 }
