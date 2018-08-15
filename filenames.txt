@@ -2,6 +2,7 @@
 
 Beard
 ********************
+beard_beard.png
 beard_clean.png
 beard_na.png
 beard_shadow.png
@@ -78,8 +79,10 @@ topic_videogames.png
 
 Inkey
 ********************
+inkey_a-sharp.png
 inkey_a.png
 inkey_a?.png
+inkey_ab.png
 inkey_am.png
 inkey_b.png
 inkey_bb.png
@@ -87,20 +90,25 @@ inkey_bbm.png
 inkey_bbmambb?.png
 inkey_bm.png
 inkey_c-sharp.png
+inkey_c-sharpm.png
 inkey_c.png
+inkey_d-sharp.png
 inkey_d-sharpm.png
 inkey_d.png
+inkey_db.png
 inkey_dg?.png
 inkey_dm.png
 inkey_e.png
 inkey_eb.png
 inkey_em.png
 inkey_f-sharp.png
+inkey_f-sharpm.png
 inkey_f.png
 inkey_fm.png
 inkey_g-sharp.png
-inkey_g-sharpm?.png
+inkey_g-sharpm.png
 inkey_g.png
+inkey_gb.png
 inkey_gm.png
 
 

@@ -1,3 +1,4 @@
+Beard
 Clean
 N/A
 Shadow
@@ -59,7 +60,9 @@ Song A Day
 TV
 Video Games
 A
+A#
 A?
+Ab
 Am
 B
 Bb
@@ -68,21 +71,27 @@ Bbm/Am/Bb?
 Bm
 C
 C#
+C#m
 D
+D#
 D#m
 D/G?
+Db
 Dm
 E
 Eb
 Em
 F
 F#
+F#m
 Fm
 G
 G#
-G#m?
+G#m
+Gb
 Gm
 80s
+a scary
 acapella
 alex copeland
 alexey pajitnov
@@ -92,6 +101,7 @@ angry
 animals
 anthem
 apology
+arkham horror
 artipithicus ramidus
 ashton kutcher
 atm
@@ -109,6 +119,7 @@ bird
 birthday
 black holes
 blues
+board game
 bob dylan
 book
 boom box
@@ -133,6 +144,7 @@ contest
 cooking
 country
 courseopedia.com
+dancing
 dark
 dating
 david shuster
