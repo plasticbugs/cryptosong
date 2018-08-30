@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json({ limit: '20mb' }));
 
-app.use(express.static(path.join(__dirname,'../client/build')));
+app.use(express.static(path.join(__dirname,'../client/public')));
 
 app.use(require('./routes'))
 
