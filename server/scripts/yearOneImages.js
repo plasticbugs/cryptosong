@@ -1,11 +1,11 @@
 const fs = require("fs");
 const gm = require("gm").subClass({ imageMagick: true });
 const pLimit = require("p-limit");
-const getHueForDate = require("../../src/helpers/hueConversion.js")
+const getHueForDate = require("../../client/src/helpers/hueConversion.js")
     .getHueForDate;
 const rootDir = __dirname + "/../../";
-const layers = rootDir + "build/artlayers";
-const out = rootDir + "build/2009/";
+const layers = rootDir + "/client/artlayers";
+const out = rootDir + "/client/build/2009";
 const db = require("../../db-config");
 const SongModel = require("../models/song");
 const limit = pLimit(1);
@@ -47,7 +47,7 @@ as = SongModel.Song.find()
     .populate("mainInstrument")
     .populate("secondaryInstrument")
     .then(results => {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         results
             .reduce(function(promise, song) {
                 return promise.then(function(result) {
@@ -172,7 +172,7 @@ const createImage = (song, array) => {
                 return array.reduce(reducer, Promise.resolve(buffer));
             })
             .then(buffer => {
-                largeImage = path.join("build", song.imagePath);
+                largeImage = path.join("client/build", song.imagePath);
                 gm(buffer).write(largeImage, function(err) {
                     if (err) return console.dir(arguments);
                     console.log(this.outname + " created  ::  " + arguments[3]);
@@ -181,7 +181,7 @@ const createImage = (song, array) => {
                         .crop(400, 400, 280, 0)
                         .autoOrient()
                         .write(
-                            path.join("build", song.imagePathSmall),
+                            path.join("client/build", song.imagePathSmall),
                             function(err) {
                                 if (!err) console.log("hooray! ");
                             }

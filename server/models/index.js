@@ -4,8 +4,9 @@ const Inkey = require('./inkey.js').Inkey;
 const Topic = require('./topic.js').Topic;
 const Instrument = require('./instrument.js').Instrument;
 const Song = require('./song.js').Song;
-const Tag = require('./tag').Tag;
+const Tag = require('./tag.js').Tag;
 const Mood = require('./mood.js').Mood;
+const Admin = require('./admin.js').Admin;
 
 module.exports = {
   Beard,
@@ -16,4 +17,5 @@ module.exports = {
   Song,
   Tag,
   Mood,
-}
+  Admin,
+};

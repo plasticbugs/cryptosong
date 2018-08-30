@@ -1,0 +1,140 @@
+#main{
+    padding-top: 80px;
+}
+.song-header-container{
+    width: 100%;
+    // Dynamically figure out height based off of width in JSX
+}
+
+.song-image{
+    width: 100%;
+    padding-top: 8vh;
+}
+
+.song-content-container{
+    max-width: 1200px;
+    margin: auto;
+    background:#FFF;
+    
+    padding: 20px;
+    z-index: 1;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.song-meta{
+    padding: 50px;
+    font-size: 18px;
+}
+
+.song-content{
+    padding: 50px;
+    color: #fff;
+    background: #1a1a1a;
+    margin-top: -60px;
+    position: relative;
+    width: 68%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+.rarity-score{
+    margin-bottom: 18px;
+    margin-top: -10px;
+}
+.rarity-title{
+    font-size: 24px;
+    font-weight: 100;
+    text-transform: uppercase;
+}
+.rarity{
+    position: sticky;
+    width: 200px;
+    height: 200px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 60px;
+    margin-right: -100px;
+    background: #FFBF43;
+    color: #FFF;
+    border-radius: 100%;
+    display: flex;
+    padding-top: 50px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    top: 50%;
+    z-index: 0;
+    flex-shrink: 0;
+    transform: rotate(-90deg);
+}
+
+.song-meta-title{
+    text-transform: uppercase;
+    font-family: 'futura-pt-condensed', sans-serif;
+    margin-bottom: 0;
+}
+.song-meta-content{
+    text-transform: uppercase;
+    font-family: 'futura-pt-condensed', sans-serif;
+}
+
+.song-content p{
+    font-size: 24px;
+    line-height: 1.5em;
+    font-family: 'Times', serif;
+    font-weight: 100;
+}
+
+
+
+.song-title{
+    font-size: 80px;
+    color: #FFF;
+}
+.song-description{
+    margin-top: 48px;
+    font-size: 24px;
+    line-height: 1.5em;
+    background: #fff;
+    color: black;
+    padding: 50px;
+}
+
+.page-nav{
+    position: fixed;
+    width: 40px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #cacaca;
+    z-index: 8;
+    transition: all 0.3s 0s ease-out;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 800;
+    .text{
+        white-space: nowrap;
+        text-align: center;
+    }
+}
+.page-nav:hover{
+    width: 20%;
+    transition: all 0.3s 0.5s ease-out;
+    font-size: 100px;
+}
+.previous-song{
+    left: 0;
+    cursor: w-resize;
+    .text{
+        transform: rotate(-90deg);
+    }
+}
+.next-song{
+    right: 0;
+    cursor: e-resize;
+    .text{
+        transform: rotate(90deg);
+    }
+}

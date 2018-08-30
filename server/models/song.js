@@ -3,25 +3,26 @@
  * @module models/song
  */
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
-const Models = require('./index.js')
-const TagModel = require('./tag')
+const Models = require('./index.js');
+const TagModel = require('./tag.js');
 const Fawn = require('fawn');
 const path = require('path');
 
 const tagSchema = new Schema({
   image: String,
   name: String,
-})
+});
 
-const slugify = (text) => {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
-}
+const slugify = text =>
+  text.toString().toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, '') // Trim - from end of text
+;
 
 const songSchema = new Schema({
   number: Number,
@@ -50,11 +51,11 @@ const songSchema = new Schema({
   mood: { type: Schema.Types.ObjectId, ref: 'Mood' },
 }, {
   toObject: {
-  virtuals: true
+    virtuals: true,
   },
   toJSON: {
-  virtuals: true 
-  }
+    virtuals: true,
+  },
 });
 
 songSchema.virtual('year').get(function () {
@@ -62,15 +63,15 @@ songSchema.virtual('year').get(function () {
 });
 
 songSchema.virtual('slug').get(function () {
-  return  `${this.date.getTime()/ 1000}-${slugify(this.title)}`;
+  return `${this.date.getTime() / 1000}-${slugify(this.title)}`;
 });
 
 songSchema.virtual('imagePathSmall').get(function () {
-  return path.join(this.year.toString(), this.slug + "-small.png", );
+  return path.join(this.year.toString(), `${this.slug}-small.png`);
 });
 
 songSchema.virtual('imagePath').get(function () {
-  return path.join(this.year.toString(), this.slug + ".png", );
+  return path.join(this.year.toString(), `${this.slug}.png`);
 });
 
 const Song = mongoose.model('Song', songSchema);
@@ -82,20 +83,19 @@ const getLength = (mins, secs) => {
     return Number.parseInt(mins) * 60;
   } else if (secs) {
     return Number.parseInt(secs);
-  } else {
-    return undefined;
   }
-}
+  return undefined;
+};
 
 const cleanObj = (obj) => {
   obj = obj.toObject();
-  for (let key in obj) {
+  for (const key in obj) {
     if (obj[key] === undefined || obj[key] === null) {
-      delete obj[key]
+      delete obj[key];
     }
   }
   return obj;
-}
+};
 
 /**
 * Get a song by the given song number.
@@ -103,9 +103,8 @@ const cleanObj = (obj) => {
 * @return {object} The song object populated with object names and images from these collections:
 * instruments, beard, topic, song key, location, mood, and main instrument (depicted in generated art)
 */
-module.exports.getSongByNumber = (number) => {
-  return new Promise((resolve, reject) => {
-    Song.find({number})
+module.exports.getSongByNumber = number => new Promise((resolve, reject) => {
+  Song.find({ number })
     .populate('instruments')
     .populate('beard')
     .populate('topic')
@@ -114,12 +113,11 @@ module.exports.getSongByNumber = (number) => {
     .populate('mood')
     .populate('mainInstrument')
     .populate('secondaryInstrument')
-    .then(results => {
+    .then((results) => {
       const song = results[0];
-      resolve(song)
-    })
-  })
-}
+      resolve(song);
+    });
+});
 /**
 * Get a song by the given song number along with all possible tag options for selectable categories. This
 * method returns the same song info as the getSongByNumber method.
@@ -127,9 +125,8 @@ module.exports.getSongByNumber = (number) => {
 * @return {object} An object with arrays for each taggable category used to populate dropdown selectors.
 * @see module:models/song.getSongByNumber
 */
-module.exports.getSongByNumberWithAllPossibleTags = (number) => {
-  return new Promise((resolve, reject) => {
-    Song.find({number})
+module.exports.getSongByNumberWithAllPossibleTags = number => new Promise((resolve, reject) => {
+  Song.find({ number })
     .populate('instruments')
     .populate('beard')
     .populate('topic')
@@ -138,46 +135,44 @@ module.exports.getSongByNumberWithAllPossibleTags = (number) => {
     .populate('mood')
     .populate('mainInstrument')
     .populate('secondaryInstrument')
-    .then(song => {
+    .then((song) => {
       song = cleanObj(song[0]);
       (async function getAllTags() {
-        let instrument = await Models.Instrument.find();
-        let beard = await Models.Beard.find();
-        let location = await Models.Location.find();
-        let topic = await Models.Topic.find();
-        let inkey = await Models.Inkey.find();
-        let tag = await Models.Tag.find().select('_id name image');
-        let mood = await Models.Mood.find();
-        resolve({instrument, beard, location, topic, inkey, song, mood, tag});
-      })();
-
+        const instrument = await Models.Instrument.find();
+        const beard = await Models.Beard.find();
+        const location = await Models.Location.find();
+        const topic = await Models.Topic.find();
+        const inkey = await Models.Inkey.find();
+        const tag = await Models.Tag.find().select('_id name image');
+        const mood = await Models.Mood.find();
+        resolve({
+          instrument, beard, location, topic, inkey, song, mood, tag,
+        });
+      }());
     })
-    .catch(err => {
+    .catch((err) => {
       if (err) {
         console.log(err);
         reject(err);
       }
-    })
-  })
-}
+    });
+});
 
 const assignIDsToTags = (data) => {
-  let songData = Object.assign({}, data);
+  const songData = Object.assign({}, data);
   const TAGS = ['beard', 'location', 'topic', 'inkey', 'mood'];
-  TAGS.forEach(tag => {
+  TAGS.forEach((tag) => {
     if (typeof songData[tag] === 'object' && songData[tag]._id) {
       songData[tag] = songData[tag]._id;
     }
-  })
+  });
   return songData;
-}
+};
 
-const deleteTagsForSong = (forSongId, task) => {
-  return new Promise((resolve, reject) => {
-    task.update("Song", {number: forSongId}, {tags: []})
-    resolve(task);
-  })
-}
+const deleteTagsForSong = (forSongId, task) => new Promise((resolve, reject) => {
+  task.update('Song', { number: forSongId }, { tags: [] });
+  resolve(task);
+});
 
 
 /**
@@ -193,74 +188,71 @@ module.exports.updateSong = (songData) => {
 
     if (songData.instruments.length > 0) {
       songData.instruments = songData.instruments.map((instrument, index) => {
-        let num = instrument._id.toString();
+        const num = instrument._id.toString();
         if (!num.match(/^[0-9a-fA-F]{24}$/)) {
-          let newInstrument = new Models.Instrument({name: instrument.name})
-          return newInstrument.save( (err, savedInstrument) => {
+          const newInstrument = new Models.Instrument({ name: instrument.name });
+          return newInstrument.save((err, savedInstrument) => {
             if (index === 0) {
               songData.mainInstrument = savedInstrument._id;
             }
             if (index === 1) {
               songData.secondaryInstrument = savedInstrument._id;
             }
-            return savedInstrument._id
+            return savedInstrument._id;
             // if (doc) {
             //   console.log(doc)
             //   return null;
             // } else {
             //   return saved._id
             // }
-          })
-        } else {
-          if (index === 0) {
-            console.log(instrument, index)
-            songData.mainInstrument = instrument._id;
-          }
-          if (index === 1) {
-            console.log(instrument, index)
-            songData.secondaryInstrument = instrument._id;
-          }
-          return instrument._id;
+          });
         }
-     })
+        if (index === 0) {
+          console.log(instrument, index);
+          songData.mainInstrument = instrument._id;
+        }
+        if (index === 1) {
+          console.log(instrument, index);
+          songData.secondaryInstrument = instrument._id;
+        }
+        return instrument._id;
+      });
     }
     if (!songData.instruments[0]) {
-      songData.mainInstrument = undefined
+      songData.mainInstrument = undefined;
     }
     if (!songData.instruments[1]) {
-      songData.secondaryInstrument = undefined
+      songData.secondaryInstrument = undefined;
     }
     deleteTagsForSong(Number.parseInt(songData.number, 10), task)
-    .then(task => {
-      if (songData.tags.length) {
-        TagModel.addOrInsertTags(songData.tags, Number.parseInt(songData.number, 10), task)
-        .then(task => {
-          delete songData.tags;
+      .then((task) => {
+        if (songData.tags.length) {
+          TagModel.addOrInsertTags(songData.tags, Number.parseInt(songData.number, 10), task)
+            .then((task) => {
+              delete songData.tags;
+              songData.length = getLength(songData.mins, songData.secs);
+              task.update('Song', { _id: songData._id }, songData);
+              task.run({ useMongoose: true })
+                .then((success) => {
+                  console.log('saved?');
+                  Song.findById(songData._id)
+                    .then((song) => {
+                      console.log(song.title);
+                      resolve(song);
+                    });
+                })
+                .catch((err) => {
+                  console.log('oh snamp:', err);
+                });
+            });
+        } else {
           songData.length = getLength(songData.mins, songData.secs);
-          task.update("Song", {_id: songData._id}, songData);
-          task.run({useMongoose: true})
-          .then(success => {
-            console.log('saved?')
-            Song.findById(songData._id)
-            .then(song => {
-              console.log(song.title)
-              resolve(song);
-            })
-          })
-          .catch(err => {
-            
-            console.log("oh snamp:", err)
-          })
-        })
-      } else {
-        songData.length = getLength(songData.mins, songData.secs);
-        task.update("Song", {_id: songData._id}, songData);
-        task.run({useMongoose: true});
-      }
-
-    })
-  })
-}
+          task.update('Song', { _id: songData._id }, songData);
+          task.run({ useMongoose: true });
+        }
+      });
+  });
+};
 
 /**
 * A promise that inserts a new song into the database based on the data sent from the client.
@@ -275,35 +267,34 @@ module.exports.insertSong = (newSong) => {
 
     if (newSong.instruments.length > 0) {
       newSong.instruments = newSong.instruments.map((instrument, index) => {
-        let num = instrument._id.toString();
+        const num = instrument._id.toString();
         if (!num.match(/^[0-9a-fA-F]{24}$/)) {
-          let newInstrument = new Models.Instrument({name: instrument.name})
-          return newInstrument.save( (err, savedInstrument) => {
-            console.log(savedInstrument.name)
+          const newInstrument = new Models.Instrument({ name: instrument.name });
+          return newInstrument.save((err, savedInstrument) => {
+            console.log(savedInstrument.name);
             if (index === 0) {
               newSong.mainInstrument = savedInstrument._id;
             }
             if (index === 1) {
               newSong.secondaryInstrument = savedInstrument._id;
             }
-            return savedInstrument._id
+            return savedInstrument._id;
             // if (doc) {
             //   console.log(doc)
             //   return null;
             // } else {
             //   return saved._id
             // }
-          })
-        } else {
-          if (index === 0) {
-            newSong.mainInstrument = instrument._id;
-          }
-          if (index === 1) {
-            newSong.secondaryInstrument = instrument._id;
-          }
-          return instrument._id;
+          });
         }
-     })
+        if (index === 0) {
+          newSong.mainInstrument = instrument._id;
+        }
+        if (index === 1) {
+          newSong.secondaryInstrument = instrument._id;
+        }
+        return instrument._id;
+      });
     }
 
 
@@ -325,32 +316,32 @@ module.exports.insertSong = (newSong) => {
 
       if (tagArray.length) {
         TagModel.addOrInsertTags(tagArray, Number.parseInt(savedSong.number, 10), task)
-        .then(task => {
+          .then((task) => {
           // task.update("Song", {_id: songData._id}, songData);
-          task.run({useMongoose: true})
-          .then(success => {
-            console.log('saved')
-            Song.findById(savedSong._id)
-            .then(song => {
-              console.log(song.title)
-              resolve(song);
-            })
-          })
-          .catch(err => {
-            console.log("oh snap:", err);
-            reject(err);
-          })
-        })
+            task.run({ useMongoose: true })
+              .then((success) => {
+                console.log('saved');
+                Song.findById(savedSong._id)
+                  .then((song) => {
+                    console.log(song.title);
+                    resolve(song);
+                  });
+              })
+              .catch((err) => {
+                console.log('oh snap:', err);
+                reject(err);
+              });
+          });
       } else {
         songData.length = getLength(songData.mins, songData.secs);
-        task.update("Song", {_id: songData._id}, songData);
-        task.run({useMongoose: true});
+        task.update('Song', { _id: songData._id }, songData);
+        task.run({ useMongoose: true });
       }
       console.log('it saved');
       resolve('OK');
-    })
-  })
-}
+    });
+  });
+};
 
 /**
 * A promise that updates a tag subdocument on a song based on updated tag data. This
@@ -362,12 +353,10 @@ module.exports.insertSong = (newSong) => {
 * @return {promise} A promise that resolves with the updated task object which is 'run' when all update tasks have been registered for all songs and tags being updated.
 * {@link module:models/tag.insertTag}
 */
-module.exports.updateTagsOnSongs = (newTagData, task) => {
-  return new Promise((resolve, reject) => {
-    task.update("Song", {"tags._id": newTagData._id}, {$set: {"tags.$.name": newTagData.name, "tags.$.image": newTagData.image}})
-    resolve(task);
-  })
-}
+module.exports.updateTagsOnSongs = (newTagData, task) => new Promise((resolve, reject) => {
+  task.update('Song', { 'tags._id': newTagData._id }, { $set: { 'tags.$.name': newTagData.name, 'tags.$.image': newTagData.image } });
+  resolve(task);
+});
 
 
 /**
@@ -375,56 +364,58 @@ module.exports.updateTagsOnSongs = (newTagData, task) => {
 * @param {array} tagArray - an array of tag ids (strings).
 * @return {promise} A promise that resolves when all tags in the array have been removed from the song.
 */
-module.exports.removeTagsFromSongs = (tagArray) => {
-  return new Promise((resolve, reject) => {
-    (function recurse(array) {
-      console.log('recursing')
-      if (!array.length) {
-        resolve()
-      } else {
-        let tag = array.shift();
-        Song.find({"tags._id": tag})
-        .then(results => {
-          results.forEach(song => {
-            song.tags.pull(tag)
-            song.save()
-          })
-          recurse(array)
-        })
-      }
-    })(tagArray.slice())
-  })
-}
+module.exports.removeTagsFromSongs = tagArray => new Promise((resolve, reject) => {
+  (function recurse(array) {
+    console.log('recursing');
+    if (!array.length) {
+      resolve();
+    } else {
+      const tag = array.shift();
+      Song.find({ 'tags._id': tag })
+        .then((results) => {
+          results.forEach((song) => {
+            song.tags.pull(tag);
+            song.save();
+          });
+          recurse(array);
+        });
+    }
+  }(tagArray.slice()));
+});
 
 /**
 * This method returns all songs matching an array of tags.
 * @param {array} tagArray - an array of tag names (strings).
 * @return {promise} A promise that resolves when all songs are returned in a renderable song array.
 */
-module.exports.getSongsByTagNames = (tags) => {
-  return new Promise((resolve, reject) => {
-    Song.find({ tagNames: { "$in" : tags} })
-    .then(results => {
-      resolve(results)
-    })
-  })
-} 
-
+module.exports.getSongsByTagNames = tags => new Promise((resolve, reject) => {
+  Song.find({ tagNames: { $in: tags } })
+    .then((results) => {
+      resolve(results);
+    });
+});
+module.exports.getSongsByTopicId = topic => new Promise((resolve, reject) => {
+  Song.find({})
+    .then((results) => {
+      let songs = results.filter(song=>{
+        return song.topic.toString()===topic.toString();
+      })
+      resolve(songs);
+  });
+});
 /**
 * This method returns the total number of songs in the database.
 * @return {promise} A promise that resolves with the total number of songs in the database.
 */
-module.exports.totalSongs = () => {
-  return new Promise((resolve, reject) => {
-    Song.count({}, (err, number) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(number)
-    })
-  })
-}
+module.exports.totalSongs = () => new Promise((resolve, reject) => {
+  Song.count({}, (err, number) => {
+    if (err) {
+      reject(err);
+      return;
+    }
+    resolve(number);
+  });
+});
 
 module.exports.Song = Song;
 module.exports.songSchema = songSchema;

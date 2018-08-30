@@ -1,0 +1,128 @@
+
+.is-loading{
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.song-list-item{
+    position: relative;
+}
+.song-list-container{
+  padding-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.song-list-image{
+    align-items: center;
+    background-repeat: no-repeat;
+    background-color: #333;
+    border: solid 0px transparent;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    transition: all 0.1s 0s ease-out;
+    width: 100%;
+    z-index: 9;
+  }
+  .song-list-item-play-button{
+    background: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    opacity: 0;
+    padding: 20px;
+    position: absolute;
+    text-transform: uppercase;
+    transition: all 0 0 ease-out;
+    visibility: hidden;
+  }
+  
+  .song-list-item-data{
+    background: #333;
+    border-radius: 0 0 5px 5px;
+    color: #FFF;
+    opacity: 0;
+    padding: 50px 10px 10px 10px;
+    position: absolute;
+    top: 50px;
+    transition: all 0 0 ease-out;
+    visibility: hidden;
+    width: 200px;
+    z-index: 9;
+    .song-list-item-data-title{
+        font-size: 14px;
+        line-height: 18px;
+        margin: 0;
+        a{
+            color: #FFF;
+        }
+        a:hover{
+            border-bottom: solid 1px;
+        }
+    }
+  }
+  
+  .song-list-item-data-date{
+      color: #cdcdcd;
+      font-size: 10px;
+  }
+
+  .song-list-item:not(.is-loading):hover{
+  // Hover styles for the list
+    background: #000;
+    z-index: 1;
+  
+    .song-list-image{
+      border-radius: 10px;
+      border: solid 5px #333;
+      height: 200px !important;
+      position: absolute;
+      transition: all 0.3s 0.3s ease-out;
+      width: 200px !important;
+      z-index: 10;
+    }
+    .song-list-item-play-button{
+      opacity: 0.2;
+      transition: all 0.3s 0.5s ease-out;
+      visibility: visible;
+    }
+    .song-list-item-play-button:hover{
+        opacity: 1;
+    }
+    .song-list-item-data{
+      opacity: 1;
+      top: 100px;
+      transition: all 0.3s 0.75s ease-out;
+      visibility: visible;
+    }
+  
+  }
+
+ .size-sm .song-list-item:not(.is-loading):hover {
+  .song-list-image{
+    margin: -75px 0 0 -75px; 
+  }
+  .song-list-item-data{
+    left: -75px;
+    top: 75px;
+  }
+}
+.size-md .song-list-item:not(.is-loading):hover {
+  .song-list-image{
+    margin: -50px 0 0 -50px;
+  }
+  .song-list-item-data{
+    left: -50px;
+    top: 100px;
+  }
+}
+.size-lg .song-list-item:not(.is-loading):hover {
+  .song-list-image{
+    margin: -5px 0 0 -5px;
+  }
+  .song-list-item-data{
+    left: -5px;
+    top: 125px;
+  }
+}

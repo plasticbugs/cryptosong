@@ -24,10 +24,9 @@ coverage
 .env
 .nvmrc
 
-build/js/
-build/css/
-build/2009
-build/2010
+build/
+build/2009/
+!build/2009/.gitkeep
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
