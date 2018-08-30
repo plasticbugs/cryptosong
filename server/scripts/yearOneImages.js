@@ -5,7 +5,7 @@ const getHueForDate = require("../../client/src/helpers/hueConversion.js")
     .getHueForDate;
 const rootDir = __dirname + "/../../";
 const layers = rootDir + "/client/artlayers";
-const out = rootDir + "/client/build/2009";
+const out = rootDir + "/client/public/2009";
 const db = require("../../db-config");
 const SongModel = require("../models/song");
 const limit = pLimit(1);
@@ -172,7 +172,7 @@ const createImage = (song, array) => {
                 return array.reduce(reducer, Promise.resolve(buffer));
             })
             .then(buffer => {
-                largeImage = path.join("client/build", song.imagePath);
+                largeImage = path.join("client/public", song.imagePath);
                 gm(buffer).write(largeImage, function(err) {
                     if (err) return console.dir(arguments);
                     console.log(this.outname + " created  ::  " + arguments[3]);
@@ -181,7 +181,7 @@ const createImage = (song, array) => {
                         .crop(400, 400, 280, 0)
                         .autoOrient()
                         .write(
-                            path.join("client/build", song.imagePathSmall),
+                            path.join("client/public", song.imagePathSmall),
                             function(err) {
                                 if (!err) console.log("hooray! ");
                             }

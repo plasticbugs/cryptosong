@@ -25,6 +25,7 @@ coverage
 .nvmrc
 
 build/
+2009/
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
