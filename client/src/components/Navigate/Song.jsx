@@ -26,8 +26,8 @@ export default class Song extends Component {
     renderSong() {
         const { song } = this.state;
         let instruments = [],
-            tags = [],
-            rarity = Math.floor(Math.random() * 100) + "%";
+            tags = [];
+            // rarity = Math.floor(Math.random() * 100) + "%";
 
         song.instruments.forEach(instrument => {
             instruments.push(instrument.name);
@@ -85,12 +85,12 @@ export default class Song extends Component {
                         <h2 className="song-meta-title">Key</h2>
                         <p className="song-meta-content">{song.inkey.name}</p>
                     </div>
-                    <div className="rarity">
+                    {/* <div className="rarity">
                         <div style={{ width: "200px", height: "200px" }}>
                             <div className="rarity-score">{rarity}</div>
                             <div className="rarity-title">Rarity Score</div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="song-content">
                         <h1 className="song-title">{song.title}</h1>
                         <h2 className="song-date">

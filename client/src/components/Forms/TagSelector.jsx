@@ -87,8 +87,8 @@ export default class TagSelector extends Component {
           <div className="search-selects">
             <div className="opt"><input onChange={this.handleChoice.bind(this)} type='radio' name='typesearch' value='tags'/> Tags</div>
             <div className="opt"><input onChange={this.handleChoice.bind(this)} type='radio' name='typesearch' value='topics'/> Topics</div>
-            <div className="opt"><input onChange={this.handleChoice.bind(this)} type='radio' name='typesearch' value='titles'/> Title</div>
-          </div>  
+            <div className="opt"><input onChange={this.handleChoice.bind(this)} type='radio' name='typesearch' value='titles'/> Titles</div>
+          </div> 
           <div className="search-bar">
             <Select
               closeMenuOnSelect={false}
@@ -96,7 +96,7 @@ export default class TagSelector extends Component {
               selected={selected}
               options={tagsOrTopics}
               placeholder={"Search through 365 unique songs"}
-              noOptionsMessage={()=>"Select Tags or Topics"}
+              noOptionsMessage={()=>"Select Tags, Topics, or Titles"}
               onChange={this.handleChange}
               groupBy='group'
             >
@@ -104,7 +104,7 @@ export default class TagSelector extends Component {
           </div>
           <div className="go-button">
             <button onClick={this.filterByChoice.bind(this)}>GO</button>
-          </div>
+          </div> 
         </div>  
       </div>
     );

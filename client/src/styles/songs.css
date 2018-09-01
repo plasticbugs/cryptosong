@@ -6,7 +6,7 @@
   position: relative; }
 
 .song-list-container {
-  padding-top: 5px;
+  padding-top: 55px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center; }
