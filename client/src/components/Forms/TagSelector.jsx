@@ -35,10 +35,18 @@ export default class TagSelector extends Component {
     }).map((cho)=>{
       return cho.value;
     })
+    let numberPile = this.state.selected.filter(choice=>{
+      return choice.group === 'titles';
+    }).map((cho)=>{
+      return parseInt(cho.label.substr(0,cho.label.indexOf(':')),10);
+    })
     this.props.tagGrab(tagPile).then((tagRes) => {
       this.doTopicPile(topicPile).then((topRes)=>{
-        tagRes.songs = tagRes.songs.concat(topRes);
-        this.props.narrowSelection(tagRes);
+        this.props.titleGrab(numberPile).then((titleRes)=>{
+          tagRes.songs = tagRes.songs.concat(topRes);
+          tagRes.songs = tagRes.songs.concat(titleRes.songs);
+          this.props.narrowSelection(tagRes);
+        });
       })
     });
   }
@@ -57,7 +65,6 @@ export default class TagSelector extends Component {
         songs.forEach((song)=>{
           songArr = songArr.concat(song);
         });
-        console.log(songArr);
         res(songArr);
       }).catch(err=>{rej(err)});
     });
@@ -80,6 +87,7 @@ export default class TagSelector extends Component {
           <div className="search-selects">
             <div className="opt"><input onChange={this.handleChoice.bind(this)} type='radio' name='typesearch' value='tags'/> Tags</div>
             <div className="opt"><input onChange={this.handleChoice.bind(this)} type='radio' name='typesearch' value='topics'/> Topics</div>
+            <div className="opt"><input onChange={this.handleChoice.bind(this)} type='radio' name='typesearch' value='titles'/> Title</div>
           </div>  
           <div className="search-bar">
             <Select

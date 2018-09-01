@@ -394,6 +394,24 @@ module.exports.getSongsByTagNames = tags => new Promise((resolve, reject) => {
       resolve(results);
     });
 });
+
+/**
+* This method returns all songs matching an array of song numbers.
+* @param {array} numbers - an array of numbers.
+* @return {promise} A promise that resolves when all songs are returned in a renderable song array.
+*/
+module.exports.getSongsByNumbers = numbers => new Promise((resolve, reject) => {
+  Song.find({ number: { $in: numbers } })
+    .then((results) => {
+      resolve(results);
+    });
+});
+
+/**
+* This method returns all songs matching a topic id.
+* @param {topic} topic - the id of one of the song topics/
+* @return {promise} A promise that resolves when all songs are returned in a renderable song array.
+*/
 module.exports.getSongsByTopicId = topic => new Promise((resolve, reject) => {
   Song.find({})
     .then((results) => {
@@ -403,6 +421,7 @@ module.exports.getSongsByTopicId = topic => new Promise((resolve, reject) => {
       resolve(songs);
   });
 });
+
 /**
 * This method returns the total number of songs in the database.
 * @return {promise} A promise that resolves with the total number of songs in the database.
@@ -415,6 +434,21 @@ module.exports.totalSongs = () => new Promise((resolve, reject) => {
     }
     resolve(number);
   });
+});
+
+/**
+* This method returns all the titles of songs in the database.
+* @return {promise} A promise that resolves all titles plus id and songnumber.
+*/
+module.exports.getTitles = () => new Promise((resolve, reject) => {
+  Song.find({})
+    .select('title _id number')
+    .then((results) => {
+      let titles = results.map(song=>{
+        return { name:`${song.number}: ${song.title.toString()}`, _id:song._id, number: song.number };
+      });
+      resolve(titles);
+    });
 });
 
 module.exports.Song = Song;

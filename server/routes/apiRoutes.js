@@ -21,6 +21,9 @@ router.route('/beards')
   .put(beardController.updateBeards)
   .delete(beardController.deleteBeards);
 
+router.route('/titles')
+  .get(songController.getTitles);
+
 router.route('/topics')
   .get(topicController.getTopics)
   .put(topicController.updateTopics)
@@ -61,6 +64,9 @@ router.route('/find_tags')
 
 router.route('/find_topics')
   .get(songController.getSongsByTopics);  
+
+router.route('/find_by_number')
+  .get(songController.getSongsByNumbers);  
 
 router.route('/songs/count')
   .get(songController.getSongCount);

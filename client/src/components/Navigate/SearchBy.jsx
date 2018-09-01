@@ -18,6 +18,7 @@ export default class SearchBy extends Component {
     this.narrowSelection = this.narrowSelection.bind(this);
     this.getByTags = this.getByTags.bind(this);
     this.tagGrab = this.tagGrab.bind(this);
+    this.titleGrab = this.titleGrab.bind(this);
     this.topicGrab = this.topicGrab.bind(this);
   }
 
@@ -67,6 +68,18 @@ export default class SearchBy extends Component {
         res({ songs: songs.data });
       }).catch(err => rej(err));
     });
+  }
+
+  titleGrab(numbers) {
+    return new Promise((res, rej)=>{
+      axios.get('/api/find_by_number', {
+        params: {
+          numbers,
+        },
+      }).then((songs) =>{
+        res({songs: songs.data});
+      }).catch(err => rej(err));
+    })
   }
 
   narrowSelection(songs) {
@@ -137,6 +150,7 @@ export default class SearchBy extends Component {
               narrowSelection={this.narrowSelection}
               tagGrab={tags => this.tagGrab(tags)}
               topicGrab={topic => this.topicGrab(topic)}
+              titleGrab={title => this.titleGrab(title)}
             />
             <ul className="filter-size">
               <li>Size</li>

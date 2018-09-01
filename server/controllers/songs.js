@@ -66,6 +66,13 @@ module.exports.getSongsByTags = (req, res) => {
   });
 };
 
+module.exports.getSongsByNumbers = (req, res) => {
+  const numbers = req.query.numbers;
+  SongModel.getSongsByNumbers(numbers).then((response) => {
+    res.send(response);
+  });
+};
+
 module.exports.getSongsByTopics = (req, res) => {
   const topic = req.query.topic;
   SongModel.getSongsByTopicId(topic).then((response) => {
@@ -77,4 +84,10 @@ module.exports.getSongByID = (req, res) => {
   const songNum = req.params.id;
   SongModel.getSongByNumber(songNum)
     .then(song => res.send(song));
+};
+
+module.exports.getTitles = (req, res) => {
+  SongModel.getTitles().then((response) => { 
+    res.send(response);
+  });
 };
