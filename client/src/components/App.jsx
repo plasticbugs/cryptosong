@@ -7,7 +7,9 @@ import Song from './Navigate/Song.jsx';
 // import ImportSongData from './Forms/Utils/ImportSongData.jsx';
 import IsAdmin from './Forms/Utils/IsAdmin.jsx';
 import Login from './Forms/Login.jsx';
+import Log from './Forms/Utils/Log.jsx';
 
+Log.info('Welcome to App.jsx', 'App.jsx');
 const App = () => (
   <BrowserRouter>
     <Switch>

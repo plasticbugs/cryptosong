@@ -6,6 +6,7 @@ const passport = require('passport');
 require('./strategy');
 // require models
 const Admin = require('../models/admin');
+const logger = require('../logger.js');
 
 
 /* these are all the routes having to do with authentication of Admin.
@@ -80,8 +81,8 @@ module.exports = {
   // allowing completion of the route
   isAuthenticated: (req, res, next) => {
     const auth = req.isAuthenticated();
-    console.log('are you authy?');
-    console.log(auth);
+    logger.info('are you authy?');
+    logger.info(auth);
     if (auth) {
       return next();
     }
@@ -102,7 +103,7 @@ module.exports = {
   },
   changePassword: (req, res) => {
     const { username, newPassword } = req.body;
-    console.log(`hello ${username}`);
+    logger.silly(`hello ${username}`);
     Admin
       .findOne({ username })
       .then((user, error) => {
