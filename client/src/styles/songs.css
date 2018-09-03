@@ -9,8 +9,7 @@
   padding-top: 5px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  overflow: auto; }
+  justify-content: center; }
 
 .song-list-image {
   align-items: center;
@@ -85,22 +84,22 @@
     visibility: visible; }
 
 .size-sm .song-list-item:not(.is-loading):hover .song-list-image {
-  margin: -75px 0 0 -75px; }
+  margin: 0 0 0 -75px; }
 
 .size-sm .song-list-item:not(.is-loading):hover .song-list-item-data {
   left: -75px;
-  top: 75px; }
+  top: 150px; }
 
 .size-md .song-list-item:not(.is-loading):hover .song-list-image {
-  margin: -50px 0 0 -50px; }
+  margin: 0 0 0 -50px; }
 
 .size-md .song-list-item:not(.is-loading):hover .song-list-item-data {
   left: -50px;
-  top: 100px; }
+  top: 150px; }
 
 .size-lg .song-list-item:not(.is-loading):hover .song-list-image {
   margin: -5px 0 0 -5px; }
 
 .size-lg .song-list-item:not(.is-loading):hover .song-list-item-data {
   left: -5px;
-  top: 125px; }
+  top: 150px; }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "9.11.2",
+    "node": "10.9.0",
     "yarn": "1.9.4",
     "npm": "5.3.0"
   },
