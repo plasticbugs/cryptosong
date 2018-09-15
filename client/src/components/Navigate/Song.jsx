@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Embed } from "semantic-ui-react";
+import axios from "axios";
+import moment from "moment";
+import Log from '../Global/Log.js';
 import AlbumCanvas from "../Render/AlbumCanvas.jsx";
 import Navigation from "./Navigation.jsx";
-import moment from "moment";
-
-import "../../styles/song.css";
 
 export default class Song extends Component {
     constructor(props) {
@@ -17,6 +16,7 @@ export default class Song extends Component {
     }
 
     componentDidMount() {
+        Log.info(this);
         const { match } = this.props;
         axios.get(`/api/song/${match.params.id}`).then(response => {
             this.setState({ song: response.data, done: true });

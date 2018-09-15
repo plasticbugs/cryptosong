@@ -1,5 +1,6 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import axios from 'axios';
+import Log from '../Global/Log.js';
 import Select from 'react-select';
 
 export default class TagSelector extends Component {
@@ -60,7 +61,8 @@ export default class TagSelector extends Component {
 
       });
       Promise.all(promises).then((songs)=>{
-        console.log(songs);
+        Log.results('songs you got:');
+        Log.results(songs);
         let songArr = [];
         songs.forEach((song)=>{
           songArr = songArr.concat(song);
@@ -109,4 +111,4 @@ export default class TagSelector extends Component {
       </div>
     );
   }
-}
+};

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../styles/global.scss';
 import axios from 'axios';
 
 export default class Login extends Component {

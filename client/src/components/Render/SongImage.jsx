@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image } from 'react-konva';
+import Log from '../Globals/Log.js';
 
 export default class SongImage extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class SongImage extends Component {
   }
 
   render() {
+    Log.trace(this);
     return (
       <Image
         key={this.state.image}

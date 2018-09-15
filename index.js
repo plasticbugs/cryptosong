@@ -9,7 +9,7 @@ const port = process.env.PORT || 3001;
 
 app.listen(port);
 
-logger.info('we are now using winston for logging! see all the levels:');
+logger.info('we are now using winston for backend logging! see all the levels:');
 logger.error('');
 logger.warn('');
 logger.info('');

@@ -2,9 +2,11 @@ import debug from 'debug';
 
 const BASE = 'sad-world';
 const COLOURS = {
-  trace: 'lightblue',
+  silly: 'purple',
+  trace: 'green',
+  results: 'hotpink',
   info: 'blue',
-  warn: 'pink',
+  warn: 'orange',
   error: 'red'
 }; // choose better colours :)
 
@@ -20,6 +22,10 @@ class Log {
     if(source) { createDebug(source, message); }
     else { createDebug(message); }
   }
+
+  silly(message, source) {
+    return this.generateMessage('silly', message, source);
+  }
   
   trace(message, source) {
     return this.generateMessage('trace', message, source);
@@ -27,6 +33,10 @@ class Log {
   
   info(message, source) {
     return this.generateMessage('info', message, source);
+  }
+
+  results(message, source) {
+    return this.generateMessage('results', message, source);
   }
   
   warn(message, source) {
@@ -36,6 +46,7 @@ class Log {
   error(message, source) {
     return this.generateMessage('error', message, source);
   }
+
 }
 
 export default new Log();

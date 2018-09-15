@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Log from '../../Global/Log.js'
 import ImportSongData from '../Utils/ImportSongData.jsx';
 import Collection from '../Utils/Collection.jsx';
-import SongInputForm from '../SongInputForm.jsx';
+import SongInputForm from './SongInputForm.jsx';
 
 
 export default class EditPanel extends Component {
@@ -44,7 +45,6 @@ export default class EditPanel extends Component {
 
   renderSomething() {
     let rtnVar;
-    console.log(this.state.render);
     if (typeof this.state.render === 'number') {
       const editing = true;
       rtnVar = (
@@ -59,7 +59,7 @@ export default class EditPanel extends Component {
     } else {
       const apiPath = `/api/${this.state.render}s`;
       const collection = this.state.render.replace(/^\w/, c => c.toUpperCase());
-      console.log(collection);
+      Log.info(collection);
       switch (this.state.render) {
         case '':
           rtnVar = <div style={{ color: 'white', marginBottom: '10px' }}>MAKE A SELECTION</div>;

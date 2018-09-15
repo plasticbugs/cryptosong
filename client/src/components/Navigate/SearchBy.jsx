@@ -1,11 +1,10 @@
 import React, { Component, Icon } from 'react';
 import { Container } from 'semantic-ui-react/dist/commonjs';
 import axios from 'axios';
+import Log from '../Global/Log.js';
 import AlbumCanvas from '../Render/AlbumCanvas.jsx';
 import TagSelector from '../Forms/TagSelector.jsx';
 import Navigation from './Navigation.jsx';
-
-import '../../styles/songs.css';
 
 export default class SearchBy extends Component {
   constructor(props) {
@@ -23,6 +22,7 @@ export default class SearchBy extends Component {
   }
 
   componentDidMount() {
+    Log.info(this);
     switch (this.props.filterBy) {
       case 'tags':
         this.getByTags();

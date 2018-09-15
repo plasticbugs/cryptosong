@@ -5,7 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import moment from 'moment';
 
-import AlbumCanvas from '../Render/AlbumCanvas.jsx';
+import Log from '../../Global/Log.js'
+import AlbumCanvas from '../../Render/AlbumCanvas.jsx';
 
 const GENESIS = '1/1/2009';
 
@@ -151,6 +152,7 @@ export default class SongInputForm extends Component {
   }
 
   componentDidMount() {
+    Log.info(this);
     if (this.props.songId) {
       const number = Number.parseInt(this.props.songId, 10);
       const date = moment(GENESIS, 'M-D-YYYY').add(number - 1, 'days');
@@ -194,10 +196,9 @@ export default class SongInputForm extends Component {
     }
   }
 
-  setUpDropdowns({
-    beard, instrument, inkey, location, topic, tag, mood,
-  }, cb) {
+  setUpDropdowns( {beard, instrument, inkey, location, topic, tag, mood}, cb) {
     const tagArray = [{ beard }, { instrument }, { inkey }, { location }, { topic }, { tag }, { mood }];
+    Log.info(tagArray);
     const options = {};
     tagArray.forEach((tag) => {
       const optionArray = [];

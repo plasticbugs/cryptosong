@@ -1,6 +1,7 @@
 const db = require("../../db-config");
 const Admin = require('../models/admin');
 const bcrypt = require('bcrypt');
+const Log = require('../logger.js');
 
 const password = 'florida';
 
@@ -16,15 +17,13 @@ initAdmin = {
 Admin
     .create(initAdmin)
     .then((instance) => {
-    console.log('new admin created:')
-    console.log(instance);
-    console.log({
-        status: `New Admin "${instance.username}" Created!`
-    });
+    Log.info('new admin created:')
+    Log.info(instance);
+    Log.info(`New Admin "${instance.username}" Created!`);
     process.exit();
     })
     .catch(err => {
-        console.dir(err);
+        Log.error(err);
         process.exit();
     });
 

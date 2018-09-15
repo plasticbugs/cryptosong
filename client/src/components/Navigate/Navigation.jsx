@@ -3,7 +3,6 @@ import '../../styles/global.css';
 
 export default class Navigation extends Component {
   render() {
-    // const number_of_songs = '3,666';
     return (
       <nav className="global-navigation">
         <div className="global-navigation-links">
@@ -15,13 +14,6 @@ export default class Navigation extends Component {
             By the one and only Jonathan Mann
           </h2>
         </div>
-        {/* <div className="global-navigation-search">
-          <input
-            className="global-search-input icon-search"
-            type="search"
-            placeholder={`Search through ${number_of_songs} songs`}
-          />
-        </div> */}
       </nav>
     );
   }

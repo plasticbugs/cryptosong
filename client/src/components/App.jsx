@@ -1,15 +1,24 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // import SongInputForm from "./Forms/SongInputForm.jsx";
+import Log from './Global/Log.js';
 import SearchBy from './Navigate/SearchBy.jsx';
 import Song from './Navigate/Song.jsx';
 // import Collection from "./Forms/Utils/Collection.jsx";
 // import ImportSongData from './Forms/Utils/ImportSongData.jsx';
 import IsAdmin from './Forms/Utils/IsAdmin.jsx';
 import Login from './Forms/Login.jsx';
-import Log from './Forms/Utils/Log.jsx';
 
-Log.info('Welcome to App.jsx', 'App.jsx');
+import '../styles/songs.css';
+
+Log.info('We are now using debug via Log for frontend logging in dev');
+Log.error('error example');
+Log.warn('warn example');
+Log.info('info example');
+Log.results('results example');
+Log.trace('trace example');
+Log.silly('😜 silly example');
+
 const App = () => (
   <BrowserRouter>
     <Switch>
@@ -194,5 +203,5 @@ const App = () => (
     </Switch>
   </BrowserRouter>
 );
-
+Log.info(App);
 export default App;
