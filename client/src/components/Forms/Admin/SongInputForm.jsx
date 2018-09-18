@@ -152,7 +152,6 @@ export default class SongInputForm extends Component {
   }
 
   componentDidMount() {
-    Log.info(this);
     if (this.props.songId) {
       const number = Number.parseInt(this.props.songId, 10);
       const date = moment(GENESIS, 'M-D-YYYY').add(number - 1, 'days');
@@ -418,6 +417,7 @@ export default class SongInputForm extends Component {
       comments,
       firsts,
       mood,
+      imagePathSmall,
       // instruments,
       // mainInstrument,
       // secondaryInstrument,
@@ -592,7 +592,7 @@ export default class SongInputForm extends Component {
             </Grid.Column>
             <Grid.Column>
               <div style={{ position: 'fixed', marginTop: '3em' }}>
-                <AlbumCanvas width={500} height={500} images={this.getTagImages()} song={this.state.song} songnumber={this.state.song.number} />
+                <AlbumCanvas backgroundImage={`/${imagePathSmall}`} width={500} height={500} images={this.getTagImages()} song={this.state.song} songnumber={this.state.song.number} />
                 <Transition visible={this.state.isOpen} animation="scale" duration={400}>
                   <Message
                     success

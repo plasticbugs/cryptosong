@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-
 export default class AlbumCanvas extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mergedImage: '',
     };
-    // console.log((Number.parseInt(this.props.songnumber, 10) + 240) % 360)
   }
 
   render() {
@@ -82,4 +80,4 @@ export default class AlbumCanvas extends Component {
     //   </Layer>
     // </Stage>
   }
-}
+};
